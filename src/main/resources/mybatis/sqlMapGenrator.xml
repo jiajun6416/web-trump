@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+"-//mybatis.org//DTD MyBatis Generator Configuration 
+1.0//EN"
+"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"
+>
+<generatorConfiguration>
+	<!-- 制定数据库驱动包的路径 千万别放中文路径下 -->
+	<classPathEntry location="D:\maven\repository\mysql-connector-java-5.1.28-bin.jar" />
+	<!-- 配置数据源和生成的代码所存放的位置 -->
+	<context id="context1">
+		<commentGenerator>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/my_oa"
+			userId="jiajun"
+			password="jiajun" />
+		<!-- 所生成的实体类的位置默认资源包src -->
+		<javaModelGenerator targetPackage="com.jiajun.pojo.system" targetProject="my_oa" />
+		<!-- 所生成的mapper.xml默认资源包src -->
+		<sqlMapGenerator targetPackage="" targetProject="my_oa" />
+		<!-- 生成mapper.java -->
+        <!-- <javaClientGenerator type="XMLMAPPER" targetPackage="com.jiajun.mapper.system" targetProject="my_oa"/> -->
+		<!-- 为哪些表生成代码 tableName:表名 schema:不用填写 enableCountByExample="false" 不生成example -->
+		<table schema="" tableName="sys_menu" domainObjectName="SysMenuEntity" mapperName="SyMenuMapper"
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"/>	
+											
+<!-- 		<table schema="" tableName="sys_user" domainObjectName="SysUserEntity"  mapperName="SysUserMapper" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"/>	
+		<table schema="" tableName="sys_menu" domainObjectName="SysMenuEntity"  mapperName="SysMenuMapper" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"/>
+		<table schema="" tableName="sys_opeartion" domainObjectName="SysOpeartionEntity"  mapperName="SysOpeartionMapper" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"/>
+		<table schema="" tableName="sys_resource" domainObjectName="SysResourceEntity"  mapperName="SysResourceMapper" 
+			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+			enableSelectByExample="false" selectByExampleQueryId="false"/> -->
+	</context>
+</generatorConfiguration>

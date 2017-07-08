@@ -1,0 +1,196 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.jiajun</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>trump</artifactId>
+  <packaging>war</packaging>
+  
+  <dependencies>
+				<!-- Spring -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+			</dependency>
+			<dependency>
+		         <groupId>org.springframework</groupId>
+		         <artifactId>spring-context-support</artifactId>
+		    </dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+			</dependency>
+			<dependency>  
+	            <groupId>org.springframework</groupId>  
+	            <artifactId>spring-test</artifactId>  
+	            <scope>test</scope>  
+	        </dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aspects</artifactId>
+			</dependency>
+
+			<!-- Mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.github.miemiedev</groupId>
+				<artifactId>mybatis-paginator</artifactId>
+			</dependency>
+			
+						<!-- JSP相关 -->
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+			</dependency>
+			<dependency>
+			    <groupId>javax.servlet</groupId>
+			    <artifactId>javax.servlet-api</artifactId>
+			    <scope>provided</scope>
+			</dependency>
+			<dependency> 
+			   <groupId>javax.servlet.jsp</groupId> 
+			   <artifactId>jsp-api</artifactId> 
+			   <scope>provided</scope>
+			</dependency>
+				
+			<!-- MySql -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+			</dependency>
+			
+						<!-- 连接池 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+			</dependency>
+			
+			
+					<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-io</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>commons-net</groupId>
+				<artifactId>commons-net</artifactId>
+			</dependency>
+
+			<!-- 日志处理 -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-log4j12</artifactId>
+			</dependency>
+
+			<!-- 文件上传组件 -->
+			<dependency>
+				<groupId>commons-fileupload</groupId>
+				<artifactId>commons-fileupload</artifactId>
+			</dependency>
+			
+			<!-- Jackson Json处理工具包 -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+			</dependency>
+			
+			<!-- 单元测试 -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<scope>test</scope>
+			</dependency>
+			
+			
+			<!-- httpclient -->
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+			</dependency>
+		
+			<!-- apache poi组件 -->
+			<dependency>
+			    <groupId>org.apache.poi</groupId>
+			    <artifactId>poi-ooxml</artifactId>
+			</dependency>
+		
+			<!-- 发送邮件组件 -->
+			<dependency>  
+			    <groupId>javax.mail</groupId>  
+			    <artifactId>mail</artifactId>  
+			</dependency> 
+			
+						
+			<!-- quartz定时器 -->
+			<dependency>
+			    <groupId>org.quartz-scheduler</groupId>
+			    <artifactId>quartz</artifactId>
+			</dependency>
+	
+			 <!-- ehcache -->
+		  <dependency>  
+		    <groupId>net.sf.ehcache</groupId>  
+		    <artifactId>ehcache</artifactId>  
+		  </dependency>   
+			
+	        <!-- shiro -->  
+	        <dependency>  
+	            <groupId>org.apache.shiro</groupId>  
+	            <artifactId>shiro-core</artifactId>  
+	        </dependency>  
+	        <dependency>  
+	            <groupId>org.apache.shiro</groupId>  
+	            <artifactId>shiro-web</artifactId>  
+	        </dependency>  
+	        <dependency>  
+	            <groupId>org.apache.shiro</groupId>  
+	            <artifactId>shiro-spring</artifactId>  
+	        </dependency> 	
+ 	 </dependencies>
+  
+    
+    <!-- 依赖的插件 , 运行  tomcat7:redeploy -->
+	<build>
+		<plugins>
+			<!-- 配置Tomcat插件 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+		        <configuration>
+					<!-- 远端tomcat的后台管理入口 -->
+	                <url>http://192.168.1.101:8080/manager/text</url>
+	  		        <!-- 部署项目包名, 如果不写的话则是 / 代表root.war, 需要把自带的删除能部署 -->
+	                <path>/xunjian</path>
+	                <!-- 也可以选择在maven.setting中设置登录用户名和密码 -->
+	                <username>jiajun</username>
+	                <password>jiajun</password>
+	                <!-- 部署项目端口号 -->
+	                <port>8080</port>
+	                <encoding>utf-8</encoding>
+       				<uriEncoding>utf-8</uriEncoding>
+		        </configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>
