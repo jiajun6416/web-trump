@@ -69,7 +69,7 @@
 								
 								<ul class="submenu">
 										<li class="" id="m36">
-											<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('m36','z2','角色(基础权限)','role.do')">
+											<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('m36','z2','角色(基础权限)','role/list.do?roleType')">
 												<i class="menu-icon fa fa-key orange"></i>
 													角色(基础权限)
 											</a>

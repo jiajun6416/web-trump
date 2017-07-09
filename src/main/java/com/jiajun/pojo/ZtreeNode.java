@@ -20,6 +20,18 @@ public class ZtreeNode {
 	/*如果是父节点,则是open=true*/
 	private boolean open = false;
 	
+	/*是否被选中*/
+	private boolean checked = false;
+	
+	
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
 	private List<ZtreeNode> nodes;
 
 	public Integer getId() {

@@ -20,7 +20,7 @@ public class SyetemExceptionHandler implements HandlerExceptionResolver{
 	@Override
 	public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler,
 			Exception ex) {
-		logger.error("发生异常: ", ex.getMessage());
+		logger.error("======================发生异常=============================== ", ex.getMessage());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("exceptionMsg", ex.getMessage());
 		modelAndView.setViewName("error");

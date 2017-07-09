@@ -183,7 +183,7 @@
 				$("#menuOrder").val(1);
 				return false;
 			}
-			$.ajax({
+ 			$.ajax({
 				type:"POST",
 				url:"menu/${action}.do",
 				data:$("#menuForm").serialize(),
@@ -198,7 +198,7 @@
 				error: function() {
 					alert("未知错误!");
 				}
-			})
+			}) 
 		}
 	</script>
 

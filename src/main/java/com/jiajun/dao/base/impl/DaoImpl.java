@@ -52,21 +52,21 @@ public class DaoImpl extends  SqlSessionDaoSupport implements Dao {
 	@Override
 	public void batchInsert(String statement, List list) throws Exception {
 		for (Object object : list) {
-			this.insert(statement, object);
+			this.getSqlSession().insert(statement, object);
 		}
 	}
 
 	@Override
 	public void batchUpdate(String statement, List list) throws Exception {
 		for (Object object : list) {
-			this.update(statement, object);
+			this.getSqlSession().update(statement, object);
 		}
 	}
 
 	@Override
 	public void batchDelete(String statement, List list) throws Exception {
 		for (Object object : list) {
-			this.delete(statement, object);
+			this.getSqlSession().delete(statement, object);
 		}
 	}
 

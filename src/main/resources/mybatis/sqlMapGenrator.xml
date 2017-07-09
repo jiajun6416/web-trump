@@ -18,13 +18,13 @@
 			userId="jiajun"
 			password="jiajun" />
 		<!-- 所生成的实体类的位置默认资源包src -->
-		<javaModelGenerator targetPackage="com.jiajun.pojo.system" targetProject="my_oa" />
+		<javaModelGenerator targetPackage="com.jiajun.pojo.system" targetProject="trump" />
 		<!-- 所生成的mapper.xml默认资源包src -->
-		<sqlMapGenerator targetPackage="" targetProject="my_oa" />
+		<sqlMapGenerator targetPackage="" targetProject="trump" />
 		<!-- 生成mapper.java -->
-        <!-- <javaClientGenerator type="XMLMAPPER" targetPackage="com.jiajun.mapper.system" targetProject="my_oa"/> -->
+        <!-- <javaClientGenerator type="XMLMAPPER" targetPackage="com.jiajun.mapper.system" targetProject="trump"/> -->
 		<!-- 为哪些表生成代码 tableName:表名 schema:不用填写 enableCountByExample="false" 不生成example -->
-		<table schema="" tableName="sys_menu" domainObjectName="SysMenuEntity" mapperName="SyMenuMapper"
+		<table schema="" tableName="sys_role" domainObjectName="SysRoleEntity" mapperName="SysRoleMapper"
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false"/>	
 											

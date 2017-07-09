@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="SysRoleMapper">
-
   <resultMap id="BaseResultMap" type="com.jiajun.pojo.system.SysRoleEntity">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="role_type" jdbcType="BIT" property="roleType" />
+    <result column="role_type" jdbcType="INTEGER" property="roleType" />
+    <result column="menu_ids" jdbcType="VARCHAR" property="menuIds" />
+    <result column="operation_ids" jdbcType="VARCHAR" property="operationIds" />
   </resultMap>
-  
-  
   <sql id="Base_Column_List">
-    id, role_name, parent_id, sort, role_type
+    id, role_name, parent_id, sort, role_type, menu_ids, operation_ids
   </sql>
   
-  <select id="getAllTypeRole" resultMap="BaseResultMap">
+  <select id="selectMenuByType" parameterType="int" resultType="string">
+  	select 
+		sys_role.menu_ids
+	from 
+		sys_role
+	where sys_role.role_type=#{roleType} and sys_role.parent_id = 0
+  </select>
+  
+   <select id="getAllTypeRole" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />
     from sys_role
-    where parent_id == 0
+    where  id != 1  and  parent_id = 0 
   </select>
   
    <select id="getByType" parameterType="int" resultMap="BaseResultMap">
@@ -28,6 +35,10 @@
     from sys_role
     where parent_id != 0 and role_type = #{type,jdbcType=BIT} 
   </select>
+  	
+  <update id="updateByRoleType" parameterType="map">
+  	UPDATE SYS_ROLE SET MENU_IDS =#{menuIds} WHERE ROLE_TYPE=#{roleType} AND PARENT_ID=0
+  </update>
   	
   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
   	select
@@ -47,9 +58,11 @@
   </delete>
   <insert id="insert" parameterType="com.jiajun.pojo.system.SysRoleEntity">
     insert into sys_role (id, role_name, parent_id, 
-      sort, role_type)
+      sort, role_type, menu_ids, 
+      operation_ids)
     values (#{id,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
-      #{sort,jdbcType=INTEGER}, #{roleType,jdbcType=BIT})
+      #{sort,jdbcType=INTEGER}, #{roleType,jdbcType=INTEGER}, #{menuIds,jdbcType=VARCHAR}, 
+      #{operationIds,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.jiajun.pojo.system.SysRoleEntity">
     insert into sys_role
@@ -69,6 +82,12 @@
       <if test="roleType != null">
         role_type,
       </if>
+      <if test="menuIds != null">
+        menu_ids,
+      </if>
+      <if test="operationIds != null">
+        operation_ids,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -84,10 +103,23 @@
         #{sort,jdbcType=INTEGER},
       </if>
       <if test="roleType != null">
-        #{roleType,jdbcType=BIT},
+        #{roleType,jdbcType=INTEGER},
+      </if>
+      <if test="menuIds != null">
+        #{menuIds,jdbcType=VARCHAR},
+      </if>
+      <if test="operationIds != null">
+        #{operationIds,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
+  <update id="updateMenuIds" parameterType="com.jiajun.pojo.system.SysRoleEntity">
+  	update sys_role
+  	set
+  	  menu_ids = #{menuIds,jdbcType=VARCHAR}
+  	  where id = #{id,jdbcType=INTEGER}
+  </update>
+  
   <update id="updateByPrimaryKeySelective" parameterType="com.jiajun.pojo.system.SysRoleEntity">
     update sys_role
     <set>
@@ -101,7 +133,13 @@
         sort = #{sort,jdbcType=INTEGER},
       </if>
       <if test="roleType != null">
-        role_type = #{roleType,jdbcType=BIT},
+        role_type = #{roleType,jdbcType=INTEGER},
+      </if>
+      <if test="menuIds != null">
+        menu_ids = #{menuIds,jdbcType=VARCHAR},
+      </if>
+      <if test="operationIds != null">
+        operation_ids = #{operationIds,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -111,7 +149,9 @@
     set role_name = #{roleName,jdbcType=VARCHAR},
       parent_id = #{parentId,jdbcType=INTEGER},
       sort = #{sort,jdbcType=INTEGER},
-      role_type = #{roleType,jdbcType=BIT}
+      role_type = #{roleType,jdbcType=INTEGER},
+      menu_ids = #{menuIds,jdbcType=VARCHAR},
+      operation_ids = #{operationIds,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

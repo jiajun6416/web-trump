@@ -19,6 +19,10 @@
   	<result column="parent_id" property="pId" jdbcType="INTEGER"/>
   	<result column="is_parent" property="isParent" jdbcType="INTEGER"/>
   	<result column="menu_name" property="name" jdbcType="VARCHAR"/>
+  
+  </resultMap>
+  <resultMap type="com.jiajun.pojo.ZtreeNode" id="checkedZtreeNode" extends="menuZtreeNode">
+  	<result column="checked" jdbcType="BIT" property="checked" />
   </resultMap>
   
   <sql id="Base_Column_List">
@@ -35,8 +39,65 @@
 		parent_id = #{id}
   </select>
   
-  <select id="selectMenuZtreeNodeById" parameterType="java.lang.Integer" resultMap="menuZtreeNode">
-  	select id, menu_name name, parent_id pId, is_parent isParent from sys_menu where parent_id = #{pId} order by sort asc
+  <select id="selectMenuIdByRoleType" parameterType="map" resultMap="checkedZtreeNode">
+	SELECT
+		id,
+		menu_name NAME,
+		parent_id pId,
+		is_parent isParent,
+	<choose>
+		<when test="menuIds != null and menuIds.size()>0" >
+		IF (
+			id IN 
+			<foreach collection="menuIds" item="menuId" open="(" close=")" separator=",">
+				#{menuId}
+			</foreach>
+			,
+			TRUE,
+			FALSE
+		) checked
+		</when>
+		<otherwise>
+			false checked
+		</otherwise>
+	</choose>
+	FROM
+		sys_menu
+	ORDER BY
+		sort
+  </select>
+  
+  <select id="selecRoleMenuNodes" parameterType="map" resultMap="checkedZtreeNode">
+	SELECT
+		id,
+		menu_name NAME,
+		parent_id pId,
+		is_parent isParent,
+	<choose>
+		<when test="menuIds != null and menuIds.size()>0">
+			IF (
+			id IN 
+			<foreach collection="menuIds" item="menuId" open="(" close=")" separator=",">
+				#{menuId}
+			</foreach>
+			,
+			TRUE,
+			FALSE
+			) checked
+		</when>
+		<otherwise>
+			false checked
+		</otherwise>
+	</choose>
+	FROM
+		sys_menu
+	WHERE
+		id IN 
+		<foreach collection="typeMenuIds" item="typeId" open="(" close=")" separator=",">
+			#{typeId}
+		</foreach>
+	ORDER BY
+		sort ASC  	
   </select>
   
   <select id="selectMenuZtreeNodeList" resultMap="menuZtreeNode">

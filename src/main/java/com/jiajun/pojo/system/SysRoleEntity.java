@@ -1,7 +1,5 @@
 package com.jiajun.pojo.system;
 
-import com.jiajun.util.JsonUtils;
-
 public class SysRoleEntity {
     private Integer id;
 
@@ -11,7 +9,11 @@ public class SysRoleEntity {
 
     private Integer sort;
 
-    private Boolean roleType;
+    private Integer roleType;
+
+    private String menuIds;
+
+    private String operationIds;
 
     public Integer getId() {
         return id;
@@ -45,17 +47,27 @@ public class SysRoleEntity {
         this.sort = sort;
     }
 
-    public Boolean getRoleType() {
+    public Integer getRoleType() {
         return roleType;
     }
 
-    public void setRoleType(Boolean roleType) {
+    public void setRoleType(Integer roleType) {
         this.roleType = roleType;
     }
 
-	@Override
-	public String toString() {
-		return JsonUtils.encode(this);
-	}
-    
+    public String getMenuIds() {
+        return menuIds;
+    }
+
+    public void setMenuIds(String menuIds) {
+        this.menuIds = menuIds;
+    }
+
+    public String getOperationIds() {
+        return operationIds;
+    }
+
+    public void setOperationIds(String operationIds) {
+        this.operationIds = operationIds;
+    }
 }

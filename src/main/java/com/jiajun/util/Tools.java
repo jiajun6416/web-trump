@@ -12,6 +12,8 @@ import java.util.UUID;
  */
 public class Tools {
 	
+	public static final String SPLIT_PATTERN = "^(([0-9]++),)++([0-9]++)$";
+	
 	/**
 	 * 读取properties文件
 	 * @param filePath
@@ -39,5 +41,18 @@ public class Tools {
 	public static String getUUID() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString().replaceAll("-", "");
+	}
+	
+	/**
+	 *  以 , 为分隔符校验输入
+	 * @param str
+	 * @return
+	 */
+	public static boolean regular(String str) {
+		return str.matches(SPLIT_PATTERN);
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(Tools.regular("1222,2,3,1,22222222222"));
 	}
 }

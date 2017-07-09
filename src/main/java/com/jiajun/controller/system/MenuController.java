@@ -95,6 +95,12 @@ public class MenuController extends BaseController{
 	@ResponseBody
 	public ResultModel save(SysMenuEntity menu, HttpSession session, HttpServletRequest request)  {
 		String status = request.getParameter("status");
+		if(StringUtils.isEmpty(menu.getAccessUrl())) {
+			menu.setAccessUrl("#");
+		}
+		if(StringUtils.isEmpty(menu.getPrivilegeCode())) {
+			menu.setPrivilegeCode("#");
+		}
 		if(status != null && status .equals("1")) {
 			menu.setIsShow(true);
 		} else {
@@ -112,8 +118,15 @@ public class MenuController extends BaseController{
 	}
 	
 	@RequestMapping("/update")
-	public String update(SysMenuEntity menu,HttpSession session, HttpServletRequest request) throws Exception{
+	@ResponseBody
+	public ResultModel update(SysMenuEntity menu,HttpSession session, HttpServletRequest request) {
 		String status = request.getParameter("status");
+		if(StringUtils.isEmpty(menu.getAccessUrl())) {
+			menu.setAccessUrl("#");
+		}
+		if(StringUtils.isEmpty(menu.getPrivilegeCode())) {
+			menu.setPrivilegeCode("#");
+		}
 		if(status != null) {
 			if(status .equals("1")) {
 				menu.setIsShow(true);
@@ -121,9 +134,14 @@ public class MenuController extends BaseController{
 				menu.setIsShow(false);
 			}
 		}
-		sysMenuService.update(menu);
-		sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改菜单信息");
-		return "redirect:/menu/"+menu.getParentId();
+		try {
+			sysMenuService.update(menu);
+			sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改菜单信息");
+			return ResultModel.build(200, "success");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultModel.build(500, e.getMessage());
+		}
 	}
 	
 	@RequestMapping("/toEditIcon")

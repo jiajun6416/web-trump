@@ -35,8 +35,10 @@ public interface SysMenuService {
 	List<SysMenuEntity> getAllMenu()throws Exception;
 	
 	/**
-	 * 返回所有的ztree格式的节点集合
+	 * 获得所有的treeNode
 	 * @return
 	 */
-	List<ZtreeNode> selectAllMenuZtreeNode()throws Exception;
+	List<ZtreeNode> selectAllMenuZtreeNode() throws Exception;
+
+
 }
