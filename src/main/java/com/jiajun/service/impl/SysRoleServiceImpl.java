@@ -27,12 +27,26 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Qualifier("daoImpl")
 	private Dao dao;
 	
+	
 	Logger logger = LoggerFactory.getLogger(SysRoleServiceImpl.class);
 	
 	private static final String ROLE_NAME_SPACE = "SysRoleMapper.";
 	
 	private static final String MENU_NAME_SPACE = "SysMenuMapper.";
 	
+	private static final String USER_NAME_SPACE = "SysUserMapper."; 
+	
+	
+	@Override
+	public SysRoleEntity getRoleByRoleType(int roleType) throws Exception {
+		return (SysRoleEntity) dao.selectObject(ROLE_NAME_SPACE+"selectRoleByType", roleType);
+	}
+
+	
+	@Override
+	public SysRoleEntity getRoleById(int roleId) throws Exception {
+		return (SysRoleEntity) dao.selectObject(ROLE_NAME_SPACE+"selectByPrimaryKey", roleId);
+	}
 	
 	@Override
 	public List<SysRoleEntity> getListByType(int type) throws Exception {
@@ -46,9 +60,24 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	@Override
 	public void delete(int roleId) throws Exception {
+		//查询此角色是否有用户
+		int count = (int) dao.selectObject(USER_NAME_SPACE+"getUserNumByRole", roleId);
+		if(count > 0 ) {
+			throw new SysCustomException("当前角色已有用户");
+		}
 		dao.delete(ROLE_NAME_SPACE+"deleteByPrimaryKey", roleId);
 	}
 
+	@Override
+	public void deleteType(int roleType) throws Exception {
+		//查询当前角色组下是否有角色
+		int count = (int) dao.selectObject(ROLE_NAME_SPACE+"getRoleNumByType", roleType);
+		if(count > 0 ) {
+			throw new SysCustomException("当前角色组下有角色存在!");
+		}
+		dao.delete(ROLE_NAME_SPACE+"deleteByRoleType", roleType);
+	}
+	
 	@Override
 	public void update(SysRoleEntity roleEntity) throws Exception {
 		dao.update(ROLE_NAME_SPACE+"updateByPrimaryKeySelective", roleEntity);
@@ -56,7 +85,17 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	@Override
 	public void saveRole(SysRoleEntity roleEntity) throws Exception {
-		dao.insert(ROLE_NAME_SPACE, roleEntity);
+		SysRoleEntity typeMenu = (SysRoleEntity) dao.selectObject(ROLE_NAME_SPACE+"getParentByType", roleEntity.getRoleType());
+		roleEntity.setParentId(typeMenu.getId());
+		dao.insert(ROLE_NAME_SPACE+"insert", roleEntity);
+	}
+	
+	@Override
+	public void saveRoleType(SysRoleEntity roleEntity) throws Exception {
+		int currentMaxRoleType = (int) dao.selectObject(ROLE_NAME_SPACE+"getMaxRoletype", null);
+		roleEntity.setRoleType(currentMaxRoleType+1);
+		roleEntity.setParentId(0);
+		dao.insert(ROLE_NAME_SPACE+"insert", roleEntity);
 	}
 	
 	@Override
@@ -191,6 +230,5 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 		dao.update(ROLE_NAME_SPACE+"updateByPrimaryKeySelective", role);
 	}
-
 	
 }

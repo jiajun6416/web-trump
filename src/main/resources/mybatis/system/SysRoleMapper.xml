@@ -14,6 +14,25 @@
     id, role_name, parent_id, sort, role_type, menu_ids, operation_ids
   </sql>
   
+  <select id="selectRoleByType" parameterType="int" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where  role_type = #{roleType}  and  parent_id = 0 
+  </select>
+  
+  <select id="getMaxRoletype" resultType="int">
+  	select max(role_type) from sys_role
+  </select>
+  
+  <select id="getRoleNumByType" parameterType="int" resultType="int">
+	select count(*) from sys_role where parent_id !=0 and role_type = #{roleType}  
+  </select>
+
+  <delete id="deleteByRoleType" parameterType="int">
+  	delete from sys_role where role_type = #{roleType}
+  </delete>  
+  
   <select id="selectMenuByType" parameterType="int" resultType="string">
   	select 
 		sys_role.menu_ids
@@ -26,14 +45,21 @@
   	select 
     <include refid="Base_Column_List" />
     from sys_role
-    where  id != 1  and  parent_id = 0 
+    where  id != 1  and  parent_id = 0 order by sort
   </select>
   
    <select id="getByType" parameterType="int" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
+    from sys_role 
+    where parent_id != 0 and role_type = #{type,jdbcType=BIT}  order by sort
+  </select>
+  	
+  <select id="getParentByType" parameterType="int" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
     from sys_role
-    where parent_id != 0 and role_type = #{type,jdbcType=BIT} 
+    where role_type = #{type,jdbcType=BIT} and  parent_id = 0  
   </select>
   	
   <update id="updateByRoleType" parameterType="map">

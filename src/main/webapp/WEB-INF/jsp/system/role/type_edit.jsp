@@ -21,29 +21,21 @@
 			<div class="page-content">
 				<div class="row">
 					<div class="col-xs-12">
-						<form action="role/${action}.do" name="form1" id="form1"  method="post">
-						<input type="hidden" name="id" id="id" value="${role.id}"/>
-						<input name="roleType" id="roleType" value="${roleType}" type="hidden">
+						<form action="role/${msg}.do" name="form1" id="form1"  method="post">
+						<input type="hidden" name="ROLE_ID" id="id" value="${pd.ROLE_ID}"/>
+						<input name="PARENT_ID" id="parent_id" value="${pd.parent_id }" type="hidden">
 							<div id="zhongxin" style="padding-top:13px;">
-							<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1">   </label>
-								<div class="col-sm-9">
-									<input type="text" name="roleName" id="roleName" value="${role.roleName}" placeholder="这里输入角色名称" class="col-xs-10 col-sm-5" />
-								</div>
-							</div>
-							<div class="form-group">
-							<label class="col-sm-3 control-label no-padding-right" for="form-field-1">  </label>
-								<div class="col-sm-9">
-									<input type="number" name="sort" id="sort" value="${role.sort}" placeholder="这里输入角色序号" title="请输入正整数" class="col-xs-10 col-sm-5" />
-								</div>
-							</div>
-							<br/>
-							<div class="clearfix " style="margin-top: 10px;margin-left: 50px;">
-								<div>
-									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-								</div>
-							</div>
+							<table class="center" style="width:100%;">
+								<tr style="text-align: center;">
+									<td><input type="text" name="ROLE_NAME" id="roleName" placeholder="这里输入名称" value="${pd.ROLE_NAME}"  title="名称" style="width:99%;"/></td>
+								</tr>
+								<tr>
+									<td style="text-align: center;padding-top:5px;">
+										<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
+										<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
+									</td>
+								</tr>
+							</table>
 							</div>
 						</form>
 					
@@ -80,19 +72,9 @@
 			$("#roleName").focus();
 			return false;
 		}
-		if($("#sort").val() == "") {
-			$("#sort").tips({
-				side:3,
-	            msg:'请输入',
-	            bg:'#AE81FF',
-	            time:2
-	        });
-			$("#sort").focus();
-			return false;
-		}
-		$("#form1").submit();
-		$("#zhongxin").hide();
-		$("#zhongxin2").show();
+			$("#form1").submit();
+			$("#zhongxin").hide();
+			$("#zhongxin2").show();
 	}
 	
 	

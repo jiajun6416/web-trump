@@ -128,18 +128,99 @@ public class RoleController extends BaseController{
 		return ResultModel.build(200, "success");
 	}
 	
-	
 	@RequestMapping("/toAdd")
 	public String toAdd(int roleType, Model model) {
 		model.addAttribute("roleType", roleType);
 		model.addAttribute("action", "save");
-		return "systrem/role/role_edit";
+		return "system/role/role_edit";
 	}
 	
 	@RequestMapping("/save")
-	public String save(SysRoleEntity roleEntity, HttpSession session, HttpServletRequest request) throws Exception {
+	public String save(SysRoleEntity roleEntity, Model model, HttpSession session, HttpServletRequest request) throws Exception  {
 		sysRoleService.saveRole(roleEntity);
 		sysLogService.save(this.getLoginUser(session), this.getIP(request), "添加角色:" +roleEntity.getRoleName());
-		return "redirect:/role/list?roleType="+roleEntity.getRoleType();
+		model.addAttribute("msg", "success");
+		return "save_result";
+	}
+	
+	@RequestMapping("/toEdit")
+	public String toEdit(int roleId, Model model) throws Exception {
+		SysRoleEntity role = sysRoleService.getRoleById(roleId);
+		model.addAttribute("role", role);
+		model.addAttribute("action", "update");
+		return "system/role/role_edit";
+	}
+	
+	@RequestMapping("/update")
+	public String  update(SysRoleEntity roleEntity, Model model, HttpSession session, HttpServletRequest request) throws Exception {
+			sysRoleService.update(roleEntity);
+			sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改角色信息:" +roleEntity.getRoleName());
+			model.addAttribute("msg", "success");
+			return "save_result";
+	}
+	
+	@RequestMapping("/delete")
+	@ResponseBody
+	public ResultModel delete(int roleId, Model model, HttpSession session, HttpServletRequest request)  {
+		try {
+			sysRoleService.delete(roleId);
+			sysLogService.save(this.getLoginUser(session), this.getIP(request), "删除角色, id是"+roleId);
+			return ResultModel.build(200, "success");
+		} catch (Exception e) {
+			if(e instanceof SysCustomException) {
+				return ResultModel.build(300, "当前角色有用户, 不能直接删除");
+			} else {
+				return ResultModel.build(500, "系统忙, 请稍后再试");
+			}
+		}
+	}
+	
+	@RequestMapping("/toEditRoleType")
+	public String toEditRoleType(int roleType, Model model) throws Exception {
+		SysRoleEntity role = sysRoleService.getRoleByRoleType(roleType);
+		model.addAttribute("role", role);
+		model.addAttribute("action", "updateType");
+		return "system/role/role_edit";
+	}
+	
+	@RequestMapping("/updateType")
+	public String  updateType(SysRoleEntity roleEntity, Model model, HttpSession session, HttpServletRequest request) throws Exception {
+			sysRoleService.update(roleEntity);
+			sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改角色类型信息:" +roleEntity.getRoleName());
+			model.addAttribute("msg", "success");
+			return "save_result";
+	}
+	
+	@RequestMapping("/toAddRoleType")
+	public String toAddRoleType(Model model) throws Exception {
+		model.addAttribute("action", "saveRoleType");
+		return "system/role/role_edit";
+	}
+	
+	@RequestMapping("/saveRoleType")
+	public String saveRoleType(SysRoleEntity roleEntity, Model model, HttpSession session, HttpServletRequest request) throws Exception  {
+		sysRoleService.saveRoleType(roleEntity);
+		sysLogService.save(this.getLoginUser(session), this.getIP(request), "添加角色类型:" + roleEntity.getRoleName());
+		model.addAttribute("msg", "success");
+		return "save_result";
+	}
+	
+	@RequestMapping("/deleteType")
+	@ResponseBody
+	public ResultModel deleteType(int roleType, Model model, HttpSession session, HttpServletRequest request) throws Exception  {
+		if(roleType == 1 || roleType == 2) {
+			return ResultModel.build(500, "系统角色组, 不允许删除!");
+		}
+		try {
+			sysRoleService.deleteType(roleType);
+			sysLogService.save(this.getLoginUser(session), this.getIP(request), "删除角色组, 类型是"+roleType);
+			return ResultModel.build(200, "success");
+		} catch (Exception e) {
+			if(e instanceof SysCustomException) {
+				return ResultModel.build(300, "当前角色组下有角色, 不能直接删除");
+			} else {
+				return ResultModel.build(500, "系统忙, 请稍后再试");
+			}
+		}
 	}
 }

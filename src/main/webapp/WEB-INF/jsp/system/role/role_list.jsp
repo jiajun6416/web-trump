@@ -29,7 +29,7 @@
 						<div class="col-xs-12">
 							<table style="margin-top: 8px;">
 								<tr height="35">
-									<td style="width:69px;"><a href="javascript:addRole(0);" class="btn btn-sm btn-success">新增组</a></td>
+									<td style="width:69px;"><a href="javascript:addRoleType(0);" class="btn btn-sm btn-success">新增组</a></td>
 										<c:choose>
 										<c:when test="${not empty roleTypes }">
 										<c:forEach items="${roleTypes}" var="role" varStatus="vs">
@@ -54,13 +54,13 @@
 								<tr>
 								<td><font color="#808080">本组：</font></td>
 								<td>
-								<a class="btn btn-mini btn-info" onclick="role/editRole('${roleType}');">修改组名称<i class="icon-arrow-right  icon-on-right"></i></a>
-									<a class="btn btn-mini btn-purple" onclick="editMaxRights('${roleType}');">
+								<a class="btn btn-mini btn-info" onclick="editRoleType();">修改组信息<i class="icon-arrow-right  icon-on-right"></i></a>
+									<a class="btn btn-mini btn-purple" onclick="editMaxRights();">
 										<i class="icon-pencil"></i>
 										组允许最大菜单
 									</a>
 									<c:if test="${roleType != 1 && roleType != 2}">
-										<a class='btn btn-mini btn-danger' title="删除" onclick="delRoleType('${roleType}')">
+										<a class='btn btn-mini btn-danger' title="删除" onclick="delRoleType()">
 											<i class='ace-icon fa fa-trash-o bigger-130'></i>
 										</a>
 									</c:if>
@@ -98,7 +98,7 @@
 											</div> -->
 												<a class="btn btn-mini btn-purple" onclick="editRights('${role.id}');"><i class="icon-pencil"></i>菜单权限</a>
 												<a class='btn btn-mini btn-info' title="编辑" onclick="editRole('${role.id}');"><i class='ace-icon fa fa-pencil-square-o bigger-130'></i></a>
- 												<a class='btn btn-mini btn-danger' title="删除" onclick="delRole('${role.id}','c','${role.roleName }');"><i class='ace-icon fa fa-trash-o bigger-130'></i></a>
+ 												<a class='btn btn-mini btn-danger' title="删除" onclick="delRole('${role.id}','${role.roleName }');"><i class='ace-icon fa fa-trash-o bigger-130'></i></a>
 											</td>
 										</tr>
 										</c:forEach>
@@ -145,33 +145,109 @@
 		$(top.hangge());
 		
 		//新增组
+		function addRoleType(roleType){
+			 top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="新增";
+			 diag.URL = '<%=basePath%>role/toAddRoleType.do?roleType='+roleType;
+			 diag.Width = 250;
+			 diag.Height =150;
+			 diag.CancelEvent = function(){ //关闭事件
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					top.jzts();
+					//弹出新窗口之后, 关闭刷新原页面
+					setTimeout("self.location.reload()",100);
+				 }
+				diag.close();
+			 };
+			 diag.show();
+		}
+		//修改组名称
+		function editRoleType() {
+			 top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="修改组名";
+			 diag.URL = '<%=basePath%>role/toEditRoleType.do?roleType='+${roleType};
+			 diag.Width = 250;
+			 diag.Height =150;
+			 diag.CancelEvent = function(){ //关闭事件
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					top.jzts();
+					//弹出新窗口之后, 关闭刷新原页面
+					setTimeout("self.location.reload()",100);
+				}
+				diag.close();
+			 };
+			 diag.show();
+		}
+		
+		//删除角色组
+		function delRoleType() {
+			bootbox.confirm("确定要删除改角色组吗?", function(result) {
+				if(result) {
+					top.jzts();
+					$.ajax({
+						url:"<%=basePath%>role/deleteType.do",
+						data:{"roleType":'${roleType}',"time":new Date().getTime()},
+						dataType:'json',
+						success: function(data) {
+							if('success' == data.msg) {
+								top.jzts();
+								//document.location.reload();
+								window.location.href='<%=basePath%>role/list.do?roletype=1';
+							} else {
+								top.hangge();
+								bootbox.dialog({
+									message: "<span class='bigger-110'>"+data.msg+"</span>",
+									buttons: 			
+									{
+										"button" :
+										{
+											"label" : "确定",
+											"className" : "btn-sm btn-success"
+										}
+									}
+								});
+							}
+						},
+						error: function() {
+							alert("未知错误!");
+						}
+					})
+				}
+			});
+		}
+		
+		//添加角色
 		function addRole(roleType){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="新增";
 			 diag.URL = '<%=basePath%>role/toAdd.do?roleType='+roleType;
-			 diag.Width = 222;
-			 diag.Height = 100;
+			 diag.Width = 250;
+			 diag.Height =150;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					top.jzts();
+					//弹出新窗口之后, 关闭刷新原页面
 					setTimeout("self.location.reload()",100);
 				}
 				diag.close();
 			 };
 			 diag.show();
 		}
-		
-		//修改
-		function editRole(ROLE_ID){
+		//修改角色
+		function editRole(roleId){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>role/toEdit.do?ROLE_ID='+ROLE_ID;
-			 diag.Width = 222;
-			 diag.Height = 100;
+			 diag.URL = '<%=basePath%>role/toEdit.do?roleId='+roleId;
+			 diag.Width = 250;
+			 diag.Height = 150;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					top.jzts();
@@ -182,61 +258,48 @@
 			 diag.show();
 		}
 		
-		//删除
-		function delRole(ROLE_ID,msg,ROLE_NAME){
-			bootbox.confirm("确定要删除["+ROLE_NAME+"]吗?", function(result) {
+		//删除角色
+		function delRole(roleId,roleName){
+			bootbox.confirm("确定要删除["+roleName+"]吗?", function(result) {
 				if(result) {
-					var url = "<%=basePath%>role/delete.do?ROLE_ID="+ROLE_ID+"&guid="+new Date().getTime();
 					top.jzts();
-					$.get(url,function(data){
-						if("success" == data.result){
-							if(msg == 'c'){
+					$.ajax({
+						url:"<%=basePath%>role/delete.do?roleId="+roleId+"&guid="+new Date().getTime(),
+						dataType:'json',
+						success: function(data) {
+							if('success' == data.msg) {
 								top.jzts();
 								document.location.reload();
-							}else{
-								top.jzts();
-								window.location.href="role.do";
+							} else {
+								top.hangge();
+								bootbox.dialog({
+									message: "<span class='bigger-110'>"+data.msg+"</span>",
+									buttons: 			
+									{
+										"button" :
+										{
+											"label" : "确定",
+											"className" : "btn-sm btn-success"
+										}
+									}
+								});
 							}
-							
-						}else if("false" == data.result){
-							top.hangge();
-							bootbox.dialog({
-								message: "<span class='bigger-110'>删除失败，请先删除下级角色!</span>",
-								buttons: 			
-								{
-									"button" :
-									{
-										"label" : "确定",
-										"className" : "btn-sm btn-success"
-									}
-								}
-							});
-						}else if("false2" == data.result){
-							top.hangge();
-							bootbox.dialog({
-								message: "<span class='bigger-110'>删除失败，此角色已被使用!</span>",
-								buttons: 			
-								{
-									"button" :
-									{
-										"label" : "确定",
-										"className" : "btn-sm btn-success"
-									}
-								}
-							});
+						},
+						error: function() {
+							alert("未知错误!");
 						}
-					});
+					})
 				}
 			});
 		}
 		
 		//角色类别最大权限
-		function editMaxRights(roleType){
+		function editMaxRights(){
 			// top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag = true;
 			 diag.Title = "菜单权限";
-			 diag.URL = '<%=basePath%>role/maxMenuList.do?roleType='+roleType;
+			 diag.URL = '<%=basePath%>role/maxMenuList.do?roleType='+${roleType};
 			 diag.Width = 320;
 			 diag.Height = 450;
 			 diag.CancelEvent = function(){ //关闭事件

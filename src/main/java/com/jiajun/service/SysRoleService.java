@@ -11,7 +11,20 @@ import com.jiajun.pojo.system.SysRoleEntity;
  * @date 2017年6月17日下午4:38:41
  */
 public interface SysRoleService {
-	
+
+	/**
+	 * 通过类别查询
+	 * @param roleType
+	 * @return
+	 * @throws Exception
+	 */
+	SysRoleEntity getRoleByRoleType(int roleType) throws Exception ;
+	/**
+	 * 通过id查找
+	 * @param roleId
+	 * @return
+	 */
+	SysRoleEntity getRoleById(int roleId) throws Exception;
 	/**
 	 * 删除
 	 * @param roleId
@@ -19,6 +32,12 @@ public interface SysRoleService {
 	 */
 	void delete(int roleId) throws Exception;
 	
+	/**
+	 * 删除角色组
+	 * @param roleType
+	 * @throws Exception
+	 */
+	void deleteType(int roleType) throws Exception;
 	/**
 	 * 改
 	 * @param roleEntity
@@ -32,6 +51,13 @@ public interface SysRoleService {
 	 * @param roleType
 	 */
 	void saveRole(SysRoleEntity roleEntity) throws Exception;
+	
+	/**
+	 * 添加角色类型
+	 * @param roleTypeName
+	 * @throws Exception
+	 */
+	void saveRoleType(SysRoleEntity roleEntity) throws Exception;
 	
 	/**
 	 * 查询当前类别的所有角色
@@ -77,6 +103,5 @@ public interface SysRoleService {
 	 * @throws Exception
 	 */
 	void saveRoleMenus(int roleId, String menuIds) throws Exception;
-	
 	
 }
