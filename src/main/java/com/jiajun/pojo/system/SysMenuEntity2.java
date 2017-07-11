@@ -3,7 +3,7 @@ package com.jiajun.pojo.system;
 import java.util.Date;
 import java.util.List;
 
-public class SysMenuEntity {
+public class SysMenuEntity2 {
     private Integer id;
 
     private String menuName;
@@ -14,6 +14,8 @@ public class SysMenuEntity {
 
     private String accessUrl;
 
+    private String privilegeCode;
+
     private Integer sort;
 
     private String icon;
@@ -23,25 +25,25 @@ public class SysMenuEntity {
     private Date gmtCreate;
 
     private Date gmtModifyed;
-
+    /*childre menuList*/
     private List<SysMenuEntity> menuList;
     
     private List<SysMenuPremission> premissionList;
     
-    public List<SysMenuEntity> getMenuList() {
-		return menuList;
-	}
-
-	public void setMenuList(List<SysMenuEntity> menuList) {
-		this.menuList = menuList;
-	}
-
-	public List<SysMenuPremission> getPremissionList() {
+    public List<SysMenuPremission> getPremissionList() {
 		return premissionList;
 	}
 
 	public void setPremissionList(List<SysMenuPremission> premissionList) {
 		this.premissionList = premissionList;
+	}
+
+	public List<SysMenuEntity> getMenuList() {
+		return menuList;
+	}
+
+	public void setMenuList(List<SysMenuEntity> menuList) {
+		this.menuList = menuList;
 	}
 
 	public Integer getId() {
@@ -82,6 +84,14 @@ public class SysMenuEntity {
 
     public void setAccessUrl(String accessUrl) {
         this.accessUrl = accessUrl;
+    }
+
+    public String getPrivilegeCode() {
+        return privilegeCode;
+    }
+
+    public void setPrivilegeCode(String privilegeCode) {
+        this.privilegeCode = privilegeCode;
     }
 
     public Integer getSort() {

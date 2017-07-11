@@ -45,7 +45,7 @@
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 上级 :</label>
 								<div class="col-sm-9">
 									<div style="padding-top:5px;">
-										<div class="col-xs-4 label label-lg label-light arrowed-in arrowed-right">
+										<div class="col-xs-4 label label-lg arrowed-in arrowed-right">
 											<b>${pId == 0?'(无) 此项为顶级菜单':pName}</b>
 										</div>
 									</div>
@@ -58,31 +58,59 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 权限名称 :</label>
-								<div class="col-sm-9">
-									<input type="text" name="privilegeCode" id="menuName" value="${menu.privilegeCode }" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 链接  :</label>
-								<div class="col-sm-9">
-									<c:choose>
-										<c:when test="menu.isParent">
-											<input type="text"  readonly="readonly" placeholder="顶级菜单禁止输入" class="col-xs-10 col-sm-5" />
-										</c:when>
-										<c:otherwise>
-											<input type="text" name="accessUrl" id="menuUrl" value="${menu.accessUrl}" placeholder="这里输入菜单链接" class="col-xs-10 col-sm-5" />
-										</c:otherwise>
-									</c:choose>
-								</div>
-							</div>
-							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 排序 : </label>
 								<div class="col-sm-9">
 									<input type="number" name="sort" id="menuOrder" value="${menu.sort}" placeholder="这里输入菜单序号" title="请输入正整数" class="col-xs-10 col-sm-5" />
 								</div>
-							</div>
-							
+							</div>							
+							<c:if test="${!menu.isParent}">
+								<div class="form-group">
+								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 链接  :</label>
+									<div class="col-sm-9">
+										<input type="text" name="accessUrl" id="menuUrl" value="${menu.accessUrl}" placeholder="这里输入菜单链接" class="col-xs-10 col-sm-5" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> </label>
+									<div class="col-sm-9">
+										<div style="padding-top:0px;">
+											<div class="col-xs-4 label label-lg label-light arrowed-in arrowed-right">
+												<b>权限代码</b>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 查询 :</label>
+									<div class="col-sm-9">
+										<input type="text" name="premissionList[0].premissionCode" id="qeury_permission" value="" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 增加 :</label>
+									<div class="col-sm-9">
+										<input type="text" name="premissionList[1].premissionCode" id="add_permission" value="" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1">修改 :</label>
+									<div class="col-sm-9">
+										<input type="text" name="premissionList[2].premissionCode" id="update_permission" value="" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 删除 :</label>
+									<div class="col-sm-9">
+										<input type="text" name="premissionList[3].premissionCode" id="delete_permission" value="" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 其他 :</label>
+									<div class="col-sm-9">
+										<input type="text" name="premissionList[4].premissionCode" id="other_permission" value="" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
+									</div>
+								</div>																																
+							</c:if>
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 状态 : </label>
 								<div class="col-sm-9">
@@ -131,6 +159,7 @@
 	<%@ include file="../index/foot.jsp"%>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+	<script type="text/javascript" src="static/js/jquery.serializejson.min.js"></script>
 	<!-- inline scripts related to this page -->
 
 	
@@ -186,7 +215,8 @@
  			$.ajax({
 				type:"POST",
 				url:"menu/${action}.do",
-				data:$("#menuForm").serialize(),
+				//serializeArray()转成json对象
+				data:$("#menuForm").serializeArray(),
 				dataType:'json',
 				success: function(result) {
 					if("success" == result.msg) {

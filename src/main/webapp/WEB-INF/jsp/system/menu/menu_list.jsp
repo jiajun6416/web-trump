@@ -48,7 +48,7 @@
 											<a href="javascript:goSonmenu('${menu.id}')">${menu.menuName}</a>
 										</td>
 										<td>${menu.accessUrl}</td>
-										<td>${menu.privilegeCode}</td>
+										<td></td>
 										<td>${menu.sort}</td>
 										<td class='center'><i class="ace-icon fa ${menu.isShow ? 'fa-eye': 'fa-eye-slash'}"></i></td>
 										<td class='center'>

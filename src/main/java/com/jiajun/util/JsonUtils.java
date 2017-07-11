@@ -2,6 +2,8 @@ package com.jiajun.util;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jiajun.pojo.system.SysMenuEntity;
+import com.jiajun.pojo.system.SysMenuPremission;
 
 /**
  * @描述：json转换工具类
@@ -101,5 +105,22 @@ public class JsonUtils {
             logger.error("decode(String, JsonTypeReference<T>)", e);
         }
         return null;
+    }
+    
+    
+    public static void main(String[] args) {
+		SysMenuEntity menu = new SysMenuEntity();
+		menu.setAccessUrl("123");
+		menu.setId(2);
+		List<SysMenuPremission> premissionList = new ArrayList<>();
+		SysMenuPremission premssion = new SysMenuPremission();
+		for(int i=0; i<5; i++) {
+			premssion.setId(i);
+			premssion.setPremissionCode("abc");
+			premissionList.add(premssion);
+		}
+		menu.setPremissionList(premissionList );
+		
+		System.out.println(JsonUtils.encode(menu));
     }
 }

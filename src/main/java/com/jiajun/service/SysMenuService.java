@@ -24,6 +24,12 @@ public interface SysMenuService {
 	
 	void delete(Integer id)throws Exception;
 	
+	/**
+	 * 添加菜单, 关联添加premission表
+	 * @param menuEntity
+	 * @param premissionCode
+	 * @throws Exception
+	 */
 	void insert(SysMenuEntity menuEntity)throws Exception;
 	
 	void update(SysMenuEntity menuEntity)throws Exception;

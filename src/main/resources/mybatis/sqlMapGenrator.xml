@@ -14,7 +14,7 @@
             <property name="suppressAllComments" value="true" />
         </commentGenerator>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/my_oa"
+			connectionURL="jdbc:mysql://localhost:3306/trump"
 			userId="jiajun"
 			password="jiajun" />
 		<!-- 所生成的实体类的位置默认资源包src -->
@@ -24,7 +24,7 @@
 		<!-- 生成mapper.java -->
         <!-- <javaClientGenerator type="XMLMAPPER" targetPackage="com.jiajun.mapper.system" targetProject="trump"/> -->
 		<!-- 为哪些表生成代码 tableName:表名 schema:不用填写 enableCountByExample="false" 不生成example -->
-		<table schema="" tableName="sys_role" domainObjectName="SysRoleEntity" mapperName="SysRoleMapper"
+		<table schema="" tableName="sys_menu" domainObjectName="SysMenuEntity" mapperName="SysMenuEntity"
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false"/>	
 											

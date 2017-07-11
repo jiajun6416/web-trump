@@ -6,12 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.junit.runners.Parameterized.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +21,7 @@ import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.ResultModel;
 import com.jiajun.pojo.ZtreeNode;
 import com.jiajun.pojo.system.SysMenuEntity;
+import com.jiajun.pojo.system.SysMenuPremission;
 import com.jiajun.service.SysLogService;
 import com.jiajun.service.SysMenuService;
 import com.jiajun.util.JsonUtils;
@@ -93,13 +93,10 @@ public class MenuController extends BaseController{
 	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
 	@ResponseBody
-	public ResultModel save(SysMenuEntity menu, HttpSession session, HttpServletRequest request)  {
+	public ResultModel insert(SysMenuEntity menu, HttpSession session, HttpServletRequest request)  {
 		String status = request.getParameter("status");
 		if(StringUtils.isEmpty(menu.getAccessUrl())) {
 			menu.setAccessUrl("#");
-		}
-		if(StringUtils.isEmpty(menu.getPrivilegeCode())) {
-			menu.setPrivilegeCode("#");
 		}
 		if(status != null && status .equals("1")) {
 			menu.setIsShow(true);
@@ -123,9 +120,6 @@ public class MenuController extends BaseController{
 		String status = request.getParameter("status");
 		if(StringUtils.isEmpty(menu.getAccessUrl())) {
 			menu.setAccessUrl("#");
-		}
-		if(StringUtils.isEmpty(menu.getPrivilegeCode())) {
-			menu.setPrivilegeCode("#");
 		}
 		if(status != null) {
 			if(status .equals("1")) {

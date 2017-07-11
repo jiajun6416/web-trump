@@ -7,13 +7,14 @@
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="is_parent" jdbcType="BIT" property="isParent" />
     <result column="access_url" jdbcType="VARCHAR" property="accessUrl" />
+    <result column="privilege_code" jdbcType="VARCHAR" property="privilegeCode" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
     <result column="is_show" jdbcType="BIT" property="isShow" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modifyed" jdbcType="TIMESTAMP" property="gmtModifyed" />
   </resultMap>
-    <resultMap type="com.jiajun.pojo.ZtreeNode" id="menuZtreeNode">
+  <resultMap type="com.jiajun.pojo.ZtreeNode" id="menuZtreeNode">
   	<id column="id" property="id" jdbcType="INTEGER"/>
   	<result column="parent_id" property="pId" jdbcType="INTEGER"/>
   	<result column="is_parent" property="isParent" jdbcType="INTEGER"/>
@@ -25,7 +26,7 @@
   </resultMap>
   
   <sql id="Base_Column_List">
-    id, menu_name, parent_id, is_parent, access_url,  sort, icon, is_show, 
+    id, menu_name, parent_id, is_parent, access_url, privilege_code, sort, icon, is_show, 
     gmt_create, gmt_modifyed
   </sql>
   
@@ -120,15 +121,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jiajun.pojo.system.SysMenuEntity">
-      <selectKey keyProperty="id" resultType="int" order="AFTER">  
-          select LAST_INSERT_ID()  
-      </selectKey>
     insert into sys_menu (id, menu_name, parent_id, 
-      is_parent, access_url, 
+      is_parent, access_url, privilege_code, 
       sort, icon, is_show, gmt_create, 
       gmt_modifyed)
     values (#{id,jdbcType=INTEGER}, #{menuName,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
-      #{isParent,jdbcType=BIT}, #{accessUrl,jdbcType=VARCHAR}, 
+      #{isParent,jdbcType=BIT}, #{accessUrl,jdbcType=VARCHAR}, #{privilegeCode,jdbcType=VARCHAR}, 
       #{sort,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{isShow,jdbcType=BIT}, #{gmtCreate,jdbcType=TIMESTAMP}, 
       #{gmtModifyed,jdbcType=TIMESTAMP})
   </insert>
@@ -149,6 +147,9 @@
       </if>
       <if test="accessUrl != null">
         access_url,
+      </if>
+      <if test="privilegeCode != null">
+        privilege_code,
       </if>
       <if test="sort != null">
         sort,
@@ -182,6 +183,9 @@
       <if test="accessUrl != null">
         #{accessUrl,jdbcType=VARCHAR},
       </if>
+      <if test="privilegeCode != null">
+        #{privilegeCode,jdbcType=VARCHAR},
+      </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
       </if>
@@ -214,6 +218,9 @@
       <if test="accessUrl != null">
         access_url = #{accessUrl,jdbcType=VARCHAR},
       </if>
+      <if test="privilegeCode != null">
+        privilege_code = #{privilegeCode,jdbcType=VARCHAR},
+      </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
       </if>
@@ -238,6 +245,7 @@
       parent_id = #{parentId,jdbcType=INTEGER},
       is_parent = #{isParent,jdbcType=BIT},
       access_url = #{accessUrl,jdbcType=VARCHAR},
+      privilege_code = #{privilegeCode,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
       icon = #{icon,jdbcType=VARCHAR},
       is_show = #{isShow,jdbcType=BIT},

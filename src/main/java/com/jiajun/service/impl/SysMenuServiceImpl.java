@@ -1,10 +1,7 @@
 package com.jiajun.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -13,8 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.jiajun.dao.base.Dao;
+import com.jiajun.exception.SysCustomException;
 import com.jiajun.pojo.ZtreeNode;
 import com.jiajun.pojo.system.SysMenuEntity;
+import com.jiajun.pojo.system.SysMenuPremission;
 import com.jiajun.service.SysMenuService;
 
 @Service
@@ -22,6 +21,8 @@ import com.jiajun.service.SysMenuService;
 public class SysMenuServiceImpl implements SysMenuService{
 
 	private final static String NAME_SPACE = "SysMenuMapper.";
+	
+	private final static String SYS_PREMISSION_NAME_SPACE = "sysMenuPremissionMapper.";
 	
 	@Resource
 	@Qualifier("daoImpl")
@@ -56,11 +57,26 @@ public class SysMenuServiceImpl implements SysMenuService{
 
 	@Override
 	public void insert(SysMenuEntity menuEntity) throws Exception {
+		if(menuEntity.getPremissionList().size() != 5) {
+			throw new SysCustomException("参数错误!");
+		}
 		Date now = new Date();
 		menuEntity.setGmtCreate(now);
 		menuEntity.setGmtModifyed(now);
-		dao.insert(NAME_SPACE+"insertSelective", menuEntity);
+		dao.insert(NAME_SPACE+"insert", menuEntity);
 		Integer pid = menuEntity.getParentId();
+		List<SysMenuPremission> premissionList = menuEntity.getPremissionList();
+		//插入sys_menu_premission表
+		for(int i= 5; i>=1; i--) {
+			SysMenuPremission premission = premissionList.get(i-1);
+			if(!StringUtils.isEmpty(premission.getPremissionCode())) {
+				premission.setPremissionType((short) i);
+				premission.setMenuId(menuEntity.getId());
+			} else {
+				premissionList.remove(i-1);
+			}
+		}
+		dao.batchInsert(SYS_PREMISSION_NAME_SPACE+"insert", premissionList);
 		if(pid != 0) {
 			SysMenuEntity parentMenu = new SysMenuEntity();
 			parentMenu.setId(pid);
