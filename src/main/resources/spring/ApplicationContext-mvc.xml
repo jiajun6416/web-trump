@@ -27,11 +27,10 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
-	<!-- 如果使用jackson最好配置一下 -->
+	<!--编码设置 -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 	    <property name="messageConverters">
 	        <list>
-	            <!-- 设置返回字符串编码 -->
 	            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
 	                <property name = "supportedMediaTypes">
 	                    <list>
@@ -40,7 +39,6 @@
 	                    </list>
 	                </property>
 	            </bean>
-	            <!-- json转换器 -->
 	            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 	                <property name="supportedMediaTypes">
 	                    <list>

@@ -1,5 +1,6 @@
 package com.jiajun.controller.system;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,6 +68,21 @@ public class MenuController extends BaseController{
 	public String toEditMenu(int menuId, Model model) throws Exception {
 		SysMenuEntity menu = sysMenuService.getById(menuId);
 		model.addAttribute("menu", menu);
+		//设置premission按照type 1. 2. 3. 4. 5排序
+		List<SysMenuPremission> premissionList = menu.getPremissionList();
+		List<SysMenuPremission> premissions = new ArrayList<>(5);
+		for(int i=1; i<=5; i++) {
+			SysMenuPremission premission = new SysMenuPremission();
+			premission.setPremissionType((short)i);
+			premissions.add(premission);
+		}
+		if(premissionList != null && premissionList.size()>0) {
+			for (SysMenuPremission premission : premissionList) {
+				Short type = premission.getPremissionType();
+				premissions.get(type-1).setPremissionCode(premission.getPremissionCode());
+			}
+		}
+		model.addAttribute("premissions", premissions);
 		if(menu != null && menu.getParentId() != 0) {
 			Integer pId = menu.getParentId();
 			SysMenuEntity pMenu = sysMenuService.getById(pId);
@@ -113,6 +128,8 @@ public class MenuController extends BaseController{
 		}
 		return ResultModel.build(200, "success");
 	}
+	
+	
 	
 	@RequestMapping("/update")
 	@ResponseBody

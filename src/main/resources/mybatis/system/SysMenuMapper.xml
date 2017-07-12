@@ -13,13 +13,18 @@
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
     <result column="gmt_modifyed" jdbcType="TIMESTAMP" property="gmtModifyed" />
   </resultMap>
-    <resultMap type="com.jiajun.pojo.ZtreeNode" id="menuZtreeNode">
+
+  <resultMap id="withPremissionMap" extends="BaseResultMap" type="com.jiajun.pojo.system.SysMenuEntity">
+  	<collection property="premissionList" ofType="com.jiajun.pojo.system.SysMenuPremission" column="id" select="sysMenuPremissionMapper.selectByMenuId"/>
+  </resultMap>
+
+   <resultMap type="com.jiajun.pojo.ZtreeNode" id="menuZtreeNode">
   	<id column="id" property="id" jdbcType="INTEGER"/>
   	<result column="parent_id" property="pId" jdbcType="INTEGER"/>
   	<result column="is_parent" property="isParent" jdbcType="INTEGER"/>
   	<result column="menu_name" property="name" jdbcType="VARCHAR"/>
-  
   </resultMap>
+  
   <resultMap type="com.jiajun.pojo.ZtreeNode" id="checkedZtreeNode" extends="menuZtreeNode">
   	<result column="checked" jdbcType="BIT" property="checked" />
   </resultMap>
@@ -107,6 +112,13 @@
   	select
   	<include refid="Base_Column_List"/>
   	from sys_menu where parent_id = #{pId} order by sort asc
+  </select>
+  
+  <select id="selectMenuWithPremissonByPrimartyKey" parameterType="int" resultMap="withPremissionMap">
+  	select 
+    	<include refid="Base_Column_List" />
+    from sys_menu
+    where id = #{menuId,jdbcType=INTEGER} 
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

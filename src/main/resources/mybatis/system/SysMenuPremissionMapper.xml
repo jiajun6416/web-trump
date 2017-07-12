@@ -10,6 +10,14 @@
   <sql id="Base_Column_List">
     id, menu_id, premission_type, premission_code
   </sql>
+  
+  <select id="selectByMenuId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu_premission
+    where menu_id = #{menuId,jdbcType=INTEGER}
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

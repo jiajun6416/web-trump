@@ -1,5 +1,6 @@
 package com.jiajun.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class SysMenuServiceImpl implements SysMenuService{
 	
 	@Override
 	public SysMenuEntity getById(Integer id) throws Exception {
-		return (SysMenuEntity) dao.selectObject(NAME_SPACE+"selectByPrimaryKey", id);
+		return (SysMenuEntity) dao.selectObject(NAME_SPACE+"selectMenuWithPremissonByPrimartyKey", id);
 	}
 
 	@Override
@@ -90,6 +91,10 @@ public class SysMenuServiceImpl implements SysMenuService{
 	public void update(SysMenuEntity menuEntity) throws Exception {
 		menuEntity.setGmtModifyed(new Date());
 		dao.update(NAME_SPACE+"updateByPrimaryKeySelective", menuEntity);
+		List<SysMenuPremission> premissionList = (List<SysMenuPremission>) dao.selectList(SYS_PREMISSION_NAME_SPACE+"selectByMenuId",menuEntity.getId());
+		List<SysMenuPremission> premissions = menuEntity.getPremissionList();
+		//已经存在修改, 不存在的添加
+		List<SysMenuPremission> exist = new ArrayList<>();
 	}
 
 	@Override

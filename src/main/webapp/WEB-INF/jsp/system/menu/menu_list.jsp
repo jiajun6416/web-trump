@@ -1,4 +1,4 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -47,8 +47,16 @@
 										<td class='center'><i class="${menu.icon }">&nbsp;</i>
 											<a href="javascript:goSonmenu('${menu.id}')">${menu.menuName}</a>
 										</td>
-										<td>${menu.accessUrl}</td>
-										<td></td>
+										<c:choose>
+											<c:when test="${menu.isParent }">
+												<td align="center">/</td>
+												<td align="center">/</td>
+											</c:when>
+											<c:otherwise>
+												<td>${menu.accessUrl}</td>
+												<td></td>
+											</c:otherwise>
+										</c:choose>
 										<td>${menu.sort}</td>
 										<td class='center'><i class="ace-icon fa ${menu.isShow ? 'fa-eye': 'fa-eye-slash'}"></i></td>
 										<td class='center'>
