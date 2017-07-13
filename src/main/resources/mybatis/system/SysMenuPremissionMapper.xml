@@ -15,7 +15,7 @@
     select 
     <include refid="Base_Column_List" />
     from sys_menu_premission
-    where menu_id = #{menuId,jdbcType=INTEGER}
+    where menu_id = #{menuId,jdbcType=INTEGER} order by premission_type
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -24,6 +24,12 @@
     from sys_menu_premission
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+ <delete id="deleteByMenuId" parameterType="java.lang.Integer">
+	 delete from sys_menu_premission
+    where menu_id = #{menuId,jdbcType=INTEGER}
+ </delete>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_menu_premission
     where id = #{id,jdbcType=INTEGER}

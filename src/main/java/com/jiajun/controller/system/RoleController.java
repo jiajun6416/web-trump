@@ -223,4 +223,14 @@ public class RoleController extends BaseController{
 			}
 		}
 	}
+	
+	/*=====================================================增删查改授权============================================*/
+	@RequestMapping("/permission")
+	public String permission(int roleId, int type, Model model) throws Exception {
+		
+		model.addAttribute("action", "premission");
+		List<ZtreeNode> treeNodes = sysRoleService.getPremissionNodes(roleId, type);
+		model.addAttribute("treeNodes", JsonUtils.encode(treeNodes));
+		return "system/role/menu";
+	}
 }

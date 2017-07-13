@@ -164,14 +164,13 @@ public class MenuController extends BaseController{
 	@RequestMapping("/editIcon")
 	public String editIcon(int menuId, String menuIcon, Model model, String iconColor, HttpServletRequest request ,
 			HttpSession session) throws Exception {
-		SysMenuEntity menu = new SysMenuEntity();
-		menu.setId(menuId);
 		if(StringUtils.isNotEmpty(menuIcon) && StringUtils.isNotEmpty(iconColor)) {
-			menu.setIcon(menuIcon+" "+iconColor);
+			sysMenuService.updateIcon(menuId, menuIcon+" "+iconColor);
+			model.addAttribute("msg", "success");
+			sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改菜单图标");
+		} else {
+			model.addAttribute("msg", "参数错误!");
 		}
-		sysMenuService.update(menu);
-		model.addAttribute("msg", "success");
-		sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改菜单图标");
 		return "save_result";
 	}
 	

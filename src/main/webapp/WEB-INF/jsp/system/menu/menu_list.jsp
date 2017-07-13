@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -31,8 +32,8 @@
 									<tr>
 										<th class="center" style="width: 50px;">序号</th>
 										<th class='center'>名称</th>
-										<th class='center'>资源路径</th>
-										<th class="center">权限名称</th>
+										<th class='center' width="250px;">资源路径</th>
+										<th class="center" width="400px;">权限列表</th>
 										<th class="center" style="width: 50px;"> 排序</th>
 										<th class='center' style="width: 50px;">状态</th>
 										<th class='center' style="width: 120px;">操作</th>
@@ -54,7 +55,19 @@
 											</c:when>
 											<c:otherwise>
 												<td>${menu.accessUrl}</td>
-												<td></td>
+												<td>
+												<c:choose>
+													<c:when test="${not empty menu.premissionList }">
+														<c:forEach items="${menu.premissionList }" var="p" varStatus="statu">
+															${p.premissionCode}
+															<c:if test="${statu.count lt  fn:length(menu.premissionList)}">,&nbsp; </c:if>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														
+													</c:otherwise>
+												</c:choose>
+												</td>
 											</c:otherwise>
 										</c:choose>
 										<td>${menu.sort}</td>

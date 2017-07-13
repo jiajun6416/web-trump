@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : jiajun
+Source Server         : localhost
 Source Server Version : 50527
 Source Host           : localhost:3306
 Source Database       : trump
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50527
 File Encoding         : 65001
 
-Date: 2017-07-12 01:22:04
+Date: 2017-07-13 08:04:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `sys_log` (
   `opear_time` datetime NOT NULL,
   `event` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=349 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=420 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_log
@@ -367,6 +367,77 @@ INSERT INTO `sys_log` VALUES ('345', '', '127.0.0.1', '2017-07-12 00:21:43', '�
 INSERT INTO `sys_log` VALUES ('346', '', '127.0.0.1', '2017-07-12 01:11:18', '添加菜单:test2');
 INSERT INTO `sys_log` VALUES ('347', '', '127.0.0.1', '2017-07-12 01:16:47', '添加菜单:测试菜单');
 INSERT INTO `sys_log` VALUES ('348', '', '127.0.0.1', '2017-07-12 01:17:38', '添加菜单:测试菜单222');
+INSERT INTO `sys_log` VALUES ('349', 'admin', '127.0.0.1', '2017-07-12 20:54:56', '登录成功');
+INSERT INTO `sys_log` VALUES ('350', '', '127.0.0.1', '2017-07-12 21:22:16', '添加菜单:test');
+INSERT INTO `sys_log` VALUES ('351', '', '127.0.0.1', '2017-07-12 21:47:54', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('352', '', '127.0.0.1', '2017-07-12 21:49:07', '添加菜单:test3');
+INSERT INTO `sys_log` VALUES ('353', '', '127.0.0.1', '2017-07-12 21:50:00', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('354', '', '127.0.0.1', '2017-07-12 21:50:08', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('355', '', '127.0.0.1', '2017-07-12 21:50:26', '添加菜单:xixi');
+INSERT INTO `sys_log` VALUES ('356', '', '127.0.0.1', '2017-07-12 21:51:32', '添加菜单:08098');
+INSERT INTO `sys_log` VALUES ('357', '', '127.0.0.1', '2017-07-12 21:56:51', '添加菜单:111');
+INSERT INTO `sys_log` VALUES ('358', '', '127.0.0.1', '2017-07-12 21:57:27', '添加菜单:hahah');
+INSERT INTO `sys_log` VALUES ('359', '', '127.0.0.1', '2017-07-12 21:59:31', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('360', '', '127.0.0.1', '2017-07-12 22:08:07', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('361', '', '127.0.0.1', '2017-07-12 22:18:33', '删除菜单');
+INSERT INTO `sys_log` VALUES ('362', '', '127.0.0.1', '2017-07-12 22:18:51', '修改菜单图标');
+INSERT INTO `sys_log` VALUES ('363', '', '127.0.0.1', '2017-07-12 22:19:02', '删除菜单');
+INSERT INTO `sys_log` VALUES ('364', '', '127.0.0.1', '2017-07-12 22:19:05', '删除菜单');
+INSERT INTO `sys_log` VALUES ('365', '', '127.0.0.1', '2017-07-12 22:19:08', '删除菜单');
+INSERT INTO `sys_log` VALUES ('366', '', '127.0.0.1', '2017-07-12 22:19:10', '删除菜单');
+INSERT INTO `sys_log` VALUES ('367', '', '127.0.0.1', '2017-07-12 22:19:12', '删除菜单');
+INSERT INTO `sys_log` VALUES ('368', '', '127.0.0.1', '2017-07-12 22:19:14', '删除菜单');
+INSERT INTO `sys_log` VALUES ('369', '', '127.0.0.1', '2017-07-12 22:19:16', '删除菜单');
+INSERT INTO `sys_log` VALUES ('370', '', '127.0.0.1', '2017-07-12 22:19:18', '删除菜单');
+INSERT INTO `sys_log` VALUES ('371', '', '127.0.0.1', '2017-07-12 22:20:09', '添加菜单:测试菜单');
+INSERT INTO `sys_log` VALUES ('372', '', '127.0.0.1', '2017-07-12 22:20:14', '修改菜单图标');
+INSERT INTO `sys_log` VALUES ('373', '', '127.0.0.1', '2017-07-12 22:20:29', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('374', '', '127.0.0.1', '2017-07-12 22:20:41', '删除菜单');
+INSERT INTO `sys_log` VALUES ('375', '', '127.0.0.1', '2017-07-12 22:31:06', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('376', '', '127.0.0.1', '2017-07-12 22:56:39', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('377', '', '127.0.0.1', '2017-07-12 22:56:46', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('378', '', '127.0.0.1', '2017-07-12 22:57:18', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('379', '', '127.0.0.1', '2017-07-12 22:57:57', '添加角色类型:man');
+INSERT INTO `sys_log` VALUES ('380', '', '127.0.0.1', '2017-07-12 22:58:13', '添加角色:young');
+INSERT INTO `sys_log` VALUES ('381', '', '127.0.0.1', '2017-07-12 22:58:18', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('382', '', '127.0.0.1', '2017-07-12 22:58:25', '删除角色, id是42');
+INSERT INTO `sys_log` VALUES ('383', '', '127.0.0.1', '2017-07-12 22:58:28', '删除角色组, 类型是3');
+INSERT INTO `sys_log` VALUES ('384', '', '127.0.0.1', '2017-07-12 22:59:44', '修改角色信息:三级管理员');
+INSERT INTO `sys_log` VALUES ('385', '', '127.0.0.1', '2017-07-12 22:59:51', '删除角色, id是40');
+INSERT INTO `sys_log` VALUES ('386', '', '127.0.0.1', '2017-07-12 23:23:43', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('387', '', '127.0.0.1', '2017-07-12 23:25:49', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('388', '', '127.0.0.1', '2017-07-12 23:26:03', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('389', '', '127.0.0.1', '2017-07-12 23:28:33', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('390', '', '127.0.0.1', '2017-07-12 23:29:00', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('391', '', '127.0.0.1', '2017-07-12 23:29:29', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('392', 'jiajun', '127.0.0.1', '2017-07-12 23:34:17', '登录成功');
+INSERT INTO `sys_log` VALUES ('393', 'jiajun', '127.0.0.1', '2017-07-12 23:36:11', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('394', 'jiajun', '127.0.0.1', '2017-07-12 23:36:59', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('395', 'jiajun', '127.0.0.1', '2017-07-12 23:38:00', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('396', 'jiajun', '127.0.0.1', '2017-07-12 23:38:31', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('397', 'jiajun', '127.0.0.1', '2017-07-12 23:38:48', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('398', 'jiajun', '127.0.0.1', '2017-07-12 23:39:05', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('399', 'jiajun', '127.0.0.1', '2017-07-12 23:39:13', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('400', 'jiajun', '127.0.0.1', '2017-07-12 23:40:56', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('401', 'jiajun', '127.0.0.1', '2017-07-12 23:41:18', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('402', 'jiajun', '127.0.0.1', '2017-07-12 23:41:41', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('403', 'jiajun', '127.0.0.1', '2017-07-12 23:41:51', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('404', 'jiajun', '127.0.0.1', '2017-07-12 23:42:15', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('405', 'jiajun', '127.0.0.1', '2017-07-12 23:42:28', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('406', 'jiajun', '127.0.0.1', '2017-07-12 23:42:47', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('407', 'jiajun', '127.0.0.1', '2017-07-12 23:43:04', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('408', 'jiajun', '127.0.0.1', '2017-07-12 23:44:35', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('409', 'jiajun', '127.0.0.1', '2017-07-12 23:45:54', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('410', 'jiajun', '127.0.0.1', '2017-07-12 23:47:36', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('411', 'jiajun', '127.0.0.1', '2017-07-12 23:48:58', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('412', 'jiajun', '127.0.0.1', '2017-07-12 23:49:32', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('413', 'jiajun', '127.0.0.1', '2017-07-12 23:53:45', '添加菜单:文件管理');
+INSERT INTO `sys_log` VALUES ('414', 'jiajun', '127.0.0.1', '2017-07-12 23:53:54', '修改菜单图标');
+INSERT INTO `sys_log` VALUES ('415', 'jiajun', '127.0.0.1', '2017-07-12 23:56:09', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('416', 'jiajun', '127.0.0.1', '2017-07-12 23:56:49', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('417', 'jiajun', '127.0.0.1', '2017-07-12 23:56:59', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('418', 'jiajun', '127.0.0.1', '2017-07-12 23:58:10', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('419', 'jiajun', '127.0.0.1', '2017-07-12 23:58:26', '修改菜单信息');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -384,7 +455,7 @@ CREATE TABLE `sys_menu` (
   `gmt_create` datetime DEFAULT NULL,
   `gmt_modifyed` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -394,39 +465,37 @@ INSERT INTO `sys_menu` VALUES ('2', '用户管理', '0', '1', '#', '20', 'menu-i
 INSERT INTO `sys_menu` VALUES ('3', '系统工具', '0', '1', '#', '30', 'menu-icon fa fa-cog  black', '1', null, '2017-07-08 23:19:58');
 INSERT INTO `sys_menu` VALUES ('4', '微信管理', '0', '1', '#', '40', 'menu-icon fa fa-comments  green', '1', null, '2017-07-08 23:20:17');
 INSERT INTO `sys_menu` VALUES ('5', '权限管理', '1', '1', '#', '10', 'menu-icon fa fa-lock  orange', '1', null, '2017-07-08 23:19:14');
-INSERT INTO `sys_menu` VALUES ('17', '菜单权限', '5', '0', 'role/menuList.do?roleType=1', '10', 'menu-icon fa fa-key  brown', '1', null, '2017-07-08 23:26:50');
-INSERT INTO `sys_menu` VALUES ('18', '按钮权限', '5', '0', 'role/buttonList.do?roleType=1', '20', 'menu-icon fa fa-key  purple', '1', null, '2017-07-08 23:27:23');
-INSERT INTO `sys_menu` VALUES ('19', '按钮管理', '1', '0', 'button/list.do', '20', 'menu-icon fa fa-hdd-o  blue', '1', null, null);
-INSERT INTO `sys_menu` VALUES ('20', '在线管理', '1', '0', 'user/onlineList.do', '40', 'menu-icon fa fa-users  green', '1', null, '2017-07-08 22:22:06');
-INSERT INTO `sys_menu` VALUES ('21', '菜单管理', '1', '0', 'menu/listAllMenu.do', '30', 'menu-icon fa fa-folder-open-o  grey', '1', null, '2017-07-08 22:21:26');
-INSERT INTO `sys_menu` VALUES ('22', '日志管理', '1', '0', 'log/list.do', '50', 'menu-icon fa fa-bolt  black', '1', '2017-07-08 22:23:45', '2017-07-08 22:24:19');
-INSERT INTO `sys_menu` VALUES ('23', '系统用户', '2', '0', 'user/listUser.do', '10', 'menu-icon fa fa-users  green', '1', '2017-07-08 22:26:25', '2017-07-11 22:50:17');
-INSERT INTO `sys_menu` VALUES ('24', '会员管理', '2', '0', 'vipUserList.do', '20', 'menu-icon fa fa-users  pink', '1', '2017-07-08 22:27:33', '2017-07-08 22:27:41');
-INSERT INTO `sys_menu` VALUES ('25', '代码生成器', '3', '0', 'codeGenerator.do', '10', 'menu-icon fa fa-cogs  purple', '1', '2017-07-08 22:31:48', '2017-07-08 22:33:50');
-INSERT INTO `sys_menu` VALUES ('26', '表单构造器', '3', '0', '#', '20', 'menu-icon fa fa-barcode  green', '1', '2017-07-08 22:33:40', '2017-07-08 22:34:11');
-INSERT INTO `sys_menu` VALUES ('27', '接口测试', '3', '0', '#', '30', 'menu-icon fa fa-fighter-jet  blue', '1', '2017-07-08 22:34:26', '2017-07-08 22:34:59');
-INSERT INTO `sys_menu` VALUES ('28', '发送邮件', '3', '0', '#', '40', 'menu-icon fa fa-envelope-o  brown', '1', '2017-07-08 22:35:20', '2017-07-08 22:37:39');
-INSERT INTO `sys_menu` VALUES ('29', '设置二维码', '3', '0', '#', '50', 'menu-icon fa fa-barcode  black', '1', '2017-07-08 22:35:34', '2017-07-08 22:37:50');
-INSERT INTO `sys_menu` VALUES ('30', '图表报表', '3', '0', '#', '60', 'menu-icon fa fa-bar-chart-o  orange', '1', '2017-07-08 22:36:26', '2017-07-08 22:38:05');
-INSERT INTO `sys_menu` VALUES ('31', '地图工具', '3', '0', '#', '70', 'menu-icon fa fa-globe  blue', '1', '2017-07-08 22:36:40', '2017-07-08 22:38:26');
-INSERT INTO `sys_menu` VALUES ('32', '性能监测', '3', '0', '#', '80', 'menu-icon fa fa-tachometer  purple', '1', '2017-07-08 22:37:02', '2017-07-08 22:39:08');
-INSERT INTO `sys_menu` VALUES ('33', '信息管理', '0', '1', '#', '50', 'menu-icon fa fa-comments-o  orange', '1', '2017-07-08 22:40:32', '2017-07-08 22:47:20');
+INSERT INTO `sys_menu` VALUES ('17', '菜单权限', '5', '0', 'role/menuList.do?roleType=1', '10', 'menu-icon fa fa-key  brown', '1', null, '2017-07-12 23:26:03');
+INSERT INTO `sys_menu` VALUES ('18', '按钮权限', '5', '0', 'role/buttonList.do?roleType=1', '20', 'menu-icon fa fa-key  purple', '1', null, '2017-07-12 23:28:33');
+INSERT INTO `sys_menu` VALUES ('19', '按钮管理', '1', '0', 'button/list.do', '20', 'menu-icon fa fa-hdd-o  blue', '1', null, '2017-07-12 23:29:00');
+INSERT INTO `sys_menu` VALUES ('20', '在线管理', '1', '0', 'user/onlineList.do', '40', 'menu-icon fa fa-users  green', '1', null, '2017-07-12 23:36:11');
+INSERT INTO `sys_menu` VALUES ('21', '菜单管理', '1', '0', 'menu/listAllMenu.do', '30', 'menu-icon fa fa-folder-open-o  grey', '1', null, '2017-07-12 23:29:29');
+INSERT INTO `sys_menu` VALUES ('22', '日志管理', '1', '0', 'log/list.do', '50', 'menu-icon fa fa-bolt  black', '1', '2017-07-08 22:23:45', '2017-07-12 23:36:59');
+INSERT INTO `sys_menu` VALUES ('23', '系统用户', '2', '0', 'user/listUser.do', '10', 'menu-icon fa fa-users  green', '1', '2017-07-08 22:26:25', '2017-07-12 23:38:48');
+INSERT INTO `sys_menu` VALUES ('24', '会员管理', '2', '0', 'vip/listVip.do', '20', 'menu-icon fa fa-users  pink', '1', '2017-07-08 22:27:33', '2017-07-12 23:39:13');
+INSERT INTO `sys_menu` VALUES ('25', '代码生成器', '3', '0', 'codeGenerator.do', '10', 'menu-icon fa fa-cogs  purple', '1', '2017-07-08 22:31:48', '2017-07-12 23:40:56');
+INSERT INTO `sys_menu` VALUES ('26', '表单构造器', '3', '0', '#', '20', 'menu-icon fa fa-barcode  green', '1', '2017-07-08 22:33:40', '2017-07-12 23:41:18');
+INSERT INTO `sys_menu` VALUES ('27', '接口测试', '3', '0', '#', '30', 'menu-icon fa fa-fighter-jet  blue', '1', '2017-07-08 22:34:26', '2017-07-12 23:41:41');
+INSERT INTO `sys_menu` VALUES ('28', '发送邮件', '3', '0', '#', '40', 'menu-icon fa fa-envelope-o  brown', '1', '2017-07-08 22:35:20', '2017-07-12 23:41:51');
+INSERT INTO `sys_menu` VALUES ('29', '设置二维码', '3', '0', '#', '50', 'menu-icon fa fa-barcode  black', '1', '2017-07-08 22:35:34', '2017-07-12 23:42:15');
+INSERT INTO `sys_menu` VALUES ('30', '图表报表', '3', '0', '#', '60', 'menu-icon fa fa-bar-chart-o  orange', '1', '2017-07-08 22:36:26', '2017-07-12 23:42:28');
+INSERT INTO `sys_menu` VALUES ('31', '地图工具', '3', '0', '#', '70', 'menu-icon fa fa-globe  blue', '1', '2017-07-08 22:36:40', '2017-07-12 23:42:47');
+INSERT INTO `sys_menu` VALUES ('32', '性能监测', '3', '0', '#', '80', 'menu-icon fa fa-tachometer  purple', '1', '2017-07-08 22:37:02', '2017-07-12 23:43:04');
+INSERT INTO `sys_menu` VALUES ('33', '信息管理', '0', '1', '#', '50', 'menu-icon fa fa-comments-o  orange', '1', '2017-07-08 22:40:32', '2017-07-12 23:53:45');
 INSERT INTO `sys_menu` VALUES ('34', '数据库管理', '0', '1', '#', '60', 'menu-icon fa fa-hdd-o  red', '1', '2017-07-08 22:41:05', '2017-07-08 23:20:58');
-INSERT INTO `sys_menu` VALUES ('35', '关注回复', '4', '0', '#', '10', 'menu-icon fa fa-bell-o  grey', '1', '2017-07-08 22:48:07', '2017-07-08 22:49:21');
-INSERT INTO `sys_menu` VALUES ('36', '文本回复', '4', '0', '#', '20', 'menu-icon fa fa-bell  blue', '1', '2017-07-08 22:48:21', '2017-07-08 22:49:29');
+INSERT INTO `sys_menu` VALUES ('35', '关注回复', '4', '0', '#', '10', 'menu-icon fa fa-bell-o  grey', '1', '2017-07-08 22:48:07', '2017-07-12 23:45:54');
+INSERT INTO `sys_menu` VALUES ('36', '文本回复', '4', '0', '#', '20', 'menu-icon fa fa-bell  blue', '1', '2017-07-08 22:48:21', '2017-07-12 23:47:36');
 INSERT INTO `sys_menu` VALUES ('37', '图文回复', '4', '0', '#', '30', 'menu-icon fa fa-leaf  black', '1', '2017-07-08 22:48:36', '2017-07-08 22:49:54');
 INSERT INTO `sys_menu` VALUES ('38', '应用命令', '4', '0', '#', '40', 'menu-icon fa fa-cutlery  brown', '1', '2017-07-08 22:48:57', '2017-07-08 22:50:13');
 INSERT INTO `sys_menu` VALUES ('39', '图片管理', '33', '1', '#', '10', 'menu-icon fa fa-camera-retro  purple', '1', '2017-07-08 22:50:36', '2017-07-08 23:21:22');
 INSERT INTO `sys_menu` VALUES ('40', '站内信', '33', '0', '#', '20', 'menu-icon fa fa-comments-o  pink', '1', '2017-07-08 22:55:50', '2017-07-08 22:56:32');
-INSERT INTO `sys_menu` VALUES ('41', '图片列表', '39', '0', '#', '10', 'menu-icon fa fa-briefcase  grey', '1', '2017-07-08 22:56:53', '2017-07-08 22:57:05');
-INSERT INTO `sys_menu` VALUES ('42', '图片爬虫', '39', '0', '#', '20', 'menu-icon fa fa-exchange  brown', '1', '2017-07-08 22:57:14', '2017-07-08 22:57:27');
-INSERT INTO `sys_menu` VALUES ('43', '数据库备份', '34', '0', '#', '10', 'menu-icon fa fa-cloud-upload  brown', '1', '2017-07-08 23:01:10', '2017-07-08 23:03:42');
-INSERT INTO `sys_menu` VALUES ('44', '备份定时器', '34', '0', '#', '20', 'menu-icon fa fa-calendar  blue', '1', '2017-07-08 23:01:34', '2017-07-08 23:03:03');
-INSERT INTO `sys_menu` VALUES ('45', '数据库还原', '34', '0', '#', '30', 'menu-icon fa fa-cloud-download  black', '1', '2017-07-08 23:02:14', '2017-07-08 23:03:14');
-INSERT INTO `sys_menu` VALUES ('56', 'sql编辑器', '34', '0', '#', '40', 'menu-icon fa fa-pencil-square-o  blue', '1', '2017-07-08 23:20:58', '2017-07-08 23:21:06');
-INSERT INTO `sys_menu` VALUES ('67', 'test2', '0', '0', '222', '222', null, '1', '2017-07-12 01:11:18', '2017-07-12 01:11:18');
-INSERT INTO `sys_menu` VALUES ('73', '测试菜单', '0', '0', '111', '111', null, '1', '2017-07-12 01:16:47', '2017-07-12 01:16:47');
-INSERT INTO `sys_menu` VALUES ('74', '测试菜单222', '0', '0', '1231321', '7777', null, '1', '2017-07-12 01:17:38', '2017-07-12 01:17:38');
+INSERT INTO `sys_menu` VALUES ('41', '图片列表', '39', '0', '#', '10', 'menu-icon fa fa-briefcase  grey', '1', '2017-07-08 22:56:53', '2017-07-12 23:48:58');
+INSERT INTO `sys_menu` VALUES ('42', '图片爬虫', '39', '0', '#', '20', 'menu-icon fa fa-exchange  brown', '1', '2017-07-08 22:57:14', '2017-07-12 23:49:32');
+INSERT INTO `sys_menu` VALUES ('43', '数据库备份', '34', '0', '#', '10', 'menu-icon fa fa-cloud-upload  brown', '1', '2017-07-08 23:01:10', '2017-07-12 23:56:09');
+INSERT INTO `sys_menu` VALUES ('44', '备份定时器', '34', '0', '#', '20', 'menu-icon fa fa-calendar  blue', '1', '2017-07-08 23:01:34', '2017-07-12 23:56:59');
+INSERT INTO `sys_menu` VALUES ('45', '数据库还原', '34', '0', '#', '30', 'menu-icon fa fa-cloud-download  black', '1', '2017-07-08 23:02:14', '2017-07-12 23:58:10');
+INSERT INTO `sys_menu` VALUES ('56', 'sql编辑器', '34', '0', '#', '40', 'menu-icon fa fa-pencil-square-o  blue', '1', '2017-07-08 23:20:58', '2017-07-12 23:58:26');
+INSERT INTO `sys_menu` VALUES ('84', '文件管理', '33', '0', '#', '30', 'menu-icon fa fa-folder-open-o  brown', '1', '2017-07-12 23:53:45', '2017-07-12 23:53:45');
 
 -- ----------------------------
 -- Table structure for sys_menu_premission
@@ -436,24 +505,71 @@ CREATE TABLE `sys_menu_premission` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `menu_id` int(16) NOT NULL,
   `premission_type` smallint(2) DEFAULT NULL COMMENT '1:query 2:insert 3:update 4:delete 5:other',
-  `premission_code` varchar(32) DEFAULT NULL,
+  `premission_code` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of sys_menu_premission
 -- ----------------------------
-INSERT INTO `sys_menu_premission` VALUES ('1', '67', '1', '1');
-INSERT INTO `sys_menu_premission` VALUES ('2', '67', '2', '2');
-INSERT INTO `sys_menu_premission` VALUES ('3', '67', '3', '3');
-INSERT INTO `sys_menu_premission` VALUES ('4', '67', '4', '4');
-INSERT INTO `sys_menu_premission` VALUES ('5', '67', '5', '5');
-INSERT INTO `sys_menu_premission` VALUES ('8', '73', '1', '1');
-INSERT INTO `sys_menu_premission` VALUES ('9', '73', '3', '3');
-INSERT INTO `sys_menu_premission` VALUES ('10', '74', '1', 'user:query');
-INSERT INTO `sys_menu_premission` VALUES ('11', '74', '2', 'user:add');
-INSERT INTO `sys_menu_premission` VALUES ('12', '74', '3', 'user:update');
-INSERT INTO `sys_menu_premission` VALUES ('13', '74', '4', 'user:remove');
+INSERT INTO `sys_menu_premission` VALUES ('63', '17', '1', 'menu:query');
+INSERT INTO `sys_menu_premission` VALUES ('64', '17', '2', 'menu:insert');
+INSERT INTO `sys_menu_premission` VALUES ('65', '17', '3', 'menu:update');
+INSERT INTO `sys_menu_premission` VALUES ('66', '17', '4', 'menu:delete');
+INSERT INTO `sys_menu_premission` VALUES ('72', '18', '5', 'premission:button');
+INSERT INTO `sys_menu_premission` VALUES ('74', '19', '1', 'button:query');
+INSERT INTO `sys_menu_premission` VALUES ('75', '19', '2', 'button:insert');
+INSERT INTO `sys_menu_premission` VALUES ('76', '19', '3', 'button:update');
+INSERT INTO `sys_menu_premission` VALUES ('77', '19', '4', 'button:delete');
+INSERT INTO `sys_menu_premission` VALUES ('79', '21', '1', 'menu:query');
+INSERT INTO `sys_menu_premission` VALUES ('80', '21', '2', 'menu:insert');
+INSERT INTO `sys_menu_premission` VALUES ('81', '21', '3', 'menu:update');
+INSERT INTO `sys_menu_premission` VALUES ('82', '21', '4', 'menu:delete');
+INSERT INTO `sys_menu_premission` VALUES ('84', '20', '1', 'online:query');
+INSERT INTO `sys_menu_premission` VALUES ('85', '20', '4', 'online:delete');
+INSERT INTO `sys_menu_premission` VALUES ('86', '22', '1', 'log:query');
+INSERT INTO `sys_menu_premission` VALUES ('87', '22', '2', 'log:insert');
+INSERT INTO `sys_menu_premission` VALUES ('88', '22', '3', 'log:update');
+INSERT INTO `sys_menu_premission` VALUES ('89', '22', '4', 'log:delete');
+INSERT INTO `sys_menu_premission` VALUES ('90', '23', '1', 'user:query');
+INSERT INTO `sys_menu_premission` VALUES ('91', '23', '2', 'user:insert');
+INSERT INTO `sys_menu_premission` VALUES ('92', '23', '3', 'user:update');
+INSERT INTO `sys_menu_premission` VALUES ('93', '23', '4', 'user:delete');
+INSERT INTO `sys_menu_premission` VALUES ('94', '24', '1', 'vip:query');
+INSERT INTO `sys_menu_premission` VALUES ('95', '24', '2', 'vip:insert');
+INSERT INTO `sys_menu_premission` VALUES ('96', '24', '3', 'vip:update');
+INSERT INTO `sys_menu_premission` VALUES ('97', '24', '4', 'vip:delete');
+INSERT INTO `sys_menu_premission` VALUES ('98', '25', '5', 'tool:codeGenerator');
+INSERT INTO `sys_menu_premission` VALUES ('99', '26', '5', 'tool:formCreate');
+INSERT INTO `sys_menu_premission` VALUES ('100', '27', '5', 'tool:APITest');
+INSERT INTO `sys_menu_premission` VALUES ('101', '28', '5', 'tool:sendEmail');
+INSERT INTO `sys_menu_premission` VALUES ('102', '29', '5', 'tool:QR-code');
+INSERT INTO `sys_menu_premission` VALUES ('103', '30', '5', 'tool:chart');
+INSERT INTO `sys_menu_premission` VALUES ('104', '31', '5', 'tool:gis');
+INSERT INTO `sys_menu_premission` VALUES ('105', '32', '5', 'tool:dataBaseMonitor');
+INSERT INTO `sys_menu_premission` VALUES ('106', '35', '5', 'weChart:reply');
+INSERT INTO `sys_menu_premission` VALUES ('107', '35', '1', 'weChart:query');
+INSERT INTO `sys_menu_premission` VALUES ('108', '36', '1', 'weiChart:planTextQuery');
+INSERT INTO `sys_menu_premission` VALUES ('109', '36', '2', 'weiChart:planTextInsert');
+INSERT INTO `sys_menu_premission` VALUES ('110', '36', '4', 'weiChart:planTextDelete');
+INSERT INTO `sys_menu_premission` VALUES ('111', '41', '1', 'picture:query');
+INSERT INTO `sys_menu_premission` VALUES ('112', '41', '2', 'picture:insert');
+INSERT INTO `sys_menu_premission` VALUES ('113', '41', '3', 'picture:update');
+INSERT INTO `sys_menu_premission` VALUES ('114', '41', '4', 'picture:delete');
+INSERT INTO `sys_menu_premission` VALUES ('115', '42', '5', 'tool:pachong');
+INSERT INTO `sys_menu_premission` VALUES ('116', '84', '1', 'folder:query');
+INSERT INTO `sys_menu_premission` VALUES ('117', '84', '2', 'folder:insert');
+INSERT INTO `sys_menu_premission` VALUES ('118', '84', '4', 'folder:delete');
+INSERT INTO `sys_menu_premission` VALUES ('119', '43', '5', 'tool:dbdump');
+INSERT INTO `sys_menu_premission` VALUES ('120', '44', '1', 'dbtimer:query');
+INSERT INTO `sys_menu_premission` VALUES ('121', '44', '2', 'dbtimer:insert');
+INSERT INTO `sys_menu_premission` VALUES ('122', '44', '4', 'dbtimer:delete');
+INSERT INTO `sys_menu_premission` VALUES ('123', '44', '5', 'dbtimer:reset');
+INSERT INTO `sys_menu_premission` VALUES ('124', '45', '1', 'db:query');
+INSERT INTO `sys_menu_premission` VALUES ('125', '45', '2', 'db:insert');
+INSERT INTO `sys_menu_premission` VALUES ('126', '45', '3', 'db:update');
+INSERT INTO `sys_menu_premission` VALUES ('127', '45', '4', 'db:delete');
+INSERT INTO `sys_menu_premission` VALUES ('128', '56', '5', 'tool:sqlEdit');
 
 -- ----------------------------
 -- Table structure for sys_opeartion
@@ -505,23 +621,22 @@ CREATE TABLE `sys_role` (
   `menu_ids` varchar(255) DEFAULT NULL COMMENT '角色对应的菜单id, 以,分隔开',
   `operation_ids` varchar(255) DEFAULT NULL COMMENT '角色对应的按钮权限, 以 逗号分隔开',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', 'admin', '0', '0', '0', null, null);
-INSERT INTO `sys_role` VALUES ('2', '系统用户组', '0', '10', '1', '1,19,21,20,22,2,23,24,3,27,28,4,38', null);
-INSERT INTO `sys_role` VALUES ('3', '一级管理员', '2', '10', '1', '1,19,21,20,22', null);
-INSERT INTO `sys_role` VALUES ('5', '二级管理员', '2', '20', '1', '4,38', null);
+INSERT INTO `sys_role` VALUES ('2', '系统用户组', '0', '10', '1', '1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38', null);
+INSERT INTO `sys_role` VALUES ('3', '一级管理员', '2', '10', '1', '1,19,21,20,22,2,23,24', null);
+INSERT INTO `sys_role` VALUES ('5', '二级管理员', '2', '20', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,23', null);
 INSERT INTO `sys_role` VALUES ('6', '会员组', '0', '20', '2', '2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40', null);
 INSERT INTO `sys_role` VALUES ('7', '超级会员', '6', '10', '2', null, null);
 INSERT INTO `sys_role` VALUES ('8', '普通会员', '6', '20', '2', null, null);
 INSERT INTO `sys_role` VALUES ('9', '注册用户', '6', '30', '2', null, null);
-INSERT INTO `sys_role` VALUES ('10', '四级菜单', '2', '40', '1', null, null);
+INSERT INTO `sys_role` VALUES ('10', '三级管理员', '2', '30', '1', null, null);
 INSERT INTO `sys_role` VALUES ('11', '50', '2', '50', '1', null, null);
-INSERT INTO `sys_role` VALUES ('12', '6', '2', '69', '1', '1,19,21,20,22,2,23,24,3,27,28,4,38', null);
-INSERT INTO `sys_role` VALUES ('40', 'test', '2', '30', '1', '1,19,21,20,22,2,23,24,3,27,28,4,38', null);
+INSERT INTO `sys_role` VALUES ('12', '6', '2', '69', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,231,19,21,20,22,2,23,241,19,21,20,22,2,23,24', null);
 
 -- ----------------------------
 -- Table structure for sys_role_resource

@@ -83,30 +83,35 @@
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 查询 :</label>
 									<div class="col-sm-9">
+										<input type="hidden" name="premissionList[0].premissionType" value="1">
 										<input type="text" name="premissionList[0].premissionCode" id="qeury_permission" value="${premissions[0].premissionCode}" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 增加 :</label>
 									<div class="col-sm-9">
+										<input type="hidden" name="premissionList[1].premissionType" value="2">
 										<input type="text" name="premissionList[1].premissionCode" id="add_permission" value="${premissions[1].premissionCode}" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-1">修改 :</label>
 									<div class="col-sm-9">
+										<input type="hidden" name="premissionList[2].premissionType" value="3">
 										<input type="text" name="premissionList[2].premissionCode" id="update_permission" value="${premissions[2].premissionCode}" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 删除 :</label>
 									<div class="col-sm-9">
+										<input type="hidden" name="premissionList[3].premissionType" value="4">
 										<input type="text" name="premissionList[3].premissionCode" id="delete_permission" value="${premissions[3].premissionCode}" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 其他 :</label>
 									<div class="col-sm-9">
+										<input type="hidden" name="premissionList[4].premissionType" value="5">
 										<input type="text" name="premissionList[4].premissionCode" id="other_permission" value="${premissions[4].premissionCode}" placeholder="这里输入代表权限名称" class="col-xs-10 col-sm-5" />
 									</div>
 								</div>																																

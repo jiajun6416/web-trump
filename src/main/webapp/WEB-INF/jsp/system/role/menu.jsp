@@ -56,6 +56,9 @@
 					<c:when test="${'maxMenu' == action}">
 							<a class="btn btn-mini btn-primary" onclick="saveMaxMenus();">保存</a>
 					</c:when>
+					<c:when test="${'premission' == action}">
+						<a class="btn btn-mini btn-primary" onclick="savepremission();">保存</a>
+					</c:when>
 					<c:otherwise>
 							<a class="btn btn-mini btn-primary" onclick="saveMenus();">保存</a>
 					</c:otherwise>
@@ -66,9 +69,8 @@
 	
 <script type="text/javascript">
 	$(top.hangge());
-	
+	/* ==========================================Ztree===================================== */
 	var zTree;
-	
 	$(function() {
 		/* Ztree */
 		var setting = {
@@ -88,7 +90,7 @@
 		//console.log('${treeNodes}');
 		zTree = $.fn.zTree.init($("#menuTree"), setting, eval('${treeNodes}'));
 	});
-	
+	/* ======================================================================================= */
 		//保存角色组菜单权限
 		 function saveMaxMenus(){
 			var nodes = zTree.getCheckedNodes(true);

@@ -104,4 +104,12 @@ public interface SysRoleService {
 	 */
 	void saveRoleMenus(int roleId, String menuIds) throws Exception;
 	
+	/**
+	 * 角色 拥有的菜单权限, 包括增删改查, 其他..
+	 * @param roleId
+	 * @param type
+	 * @return
+	 */
+	List<ZtreeNode> getPremissionNodes(int roleId, int type) throws Exception;
+	
 }

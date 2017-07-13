@@ -1,5 +1,6 @@
 package com.jiajun.service.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -229,6 +230,26 @@ public class SysRoleServiceImpl implements SysRoleService {
 			role.setMenuIds(menuIds);
 		}
 		dao.update(ROLE_NAME_SPACE+"updateByPrimaryKeySelective", role);
+	}
+
+
+	@Override
+	public List<ZtreeNode> getPremissionNodes(int roleId, int type) throws Exception {
+		SysRoleEntity role = (SysRoleEntity) dao.selectObject(ROLE_NAME_SPACE+"selectByPrimaryKey", roleId);
+		String menuIdstr = role.getMenuIds();
+		List<Integer> mIds = new ArrayList<>();
+		if(StringUtils.isNotEmpty(menuIdstr)) {
+			String[] menuIds = menuIdstr.split(",");
+			if(menuIds.length > 0) {
+				for (String idStr : menuIds) {
+					mIds.add(Integer.valueOf(idStr));
+				}
+			}
+		}
+		Map<String, Object> params = new HashMap<>();
+		params.put("roleId", roleId);
+		params.put("menuIds", mIds);
+		return (List<ZtreeNode>) dao.selectList(MENU_NAME_SPACE+"selecRoleMenuPremissionNodes", params);
 	}
 	
 }

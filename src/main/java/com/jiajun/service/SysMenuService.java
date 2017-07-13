@@ -32,6 +32,13 @@ public interface SysMenuService {
 	 */
 	void insert(SysMenuEntity menuEntity)throws Exception;
 	
+	/**
+	 * 修改icon
+	 * @param menuId
+	 * @param icon
+	 */
+	void updateIcon(Integer menuId, String icon) throws Exception;
+	
 	void update(SysMenuEntity menuEntity)throws Exception;
 	
 	/**

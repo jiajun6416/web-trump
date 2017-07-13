@@ -42,7 +42,7 @@
 	WHERE
 		parent_id = #{id}
   </select>
-  
+  <!-- ======================================ztree 查询=============================== -->
   <select id="selectMenuIdByRoleType" parameterType="map" resultMap="checkedZtreeNode">
 	SELECT
 		id,
@@ -104,6 +104,12 @@
 		sort ASC  	
   </select>
   
+  <select id="selecRoleMenuPremissionNodes" parameterType="map" resultMap="checkedZtreeNode">
+	  select id, menu_name, parent_id, is_parent, false checked
+	from sys_menu menu where menu.id in (1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38)
+  </select>
+  
+  <!-- =========================================================================================== -->
   <select id="selectMenuZtreeNodeList" resultMap="menuZtreeNode">
   	select id, menu_name name, parent_id pId, is_parent isParent from sys_menu order by sort asc
   </select>
@@ -112,6 +118,13 @@
   	select
   	<include refid="Base_Column_List"/>
   	from sys_menu where parent_id = #{pId} order by sort asc
+  </select>
+  
+  <select id="selectMenuWithPremissionByPid" parameterType="int" resultMap="withPremissionMap">
+  	 select 
+    	<include refid="Base_Column_List" />
+    from sys_menu
+    where parent_id = #{pId} order by sort asc
   </select>
   
   <select id="selectMenuWithPremissonByPrimartyKey" parameterType="int" resultMap="withPremissionMap">
@@ -127,10 +140,12 @@
     from sys_menu
     where id = #{id,jdbcType=INTEGER} 
   </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_menu
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
   <insert id="insert" parameterType="com.jiajun.pojo.system.SysMenuEntity">
       <selectKey keyProperty="id" resultType="int" order="AFTER">  
           select LAST_INSERT_ID()  

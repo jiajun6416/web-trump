@@ -74,10 +74,11 @@
 									<th class="center" style="width: 50px;">序号</th>
 									<th class='center'>角色</th>
 									<th class='center'>排序</th>
-									<th class="center">增</th>
-									<th class="center">删</th>
-									<th class="center">改</th>
 									<th class="center">查</th>
+									<th class="center">曾</th>
+									<th class="center">改</th>
+									<th class="center">删</th>
+									<th class="center">其他</th>
 									<th style="width:155px;"  class="center">操作</th>
 								</tr>
 								</thead>
@@ -88,10 +89,11 @@
 											<td class='center' style="width:30px;">${vs.count}</td>
 											<td id="ROLE_NAMETd${role.id }" class='center'>${role.roleName}</td>
 											<td class='center' width="8%">${role.sort}</td>
-											<td style="width:30px;"><a onclick="roleButton('${role.id}','add_qx');" class="btn btn-warning btn-mini" title="分配新增权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>
-											<td style="width:30px;"><a onclick="roleButton('${role.id}','del_qx');" class="btn btn-warning btn-mini" title="分配删除权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>
-											<td style="width:30px;"><a onclick="roleButton('${role.id}','edit_qx');" class="btn btn-warning btn-mini" title="分配修改权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>
-											<td style="width:30px;"><a onclick="roleButton('${role.id}','cha_qx');" class="btn btn-warning btn-mini" title="分配查看权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>
+											<td style="width:30px;"><a onclick="roleButton('${role.id}',1);" class="btn btn-warning btn-mini" title="分配查看权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>
+											<td style="width:30px;"><a onclick="roleButton('${role.id}',2);" class="btn btn-warning btn-mini" title="分配新增权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>
+											<td style="width:30px;"><a onclick="roleButton('${role.id}',3);" class="btn btn-warning btn-mini" title="分配修改权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>
+											<td style="width:30px;"><a onclick="roleButton('${role.id}',4);" class="btn btn-warning btn-mini" title="分配删除权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>
+											<td style="width:30px;"><a onclick="roleButton('${role.id}',5);" class="btn btn-warning btn-mini" title="分配其他权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>
 											<td style="width:155px;">
 											<!-- <div style="width:100%;" class="center">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -324,21 +326,23 @@
 		}
 		
 		//按钮权限(增删改查)
-		function roleButton(ROLE_ID,msg){
+		function roleButton(roleId,type){
 			top.jzts();
-			if(msg == 'add_qx'){
-				var Title = "授权新增权限(此角色下打勾的菜单拥有新增权限)";
-			}else if(msg == 'del_qx'){
-				Title = "授权删除权限(此角色下打勾的菜单拥有删除权限)";
-			}else if(msg == 'edit_qx'){
+			if(type == 1){
+				var Title = "授权新增权限(此角色下打勾的菜单拥有查看权限)";
+			}else if(type == 2){
+				Title = "授权删除权限(此角色下打勾的菜单拥有新增权限)";
+			}else if(type == 3){
 				Title = "授权修改权限(此角色下打勾的菜单拥有修改权限)";
-			}else if(msg == 'cha_qx'){
-				Title = "授权查看权限(此角色下打勾的菜单拥有查看权限)";
+			}else if(type == 4){
+				Title = "授权查看权限(此角色下打勾的菜单拥有删除权限)";
+			}else if(type == 5){
+				Title = "授权查看权限(此角色下打勾的菜单拥有其他权限)";
 			}
 			 var diag = new top.Dialog();
 			 diag.Drag = true;
 			 diag.Title = Title;
-			 diag.URL = '<%=basePath%>role/b4Button.do?ROLE_ID='+ROLE_ID+'&msg='+msg;
+			 diag.URL = '<%=basePath%>role/permission.do?roleId='+roleId+'&type='+type;
 			 diag.Width = 330;
 			 diag.Height = 450;
 			 diag.CancelEvent = function(){ //关闭事件
