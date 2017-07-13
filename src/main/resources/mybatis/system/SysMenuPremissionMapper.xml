@@ -18,6 +18,10 @@
     where menu_id = #{menuId,jdbcType=INTEGER} order by premission_type
   </select>
   
+  <select id="getMenuIdByRoleId" resultType="int" parameterType="map">
+  	select p.menu_id from sys_role r, sys_role_prem rp, sys_menu_premission p where r.id=rp.role_id and p.id=rp.prem_id and rp.prem_type=#{type} and  r.id = #{roleId}
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

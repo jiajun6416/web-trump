@@ -105,11 +105,54 @@
   </select>
   
   <select id="selecRoleMenuPremissionNodes" parameterType="map" resultMap="checkedZtreeNode">
-	  select id, menu_name, parent_id, is_parent, false checked
-	from sys_menu menu where menu.id in (1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38)
+	SELECT
+		menu.id,
+		menu.menu_name,
+		menu.parent_id,
+		is_parent,
+	<choose>
+		<when test="hasPrem != null and hasPrem.size()>0">
+			IF (
+			id IN 
+			<foreach collection="hasPrem" item="p" open="(" close=")" separator=",">
+				#{p}
+			</foreach>
+			,
+			TRUE,
+			FALSE
+			) checked
+		</when>
+		<otherwise>
+			false checked
+		</otherwise>
+	</choose>
+	FROM
+		sys_menu menu
+	WHERE
+		menu.id IN 
+		<foreach collection="menuIds" item="id" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	AND
+	IF (
+		menu.is_parent = 0,
+		EXISTS (
+			SELECT
+				*
+			FROM
+				sys_menu_premission prem
+			WHERE
+				prem.menu_id = menu.id
+			AND prem.premission_type = #{type}
+		),
+		TRUE
+	)
   </select>
   
   <!-- =========================================================================================== -->
+ 
+ 
+ 
   <select id="selectMenuZtreeNodeList" resultMap="menuZtreeNode">
   	select id, menu_name name, parent_id pId, is_parent isParent from sys_menu order by sort asc
   </select>

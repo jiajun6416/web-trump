@@ -37,6 +37,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	
 	private static final String USER_NAME_SPACE = "SysUserMapper."; 
 	
+	private static final String MENU_PREMISSION_NAME_SPACE = "sysMenuPremissionMapper.";
 	
 	@Override
 	public SysRoleEntity getRoleByRoleType(int roleType) throws Exception {
@@ -245,11 +246,35 @@ public class SysRoleServiceImpl implements SysRoleService {
 					mIds.add(Integer.valueOf(idStr));
 				}
 			}
+		} else  {
+			return null;
 		}
 		Map<String, Object> params = new HashMap<>();
+		params.put("type", type);
 		params.put("roleId", roleId);
 		params.put("menuIds", mIds);
-		return (List<ZtreeNode>) dao.selectList(MENU_NAME_SPACE+"selecRoleMenuPremissionNodes", params);
+
+		//查询当前具备的权限
+		List<Integer> hasPrem = (List<Integer>) dao.selectList(MENU_PREMISSION_NAME_SPACE+"getMenuIdByRoleId", params);
+		params.put("hasPrem", hasPrem);
+		 return (List<ZtreeNode>) dao.selectList(MENU_NAME_SPACE+"selecRoleMenuPremissionNodes", params);
 	}
+
+
+	@Override
+	public void saveRoleMenuPremission(int roleId, String menuIds) throws Exception {
+		if(! Tools.regular(menuIds)) {
+			throw new SysCustomException("参数格式不匹配");
+		}
+		List<Integer> ids = new ArrayList<>();
+		String[] idsStr = menuIds.split(",");
+		for (String idStr : idsStr) {
+			ids.add(Integer.valueOf(idStr));
+		}
+		//TODO
+	}
+
+
 	
 }
+ 

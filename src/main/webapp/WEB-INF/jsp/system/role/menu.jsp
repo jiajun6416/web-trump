@@ -143,7 +143,35 @@
 				top.Dialog.close();
 			});
 		 }	
-
+	
+		//保存权限
+		function savepremission( ) {
+			//获得所有选中的node
+			var nodes = zTree.getCheckedNodes(true);
+			var tmpNode;
+			var ids = "";
+			for(var i=0; i<nodes.length; i++){
+				tmpNode = nodes[i];
+				if(i!=nodes.length-1){
+					ids += tmpNode.id+",";
+				}else{
+					ids += tmpNode.id;
+				}
+			}
+			var roleId = '${roleId}';
+			var url = "role/saveRolePremission.do";
+			var postData;
+			postData = {"roleId":roleId,"menuIds":ids};
+			$("#zhongxin").hide();
+			$("#zhongxin2").show();
+			$.post(url,postData,function(data){
+				if(data.status != 200) {
+					alert(data.msg);
+				}
+				top.Dialog.close();
+			});
+		}
+		
 	</script>
 </body>
 </html>

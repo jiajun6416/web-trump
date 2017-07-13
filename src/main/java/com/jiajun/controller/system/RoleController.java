@@ -21,6 +21,7 @@ import com.jiajun.service.SysLogService;
 import com.jiajun.service.SysRoleService;
 import com.jiajun.util.Constant;
 import com.jiajun.util.JsonUtils;
+import com.jiajun.util.Tools;
 
 /**
  * @描述：系统的角色controller
@@ -230,7 +231,16 @@ public class RoleController extends BaseController{
 		
 		model.addAttribute("action", "premission");
 		List<ZtreeNode> treeNodes = sysRoleService.getPremissionNodes(roleId, type);
+		model.addAttribute("roleId", roleId);
 		model.addAttribute("treeNodes", JsonUtils.encode(treeNodes));
 		return "system/role/menu";
+	}
+	
+	@RequestMapping("/saveRolePremission")
+	@ResponseBody
+	public ResultModel saveRolePremission(String menuIds, int roleId, HttpServletRequest request, HttpSession session) throws Exception {
+		sysRoleService.saveRoleMenuPremission(roleId, menuIds);
+		sysLogService.save(this.getLoginUser(session), this.getIP(request), "保存角色对应的菜单权限");
+		return ResultModel.build(200, "success");
 	}
 }
