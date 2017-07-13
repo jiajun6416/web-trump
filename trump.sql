@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50527
 File Encoding         : 65001
 
-Date: 2017-07-13 08:04:05
+Date: 2017-07-14 00:57:27
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `sys_log` (
   `opear_time` datetime NOT NULL,
   `event` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=420 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=425 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_log
@@ -438,6 +438,11 @@ INSERT INTO `sys_log` VALUES ('416', 'jiajun', '127.0.0.1', '2017-07-12 23:56:49
 INSERT INTO `sys_log` VALUES ('417', 'jiajun', '127.0.0.1', '2017-07-12 23:56:59', '修改菜单信息');
 INSERT INTO `sys_log` VALUES ('418', 'jiajun', '127.0.0.1', '2017-07-12 23:58:10', '修改菜单信息');
 INSERT INTO `sys_log` VALUES ('419', 'jiajun', '127.0.0.1', '2017-07-12 23:58:26', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('420', 'jiajun', '127.0.0.1', '2017-07-13 22:32:36', '登录成功');
+INSERT INTO `sys_log` VALUES ('421', 'jiajun', '127.0.0.1', '2017-07-14 00:19:43', '登录成功');
+INSERT INTO `sys_log` VALUES ('422', 'jiajun', '127.0.0.1', '2017-07-14 00:20:34', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('423', 'jiajun', '127.0.0.1', '2017-07-14 00:20:39', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('424', 'jiajun', '127.0.0.1', '2017-07-14 00:20:44', '保存角色对应的菜单');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -593,22 +598,6 @@ INSERT INTO `sys_opeartion` VALUES ('4', '发短信', 'sys:sms', null);
 INSERT INTO `sys_opeartion` VALUES ('5', '站内通信', 'sys:chat', null);
 
 -- ----------------------------
--- Table structure for sys_resource
--- ----------------------------
-DROP TABLE IF EXISTS `sys_resource`;
-CREATE TABLE `sys_resource` (
-  `id` int(16) NOT NULL AUTO_INCREMENT,
-  `resource_desc` varchar(255) DEFAULT NULL,
-  `privilege_code` varchar(32) NOT NULL,
-  `menu_id` int(16) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_resource
--- ----------------------------
-
--- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
@@ -627,8 +616,8 @@ CREATE TABLE `sys_role` (
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', 'admin', '0', '0', '0', null, null);
-INSERT INTO `sys_role` VALUES ('2', '系统用户组', '0', '10', '1', '1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38', null);
-INSERT INTO `sys_role` VALUES ('3', '一级管理员', '2', '10', '1', '1,19,21,20,22,2,23,24', null);
+INSERT INTO `sys_role` VALUES ('2', '系统用户组', '0', '10', '1', '1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40,84,34,43,44,45,56', null);
+INSERT INTO `sys_role` VALUES ('3', '一级管理员', '2', '10', '1', '1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40,84,34,43,44,45,56', null);
 INSERT INTO `sys_role` VALUES ('5', '二级管理员', '2', '20', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,23', null);
 INSERT INTO `sys_role` VALUES ('6', '会员组', '0', '20', '2', '2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40', null);
 INSERT INTO `sys_role` VALUES ('7', '超级会员', '6', '10', '2', null, null);
@@ -636,23 +625,22 @@ INSERT INTO `sys_role` VALUES ('8', '普通会员', '6', '20', '2', null, null);
 INSERT INTO `sys_role` VALUES ('9', '注册用户', '6', '30', '2', null, null);
 INSERT INTO `sys_role` VALUES ('10', '三级管理员', '2', '30', '1', null, null);
 INSERT INTO `sys_role` VALUES ('11', '50', '2', '50', '1', null, null);
-INSERT INTO `sys_role` VALUES ('12', '6', '2', '69', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,231,19,21,20,22,2,23,241,19,21,20,22,2,23,24', null);
+INSERT INTO `sys_role` VALUES ('12', '6', '2', '69', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,231,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38', null);
 
 -- ----------------------------
--- Table structure for sys_role_resource
+-- Table structure for sys_role_prem
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_role_resource`;
-CREATE TABLE `sys_role_resource` (
+DROP TABLE IF EXISTS `sys_role_prem`;
+CREATE TABLE `sys_role_prem` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `role_id` int(16) NOT NULL,
-  `resource_id` int(16) NOT NULL,
-  `gmt_create` datetime DEFAULT NULL,
-  `gmt_modified` datetime DEFAULT NULL,
+  `prem_id` int(16) NOT NULL,
+  `prem_type` smallint(1) NOT NULL COMMENT '权限类型, 1是菜单权限, 2是按钮权限',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sys_role_resource
+-- Records of sys_role_prem
 -- ----------------------------
 
 -- ----------------------------
