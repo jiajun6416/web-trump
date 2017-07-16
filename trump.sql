@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50527
-Source Host           : localhost:3306
+Source Server         : 192.168.1.111_jiajun
+Source Server Version : 50718
+Source Host           : 192.168.1.111:3306
 Source Database       : trump
 
 Target Server Type    : MYSQL
-Target Server Version : 50527
+Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-07-14 00:57:27
+Date: 2017-07-17 01:01:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `sys_log` (
   `opear_time` datetime NOT NULL,
   `event` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=425 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=536 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_log
@@ -443,6 +443,117 @@ INSERT INTO `sys_log` VALUES ('421', 'jiajun', '127.0.0.1', '2017-07-14 00:19:43
 INSERT INTO `sys_log` VALUES ('422', 'jiajun', '127.0.0.1', '2017-07-14 00:20:34', '保存角色对应的菜单');
 INSERT INTO `sys_log` VALUES ('423', 'jiajun', '127.0.0.1', '2017-07-14 00:20:39', '修改角色类型最大菜单权限');
 INSERT INTO `sys_log` VALUES ('424', 'jiajun', '127.0.0.1', '2017-07-14 00:20:44', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('425', 'jiajun', '127.0.0.1', '2017-07-16 13:58:38', '登录成功');
+INSERT INTO `sys_log` VALUES ('426', '', '127.0.0.1', '2017-07-16 15:18:49', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('427', '', '127.0.0.1', '2017-07-16 15:19:04', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('428', '', '127.0.0.1', '2017-07-16 16:54:29', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('429', '', '127.0.0.1', '2017-07-16 16:55:14', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('430', '', '127.0.0.1', '2017-07-16 17:01:57', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('431', '', '127.0.0.1', '2017-07-16 17:15:40', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('432', '', '127.0.0.1', '2017-07-16 17:15:54', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('433', '', '127.0.0.1', '2017-07-16 17:15:59', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('434', '', '127.0.0.1', '2017-07-16 17:16:33', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('435', '', '127.0.0.1', '2017-07-16 17:20:43', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('436', '', '127.0.0.1', '2017-07-16 17:20:53', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('437', '', '127.0.0.1', '2017-07-16 17:21:00', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('438', '', '127.0.0.1', '2017-07-16 17:26:32', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('439', '', '127.0.0.1', '2017-07-16 17:26:53', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('440', '', '127.0.0.1', '2017-07-16 17:26:58', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('441', '', '127.0.0.1', '2017-07-16 17:27:19', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('442', '', '127.0.0.1', '2017-07-16 17:27:22', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('443', '', '127.0.0.1', '2017-07-16 17:28:20', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('444', '', '127.0.0.1', '2017-07-16 17:38:53', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('445', '', '127.0.0.1', '2017-07-16 17:38:58', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('446', '', '127.0.0.1', '2017-07-16 17:46:09', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('447', '', '127.0.0.1', '2017-07-16 17:46:12', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('448', '', '127.0.0.1', '2017-07-16 17:46:15', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('449', '', '127.0.0.1', '2017-07-16 17:47:29', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('450', '', '127.0.0.1', '2017-07-16 17:47:48', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('451', '', '127.0.0.1', '2017-07-16 17:48:50', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('452', '', '127.0.0.1', '2017-07-16 17:49:22', '添加角色类型:外勤');
+INSERT INTO `sys_log` VALUES ('453', '', '127.0.0.1', '2017-07-16 17:49:40', '添加角色:外勤1');
+INSERT INTO `sys_log` VALUES ('454', '', '127.0.0.1', '2017-07-16 17:55:49', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('455', '', '127.0.0.1', '2017-07-16 17:55:57', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('456', '', '127.0.0.1', '2017-07-16 17:56:01', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('457', '', '127.0.0.1', '2017-07-16 17:56:05', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('458', '', '127.0.0.1', '2017-07-16 17:56:08', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('459', '', '127.0.0.1', '2017-07-16 17:56:10', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('460', '', '127.0.0.1', '2017-07-16 17:56:37', '删除角色, id是14');
+INSERT INTO `sys_log` VALUES ('461', '', '127.0.0.1', '2017-07-16 17:57:00', '删除角色组, 类型是3');
+INSERT INTO `sys_log` VALUES ('462', '', '127.0.0.1', '2017-07-16 21:40:09', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('463', '', '127.0.0.1', '2017-07-16 21:41:18', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('464', '', '127.0.0.1', '2017-07-16 21:41:21', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('465', '', '127.0.0.1', '2017-07-16 21:41:29', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('466', '', '127.0.0.1', '2017-07-16 21:41:37', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('467', '', '127.0.0.1', '2017-07-16 21:43:00', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('468', '', '127.0.0.1', '2017-07-16 21:48:00', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('469', '', '127.0.0.1', '2017-07-16 21:48:05', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('470', '', '127.0.0.1', '2017-07-16 21:48:15', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('471', '', '127.0.0.1', '2017-07-16 21:51:15', '修改角色信息:一级管理员');
+INSERT INTO `sys_log` VALUES ('472', '', '127.0.0.1', '2017-07-16 21:52:00', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('473', '', '127.0.0.1', '2017-07-16 21:52:14', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('474', '', '127.0.0.1', '2017-07-16 21:52:31', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('475', '', '127.0.0.1', '2017-07-16 21:52:43', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('476', '', '127.0.0.1', '2017-07-16 21:54:09', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('477', '', '127.0.0.1', '2017-07-16 21:54:15', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('478', '', '127.0.0.1', '2017-07-16 21:54:59', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('479', '', '127.0.0.1', '2017-07-16 21:55:07', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('480', '', '127.0.0.1', '2017-07-16 21:57:59', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('481', '', '127.0.0.1', '2017-07-16 21:59:06', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('482', '', '127.0.0.1', '2017-07-16 22:00:33', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('483', '', '127.0.0.1', '2017-07-16 22:00:38', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('484', '', '127.0.0.1', '2017-07-16 22:31:54', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('485', '', '127.0.0.1', '2017-07-16 22:31:59', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('486', '', '127.0.0.1', '2017-07-16 22:32:03', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('487', '', '127.0.0.1', '2017-07-16 22:32:06', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('488', '', '127.0.0.1', '2017-07-16 22:35:49', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('489', '', '127.0.0.1', '2017-07-16 22:37:12', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('490', '', '127.0.0.1', '2017-07-16 22:37:20', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('491', '', '127.0.0.1', '2017-07-16 22:37:55', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('492', '', '127.0.0.1', '2017-07-16 22:38:39', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('493', '', '127.0.0.1', '2017-07-16 22:49:36', '添加按钮操作!');
+INSERT INTO `sys_log` VALUES ('494', '', '127.0.0.1', '2017-07-17 00:54:39', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('495', '', '127.0.0.1', '2017-07-17 00:57:21', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('496', '', '127.0.0.1', '2017-07-17 00:57:25', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('497', '', '127.0.0.1', '2017-07-17 00:57:30', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('498', '', '127.0.0.1', '2017-07-17 00:57:31', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('499', '', '127.0.0.1', '2017-07-17 00:57:31', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('500', '', '127.0.0.1', '2017-07-17 00:57:31', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('501', '', '127.0.0.1', '2017-07-17 00:57:31', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('502', '', '127.0.0.1', '2017-07-17 00:57:32', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('503', '', '127.0.0.1', '2017-07-17 00:57:32', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('504', '', '127.0.0.1', '2017-07-17 00:57:32', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('505', '', '127.0.0.1', '2017-07-17 00:57:32', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('506', '', '127.0.0.1', '2017-07-17 00:57:32', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('507', '', '127.0.0.1', '2017-07-17 00:57:32', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('508', '', '127.0.0.1', '2017-07-17 00:57:43', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('509', '', '127.0.0.1', '2017-07-17 00:57:43', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('510', '', '127.0.0.1', '2017-07-17 00:57:47', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('511', '', '127.0.0.1', '2017-07-17 00:57:48', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('512', '', '127.0.0.1', '2017-07-17 00:57:48', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('513', '', '127.0.0.1', '2017-07-17 00:57:48', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('514', '', '127.0.0.1', '2017-07-17 00:57:49', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('515', '', '127.0.0.1', '2017-07-17 00:57:49', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('516', '', '127.0.0.1', '2017-07-17 00:57:50', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('517', '', '127.0.0.1', '2017-07-17 00:57:51', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('518', '', '127.0.0.1', '2017-07-17 00:57:51', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('519', '', '127.0.0.1', '2017-07-17 00:57:52', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('520', '', '127.0.0.1', '2017-07-17 00:57:52', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('521', '', '127.0.0.1', '2017-07-17 00:57:53', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('522', '', '127.0.0.1', '2017-07-17 00:57:53', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('523', '', '127.0.0.1', '2017-07-17 00:57:55', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('524', '', '127.0.0.1', '2017-07-17 00:57:56', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('525', '', '127.0.0.1', '2017-07-17 00:57:58', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('526', '', '127.0.0.1', '2017-07-17 00:59:22', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('527', '', '127.0.0.1', '2017-07-17 00:59:22', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('528', '', '127.0.0.1', '2017-07-17 00:59:23', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('529', '', '127.0.0.1', '2017-07-17 00:59:23', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('530', '', '127.0.0.1', '2017-07-17 00:59:24', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('531', '', '127.0.0.1', '2017-07-17 00:59:24', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('532', '', '127.0.0.1', '2017-07-17 00:59:25', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('533', '', '127.0.0.1', '2017-07-17 00:59:25', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('534', '', '127.0.0.1', '2017-07-17 00:59:26', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('535', '', '127.0.0.1', '2017-07-17 00:59:56', '修改角色按钮权限');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -586,16 +697,16 @@ CREATE TABLE `sys_opeartion` (
   `privileges_code` varchar(32) NOT NULL DEFAULT '' COMMENT '权限标识',
   `operation_desc` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_opeartion
 -- ----------------------------
-INSERT INTO `sys_opeartion` VALUES ('1', '导出到EXCEL', 'sys:toExcel', '导出excel必须权限');
-INSERT INTO `sys_opeartion` VALUES ('2', '发邮件', 'sys:sendEmail', '发送邮件必备权限');
-INSERT INTO `sys_opeartion` VALUES ('3', '导入Excel', 'sys:fromExcel', null);
-INSERT INTO `sys_opeartion` VALUES ('4', '发短信', 'sys:sms', null);
-INSERT INTO `sys_opeartion` VALUES ('5', '站内通信', 'sys:chat', null);
+INSERT INTO `sys_opeartion` VALUES ('11', '导出EXCEL', 'opera:outExcel', '到处excel需要具备权限');
+INSERT INTO `sys_opeartion` VALUES ('12', '导入Excel', 'opera:inExcel', '数据导入需要具备权限');
+INSERT INTO `sys_opeartion` VALUES ('13', '发邮件', 'opera:sendMail', '发送邮件需要具备权限');
+INSERT INTO `sys_opeartion` VALUES ('14', '发短信', 'opera:sendSMS', '发送短信需要具备权限');
+INSERT INTO `sys_opeartion` VALUES ('15', '站内信', 'opera:innerMsg', '站内通信需要具备权限');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -610,22 +721,22 @@ CREATE TABLE `sys_role` (
   `menu_ids` varchar(255) DEFAULT NULL COMMENT '角色对应的菜单id, 以,分隔开',
   `operation_ids` varchar(255) DEFAULT NULL COMMENT '角色对应的按钮权限, 以 逗号分隔开',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', 'admin', '0', '0', '0', null, null);
 INSERT INTO `sys_role` VALUES ('2', '系统用户组', '0', '10', '1', '1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40,84,34,43,44,45,56', null);
-INSERT INTO `sys_role` VALUES ('3', '一级管理员', '2', '10', '1', '1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40,84,34,43,44,45,56', null);
-INSERT INTO `sys_role` VALUES ('5', '二级管理员', '2', '20', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,23', null);
+INSERT INTO `sys_role` VALUES ('3', '一级管理员', '2', '10', '1', '1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40,84,34,43,44,45,56', '11,12,15,13,14');
+INSERT INTO `sys_role` VALUES ('5', '二级管理员', '2', '20', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,23', '12,11,14,13');
 INSERT INTO `sys_role` VALUES ('6', '会员组', '0', '20', '2', '2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40', null);
-INSERT INTO `sys_role` VALUES ('7', '超级会员', '6', '10', '2', null, null);
-INSERT INTO `sys_role` VALUES ('8', '普通会员', '6', '20', '2', null, null);
-INSERT INTO `sys_role` VALUES ('9', '注册用户', '6', '30', '2', null, null);
-INSERT INTO `sys_role` VALUES ('10', '三级管理员', '2', '30', '1', null, null);
-INSERT INTO `sys_role` VALUES ('11', '50', '2', '50', '1', null, null);
-INSERT INTO `sys_role` VALUES ('12', '6', '2', '69', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,231,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38', null);
+INSERT INTO `sys_role` VALUES ('7', '超级会员', '6', '10', '2', null, '11,13,15,12');
+INSERT INTO `sys_role` VALUES ('8', '普通会员', '6', '20', '2', null, '11,12,13,15');
+INSERT INTO `sys_role` VALUES ('9', '注册用户', '6', '30', '2', null, '11,14');
+INSERT INTO `sys_role` VALUES ('10', '三级管理员', '2', '30', '1', null, '12,11,15');
+INSERT INTO `sys_role` VALUES ('11', '50', '2', '50', '1', null, '11,14,13');
+INSERT INTO `sys_role` VALUES ('12', '6', '2', '69', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,231,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38', '11,14,15');
 
 -- ----------------------------
 -- Table structure for sys_role_prem
@@ -635,13 +746,52 @@ CREATE TABLE `sys_role_prem` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `role_id` int(16) NOT NULL,
   `prem_id` int(16) NOT NULL,
+  `menu_type` smallint(1) DEFAULT NULL COMMENT 'prem_type是1的时候, menu_type才有效,  1 2 3 4 冗余字段',
   `prem_type` smallint(1) NOT NULL COMMENT '权限类型, 1是菜单权限, 2是按钮权限',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_prem
 -- ----------------------------
+INSERT INTO `sys_role_prem` VALUES ('55', '5', '75', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('56', '5', '80', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('57', '5', '87', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('58', '5', '91', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('71', '3', '98', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('72', '3', '99', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('73', '3', '100', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('74', '3', '101', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('75', '3', '102', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('76', '3', '103', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('77', '3', '104', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('78', '3', '105', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('79', '3', '106', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('102', '3', '74', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('103', '3', '79', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('104', '3', '84', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('105', '3', '86', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('106', '3', '90', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('107', '3', '94', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('108', '3', '107', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('109', '3', '108', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('110', '3', '111', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('111', '3', '116', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('112', '3', '120', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('113', '3', '124', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('124', '3', '75', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('125', '3', '80', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('126', '3', '87', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('127', '3', '91', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('128', '3', '95', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('129', '3', '109', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('130', '3', '112', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('131', '3', '117', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('132', '5', '74', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('133', '5', '79', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('134', '5', '84', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('135', '5', '86', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('136', '5', '90', '1', '1');
 
 -- ----------------------------
 -- Table structure for sys_user
