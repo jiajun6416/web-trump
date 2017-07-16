@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.jiajun.dao.base.Dao;
 import com.jiajun.exception.SysCustomException;
 import com.jiajun.pojo.ZtreeNode;
+import com.jiajun.pojo.system.SysMenuPremission;
 import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.service.SysRoleService;
 import com.jiajun.util.Tools;
@@ -67,6 +68,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if(count > 0 ) {
 			throw new SysCustomException("当前角色已有用户");
 		}
+		//删除角色对应的菜单权限信息
+		dao.delete(MENU_PREMISSION_NAME_SPACE+"deleteBYRoleId", roleId);
+		//TODO 删除对应按钮权限信息
+		
 		dao.delete(ROLE_NAME_SPACE+"deleteByPrimaryKey", roleId);
 	}
 
@@ -262,19 +267,69 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 
 	@Override
-	public void saveRoleMenuPremission(int roleId, String menuIds) throws Exception {
-		if(! Tools.regular(menuIds)) {
-			throw new SysCustomException("参数格式不匹配");
+	public void saveRoleMenuPremission(int roleId, String menuIds, int type) throws Exception {
+		//删除之前的
+		Map<String, Object> params = new HashMap<>();
+		params.put("roleId", roleId);
+		params.put("type", type);
+		dao.delete(MENU_PREMISSION_NAME_SPACE+"deleteAllByRoleIdAndType", params);
+		
+		if(type!=1 && type!=2 && type!=3 && type!=4 && type!=5) {
+			throw new SysCustomException("类型不符");
 		}
-		List<Integer> ids = new ArrayList<>();
-		String[] idsStr = menuIds.split(",");
-		for (String idStr : idsStr) {
-			ids.add(Integer.valueOf(idStr));
+
+		if(StringUtils.isNotEmpty(menuIds)) {
+			if( !Tools.regular(menuIds)) {
+				throw new SysCustomException("权限数格式不匹配");
+			}
+			String[] idsStr = menuIds.split(",");
+			//插入新的
+			if(idsStr != null && idsStr.length > 0) {
+				List<Integer> ids = new ArrayList<>(idsStr.length);
+				for (String id : idsStr) {
+					ids.add(Integer.valueOf(id));
+				}
+				params.put("ids", ids);
+				//查询出这些菜单对应 的权限
+				List<Integer> premIds = (List<Integer>) dao.selectList(MENU_PREMISSION_NAME_SPACE+"getPremissionByMenuAndType", params);
+				//插入role_prem表
+				if(premIds != null && premIds.size() > 0) {
+					params.put("premIds", premIds);
+					dao.insert(MENU_PREMISSION_NAME_SPACE+"insertRolePremission", params);
+				}
+			}
 		}
-		//TODO
 	}
 
+	@Override
+	public void updateOpera(int roleId, int operaId) throws Exception {
+		SysRoleEntity role = (SysRoleEntity) dao.selectObject(ROLE_NAME_SPACE+"selectByPrimaryKey", roleId);
+		List<Integer> ids = role.getOperaIds();
+		StringBuilder newOpera = new StringBuilder();
+		boolean isDelete = false;
+		if(ids != null && ids.size()>0) {
+			for (Integer id : ids) {
+				if(!id.equals(operaId)) {
+					newOpera.append(id);
+					newOpera.append(",");
+				} else {
+					isDelete = true;
+				}
+			}
+			//表示是添加
+			if(!isDelete) {
+				newOpera.append(operaId);
+			} 
+		} else {
+			newOpera.append(operaId);
+		}
+		String newOperaStr = newOpera.toString();
+		if(StringUtils.isNotEmpty(newOperaStr) && newOperaStr.endsWith(",")) {
+			newOperaStr = newOperaStr.substring(0, newOperaStr.length()-1);
+		}
+		role.setOperationIds(newOperaStr);
+		dao.update(ROLE_NAME_SPACE+"updateByPrimaryKey", role);
+	}
 
-	
 }
  

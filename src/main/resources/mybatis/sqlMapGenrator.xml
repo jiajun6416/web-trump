@@ -6,7 +6,7 @@
 >
 <generatorConfiguration>
 	<!-- 制定数据库驱动包的路径 千万别放中文路径下 -->
-	<classPathEntry location="D:\maven\repository\mysql-connector-java-5.1.28-bin.jar" />
+	<classPathEntry location="F:\maven\repository\mysql-connector-java-5.1.28-bin.jar" />
 	<!-- 配置数据源和生成的代码所存放的位置 -->
 	<context id="context1">
 		<commentGenerator>
@@ -14,7 +14,7 @@
             <property name="suppressAllComments" value="true" />
         </commentGenerator>
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/trump"
+			connectionURL="jdbc:mysql://192.168.1.111:3306/trump"
 			userId="jiajun"
 			password="jiajun" />
 		<!-- 所生成的实体类的位置默认资源包src -->
@@ -24,7 +24,7 @@
 		<!-- 生成mapper.java -->
         <!-- <javaClientGenerator type="XMLMAPPER" targetPackage="com.jiajun.mapper.system" targetProject="trump"/> -->
 		<!-- 为哪些表生成代码 tableName:表名 schema:不用填写 enableCountByExample="false" 不生成example -->
-		<table schema="" tableName="sys_menu" domainObjectName="SysMenuEntity" mapperName="SysMenuEntity"
+		<table schema="" tableName="sys_opeartion" domainObjectName="SysOpeartionEntity" mapperName="SysOpeartion"
 			enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
 			enableSelectByExample="false" selectByExampleQueryId="false"/>	
 											

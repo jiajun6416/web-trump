@@ -16,12 +16,13 @@ import com.jiajun.controller.base.BaseController;
 import com.jiajun.exception.SysCustomException;
 import com.jiajun.pojo.ResultModel;
 import com.jiajun.pojo.ZtreeNode;
+import com.jiajun.pojo.system.SysOpeartionEntity;
 import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.service.SysLogService;
+import com.jiajun.service.SysOperationService;
 import com.jiajun.service.SysRoleService;
 import com.jiajun.util.Constant;
 import com.jiajun.util.JsonUtils;
-import com.jiajun.util.Tools;
 
 /**
  * @描述：系统的角色controller
@@ -36,7 +37,8 @@ public class RoleController extends BaseController{
 	private SysRoleService sysRoleService;
 	@Autowired
 	private SysLogService sysLogService;
-	
+	@Autowired
+	private SysOperationService sysOperaService;
 
 	@RequestMapping("/list")
 	public String roRole(Model model, HttpServletRequest request) throws Exception {
@@ -232,15 +234,56 @@ public class RoleController extends BaseController{
 		model.addAttribute("action", "premission");
 		List<ZtreeNode> treeNodes = sysRoleService.getPremissionNodes(roleId, type);
 		model.addAttribute("roleId", roleId);
+		model.addAttribute("type", type);
 		model.addAttribute("treeNodes", JsonUtils.encode(treeNodes));
 		return "system/role/menu";
 	}
 	
 	@RequestMapping("/saveRolePremission")
 	@ResponseBody
-	public ResultModel saveRolePremission(String menuIds, int roleId, HttpServletRequest request, HttpSession session) throws Exception {
-		sysRoleService.saveRoleMenuPremission(roleId, menuIds);
+	public ResultModel saveRolePremission(String menuIds, int type, int roleId, HttpServletRequest request, HttpSession session) throws Exception {
+		sysRoleService.saveRoleMenuPremission(roleId, menuIds, type);
 		sysLogService.save(this.getLoginUser(session), this.getIP(request), "保存角色对应的菜单权限");
 		return ResultModel.build(200, "success");
+	}
+	
+	@RequestMapping("/operation/list")
+	public String operationList(Model model, HttpServletRequest request) throws Exception {
+		//query all role type
+		List<SysRoleEntity> roleTypes = sysRoleService.getAllTypeRole();
+		model.addAttribute("roleTypes", roleTypes);
+		
+		String roleType = request.getParameter("roleType");
+		if(StringUtils.isEmpty(roleType)) {
+			roleType  = "1";
+		}
+		int type = Integer.valueOf(roleType);
+		model.addAttribute("type",type);
+		//roles by type
+		List<SysRoleEntity> roleList = sysRoleService.getListByType(type);
+		model.addAttribute("roleList", roleList);
+		
+		//all operation
+		List<SysOpeartionEntity> operaList = sysOperaService.getAll();
+		model.addAttribute("operaList", operaList);
+		
+		//如果是切换视图, 则进入视图2
+		String viewType = request.getParameter("viewType");
+		if(viewType != null && "2".equals(viewType)) {
+			return "system/operaRight/list_2";
+		}
+		return "system/operaRight/list";
+	}
+	
+	@RequestMapping("/operation/update")
+	public ResultModel updateOperation(int roleId, int opearId, HttpServletRequest request, HttpSession session) {
+		try {
+			sysRoleService.updateOpera(roleId, opearId);
+			sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改角色按钮权限");
+			return ResultModel.build(200, "success");
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return ResultModel.build(500, "error");
+		}
 	}
 }

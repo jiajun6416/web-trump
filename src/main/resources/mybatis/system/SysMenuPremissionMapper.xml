@@ -19,7 +19,7 @@
   </select>
   
   <select id="getMenuIdByRoleId" resultType="int" parameterType="map">
-  	select p.menu_id from sys_role r, sys_role_prem rp, sys_menu_premission p where r.id=rp.role_id and p.id=rp.prem_id and rp.prem_type=#{type} and  r.id = #{roleId}
+  	select p.menu_id from sys_role r, sys_role_prem rp, sys_menu_premission p where r.id=rp.role_id and p.id=rp.prem_id and rp.prem_type=1 and p.premission_type=#{type} and  r.id = #{roleId}
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -28,6 +28,18 @@
     from sys_menu_premission
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+<select id="getPremissionByMenuAndType" parameterType="map" resultType="int">
+	select id from sys_menu_premission where menu_id in 
+	<foreach collection="ids" item="id" open="(" close=")" separator="," >
+		#{id}
+	</foreach>
+	and premission_type = #{type}
+</select>
+
+<delete id="deleteAllByRoleIdAndType" parameterType="map">
+	delete from sys_role_prem where  prem_type=1 and menu_type=#{type} and role_id=#{roleId}
+</delete>
 
  <delete id="deleteByMenuId" parameterType="java.lang.Integer">
 	 delete from sys_menu_premission
@@ -38,6 +50,18 @@
     delete from sys_menu_premission
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  
+  <delete id="deleteBYRoleId" parameterType="int">
+  	delete from sys_role_prem where role_id=#{roleId}
+  </delete>
+  
+  <insert id="insertRolePremission" parameterType="map">
+  	insert into sys_role_prem value
+  	<foreach collection="premIds" item="premId" separator=",">
+  		(null, #{roleId}, #{premId}, #{type}, 1)
+  	</foreach>
+  </insert>
+  
   <insert id="insert" parameterType="com.jiajun.pojo.system.SysMenuPremission">
     insert into sys_menu_premission (id, menu_id, premission_type, 
       premission_code)

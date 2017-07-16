@@ -78,7 +78,7 @@
 										
 									
 										<li class="" id="m37">
-											<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('m37','z2','按钮权限','buttonrights/list.do')">
+											<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('m37','z2','按钮权限','role/operation/list.do')">
 												<i class="menu-icon fa fa-key green"></i>
 													按钮权限
 											</a>
@@ -91,7 +91,7 @@
 						
 							
 							<li class="" id="z39">
-								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z39','lm1','按钮管理','fhbutton/list.do')">
+								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z39','lm1','按钮管理','operation/list.do')">
 									<i class="menu-icon fa fa-download orange"></i>
 										按钮管理
 								</a>

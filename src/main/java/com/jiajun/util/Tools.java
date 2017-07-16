@@ -49,7 +49,7 @@ public class Tools {
 	 * @return
 	 */
 	public static boolean regular(String str) {
-		return str.matches(SPLIT_PATTERN);
+		return str.matches(SPLIT_PATTERN) || str.matches("\\d++");
 	}
 	
 	public static void main(String[] args) {

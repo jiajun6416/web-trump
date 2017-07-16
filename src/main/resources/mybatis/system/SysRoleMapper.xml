@@ -41,6 +41,7 @@
 	where sys_role.role_type=#{roleType} and sys_role.parent_id = 0
   </select>
   
+  
    <select id="getAllTypeRole" resultMap="BaseResultMap">
   	select 
     <include refid="Base_Column_List" />

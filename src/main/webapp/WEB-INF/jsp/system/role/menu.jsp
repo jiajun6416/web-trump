@@ -161,7 +161,7 @@
 			var roleId = '${roleId}';
 			var url = "role/saveRolePremission.do";
 			var postData;
-			postData = {"roleId":roleId,"menuIds":ids};
+			postData = {"roleId":roleId,"menuIds":ids, "type":'${type}'};
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();
 			$.post(url,postData,function(data){

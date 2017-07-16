@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysOpeartion">
+  <resultMap id="BaseResultMap" type="com.jiajun.pojo.system.SysOpeartionEntity">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="opeartion_name" jdbcType="VARCHAR" property="opeartionName" />
+    <result column="privileges_code" jdbcType="VARCHAR" property="privilegesCode" />
+    <result column="operation_desc" jdbcType="VARCHAR" property="operationDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, opeartion_name, privileges_code, operation_desc
+  </sql>
+  
+  <select id="getAll" resultMap="BaseResultMap">
+      select 
+    <include refid="Base_Column_List" />
+    from sys_opeartion
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_opeartion
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_opeartion
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jiajun.pojo.system.SysOpeartionEntity">
+    insert into sys_opeartion (id, opeartion_name, privileges_code, 
+      operation_desc)
+    values (#{id,jdbcType=INTEGER}, #{opeartionName,jdbcType=VARCHAR}, #{privilegesCode,jdbcType=VARCHAR}, 
+      #{operationDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jiajun.pojo.system.SysOpeartionEntity">
+    insert into sys_opeartion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="opeartionName != null">
+        opeartion_name,
+      </if>
+      <if test="privilegesCode != null">
+        privileges_code,
+      </if>
+      <if test="operationDesc != null">
+        operation_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="opeartionName != null">
+        #{opeartionName,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegesCode != null">
+        #{privilegesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDesc != null">
+        #{operationDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jiajun.pojo.system.SysOpeartionEntity">
+    update sys_opeartion
+    <set>
+      <if test="opeartionName != null">
+        opeartion_name = #{opeartionName,jdbcType=VARCHAR},
+      </if>
+      <if test="privilegesCode != null">
+        privileges_code = #{privilegesCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operationDesc != null">
+        operation_desc = #{operationDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jiajun.pojo.system.SysOpeartionEntity">
+    update sys_opeartion
+    set opeartion_name = #{opeartionName,jdbcType=VARCHAR},
+      privileges_code = #{privilegesCode,jdbcType=VARCHAR},
+      operation_desc = #{operationDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -113,10 +113,20 @@ public interface SysRoleService {
 	List<ZtreeNode> getPremissionNodes(int roleId, int type) throws Exception;
 	
 	/**
-	 * 保存角色对应的菜单
+	 * 
 	 * @param roleId
 	 * @param menuIds
+	 * @param type 1 query 2 add 3 update 4 delete 5 other
+	 * @throws Exception
 	 */
-	void saveRoleMenuPremission(int roleId, String menuIds)throws Exception;
+	void saveRoleMenuPremission(int roleId, String menuIds, int type)throws Exception;
+	
+	/**
+	 * 修改角色的opera权限
+	 * @param roleId
+	 * @param operaId
+	 */
+	void updateOpera(int roleId, int operaId) throws Exception;
+	
 	
 }

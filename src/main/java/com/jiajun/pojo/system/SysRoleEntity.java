@@ -1,5 +1,12 @@
 package com.jiajun.pojo.system;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.jiajun.util.Tools;
+
 public class SysRoleEntity {
     private Integer id;
 
@@ -14,8 +21,14 @@ public class SysRoleEntity {
     private String menuIds;
 
     private String operationIds;
+    
+    private List<Integer> operaIds;
+    
+    public List<Integer> getOperaIds() {
+		return operaIds;
+	}
 
-    public Integer getId() {
+	public Integer getId() {
         return id;
     }
 
@@ -69,5 +82,12 @@ public class SysRoleEntity {
 
     public void setOperationIds(String operationIds) {
         this.operationIds = operationIds;
+        if(StringUtils.isNotEmpty(operationIds) && Tools.regular(operationIds)) {
+        	String[] idsStr = operationIds.split(",");
+        	operaIds = new ArrayList<>(idsStr.length);
+        	for (String id : idsStr) {
+        		operaIds.add(Integer.valueOf(id));
+			}
+        }
     }
 }
