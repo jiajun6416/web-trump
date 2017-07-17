@@ -3,3 +3,5 @@ target
 /*.classpath
 .settings
 .gitgnore
+/config/dbConfig.properties
+/mybatis/sqlMapGenrator.xm
