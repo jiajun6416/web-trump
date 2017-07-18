@@ -12,7 +12,7 @@
 	<!-- 使用默认的handler映射器和handler适配器 -->
 	<mvc:annotation-driven/>
 	
-	<!--restfull对静态资源放行-->     
+	<!--静态资源的映射-->     
 	<mvc:resources mapping="/admin/**" location="/admin/" />
 	<mvc:resources mapping="/static/**" location="/static/" />
 	<mvc:resources mapping="/plugins/**" location="/plugins/" />

@@ -16,6 +16,7 @@ import com.jiajun.pojo.ZtreeNode;
 import com.jiajun.pojo.system.SysMenuEntity;
 import com.jiajun.pojo.system.SysMenuPremission;
 import com.jiajun.service.SysMenuService;
+import com.jiajun.util.Tools;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -24,6 +25,8 @@ public class SysMenuServiceImpl implements SysMenuService{
 	private final static String NAME_SPACE = "SysMenuMapper.";
 	
 	private final static String SYS_PREMISSION_NAME_SPACE = "sysMenuPremissionMapper.";
+	
+	private final static String SYS_ROLE_NAME_SPACE = "SysRoleMapper.";
 	
 	@Resource
 	@Qualifier("daoImpl")
@@ -144,16 +147,28 @@ public class SysMenuServiceImpl implements SysMenuService{
 			dao.batchDelete(SYS_PREMISSION_NAME_SPACE+"deleteByPrimaryKey", removeList);
 		}
 	}
-
-	@Override
-	public List<SysMenuEntity> getAllMenu() throws Exception {
-		return null;
-	}
+	
+	
 
 	@Override
 	public List<ZtreeNode> selectAllMenuZtreeNode() throws Exception {
 		//return (List<ZtreeNode>) dao.selectAllMenuZtreeNode();
 		return (List<ZtreeNode>) dao.selectList(NAME_SPACE+"selectMenuZtreeNodeList", null);
+	}
+
+	@Override
+	public List<SysMenuEntity> getMenuListByRoleId(int roleId) throws Exception {
+		String hasMenuId = (String) dao.selectObject(SYS_ROLE_NAME_SPACE+"selectMenuIdsById", roleId);
+		if(!StringUtils.isEmpty(hasMenuId) && Tools.regular(hasMenuId)) {
+			String[] hasMenuIds = hasMenuId.split(",");
+			List<Integer> menuIds = new ArrayList<>();
+			for (String menuId : hasMenuIds) {
+				menuIds.add(Integer.valueOf(menuId));
+			}
+			List<SysMenuEntity> menuEntitys = (List<SysMenuEntity>) dao.selectList(NAME_SPACE+"selectByMenuIds", menuIds);
+		}
+		
+		return null;
 	}
 
 }

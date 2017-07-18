@@ -41,6 +41,9 @@
 	where sys_role.role_type=#{roleType} and sys_role.parent_id = 0
   </select>
   
+  <select id="selectMenuIdsById" parameterType="int" resultType="string">
+  	select menu_ids from sys_role where id=#{roleId}
+  </select>
   
    <select id="getAllTypeRole" resultMap="BaseResultMap">
   	select 

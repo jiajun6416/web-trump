@@ -14,15 +14,19 @@ var oladress="";		//在线管理和站内信服务器IP和端口
 
 //菜单切换
 function siMenu(id,fid,MENU_NAME,MENU_URL){
+	//不是上次选中
 	if(id != mid){
 		$("#"+mid).removeClass();
 		mid = id;
 	}
+	//父节点不是上次的
 	if(fid != fmid){
 		$("#"+fmid).removeClass();
 		fmid = fid;
 	}
+	//父节点是打开状态
 	$("#"+fid).attr("class","active open");
+	//当前节点是活跃状态
 	$("#"+id).attr("class","active");
 	top.mainFrame.tabAddHandler(id,MENU_NAME,MENU_URL);
 	if(MENU_URL != "druid/index.html"){

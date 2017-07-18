@@ -75,7 +75,6 @@
 											</a>
 											<b class="arrow"></b>
 										</li>
-										
 									
 										<li class="" id="m37">
 											<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('m37','z2','按钮权限','role/operation/list.do')">
@@ -85,74 +84,45 @@
 											<b class="arrow"></b>
 										</li>
 								</ul>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z39">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z39','lm1','按钮管理','operation/list.do')">
 									<i class="menu-icon fa fa-download orange"></i>
 										按钮管理
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z38">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z38','lm1','菜单管理','menu/listAllMenu.do')">
 									<i class="menu-icon fa fa-folder-open-o brown"></i>
 										菜单管理
-									
 								</a>
 								<b class="arrow"></b>
 								
 							</li>
-							
-						
-							
 							<li class="" id="z43">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z43','lm1','数据字典','dictionaries/listAllDict.do?DICTIONARIES_ID=0')">
 									<i class="menu-icon fa fa-book purple"></i>
 										数据字典
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z20">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z20','lm1','在线管理','onlinemanager/list.do')">
 									<i class="menu-icon fa fa-laptop green"></i>
 										在线管理
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z3">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z3','lm1','日志管理','log/list')">
 									<i class="menu-icon fa fa-book blue"></i>
 										日志管理
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
 						</ul>
-						
 					</li>
-				
-				
-				
 					<li class=""  id="lm40">
 						<a style="cursor:pointer;" class="dropdown-toggle">
 							<i class="menu-icon fa fa-users blue"></i>
@@ -170,31 +140,18 @@
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z41','lm40','系统用户','user/listUser')">
 									<i class="menu-icon fa fa-users green"></i>
 										系统用户
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z42">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z42','lm40','会员管理','happuser/listUsers.do')">
 									<i class="menu-icon fa fa-users orange"></i>
 										会员管理
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
 						</ul>
-						
 					</li>
-				
-				
-				
 					<li class=""  id="lm9">
 						<a style="cursor:pointer;" class="dropdown-toggle">
 							<i class="menu-icon fa fa-cog black"></i>
@@ -206,8 +163,6 @@
 						<b class="arrow"></b>
 						
 						<ul class="submenu">
-						
-							
 							<li class="" id="z44">
 								<a style="cursor:pointer;"  class="dropdown-toggle">
 									<i class="menu-icon fa fa-cogs brown"></i>
@@ -217,136 +172,81 @@
 								<b class="arrow"></b>
 								
 								<ul class="submenu">
-									
-									
 										<li class="" id="m62">
 											<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('m62','z44','正向生成','createCode/list.do')">
 												<i class="menu-icon fa fa-cogs green"></i>
 													正向生成
-												
 											</a>
 											<b class="arrow"></b>
-	
-											
 										</li>
-										
-									
-									
 										<li class="" id="m63">
 											<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('m63','z44','反向生成','recreateCode/list.do')">
 												<i class="menu-icon fa fa-cogs blue"></i>
 													反向生成
-												
 											</a>
 											<b class="arrow"></b>
-	
-											
 										</li>
-										
-									
 								</ul>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z53">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z53','lm9','表单构建器','tool/goFormbuilder.do')">
 									<i class="menu-icon fa fa-credit-card green"></i>
 										表单构建器
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z10">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z10','lm9','接口测试','tool/interfaceTest.do')">
 									<i class="menu-icon fa fa-exchange green"></i>
 										接口测试
-									
 								</a>
 								<b class="arrow"></b>
 								
 							</li>
-							
-						
-							
 							<li class="" id="z11">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z11','lm9','发送邮件','tool/goSendEmail.do')">
 									<i class="menu-icon fa fa-envelope-o green"></i>
 										发送邮件
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z12">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z12','lm9','置二维码','tool/goTwoDimensionCode.do')">
 									<i class="menu-icon fa fa-barcode green"></i>
 										置二维码
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z48">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z48','lm9','图表报表',' tool/fusionchartsdemo.do')">
 									<i class="menu-icon fa fa-bar-chart-o black"></i>
 										图表报表
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z14">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z14','lm9','地图工具','tool/map.do')">
 									<i class="menu-icon fa fa-globe black"></i>
 										地图工具
-									
 								</a>
 								<b class="arrow"></b>
 								
 							</li>
-							
-						
-							
 							<li class="" id="z21">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z21','lm9','打印测试','tool/printTest.do')">
 									<i class="menu-icon fa fa-hdd-o grey"></i>
 										打印测试
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
-							
 							<li class="" id="z8">
 								<a style="cursor:pointer;" target="mainFrame" onclick="siMenu('z8','lm9','性能监控','druid/index.html')">
 									<i class="menu-icon fa fa-tachometer red"></i>
 										性能监控
-									
 								</a>
 								<b class="arrow"></b>
-								
 							</li>
-							
-						
 						</ul>
-						
 					</li>
 				
 				

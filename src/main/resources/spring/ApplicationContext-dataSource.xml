@@ -46,11 +46,6 @@
          <property name="logAbandoned" value="${logAbandoned}" />
 	</bean>  
 	
-	<!-- sql会话模版, 如果配置sqlSessionTemplate多例的话, 在单元测试的时候会丢出异常?? -->
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="sqlSessionFactory" />
-	</bean>
-	
 	<!-- 配置mybatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     	<property name="dataSource" ref="dataSource" />

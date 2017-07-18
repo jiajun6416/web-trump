@@ -29,6 +29,11 @@
   	<result column="checked" jdbcType="BIT" property="checked" />
   </resultMap>
   
+  <!-- 递归查询所有的node -->
+  <select id="selectMenuZtreeNodeById" parameterType="int" resultMap="menuZtreeNode">
+  	select id, parent_id,is_parent,menu_name from sys_menu where parent_id = #{parentId};
+  </select>
+  
   <sql id="Base_Column_List">
     id, menu_name, parent_id, is_parent, access_url,  sort, icon, is_show, 
     gmt_create, gmt_modifyed
@@ -41,6 +46,16 @@
 		sys_menu
 	WHERE
 		parent_id = #{id}
+  </select>
+  
+  <select id="selectByMenuIds" parameterType="java.util.List" resultMap="BaseResultMap">
+ 	select 
+ 	<include refid="Base_Column_List"/>
+ 	from  sys_menu where id in 
+ 	<foreach collection="menuIds" open="(" close=")" separator="," item="menuId">
+ 		#{menuId}
+ 	</foreach>
+  	
   </select>
   <!-- ======================================ztree 查询=============================== -->
   <select id="selectMenuIdByRoleType" parameterType="map" resultMap="checkedZtreeNode">

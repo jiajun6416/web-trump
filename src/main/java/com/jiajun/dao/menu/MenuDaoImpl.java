@@ -15,7 +15,6 @@ public class MenuDaoImpl extends DaoImpl implements MenuDao{
 	public List<ZtreeNode> selectAllMenuZtreeNode() throws Exception {
 		return getNodesByPid(this.getSqlSession(), "SysMenuMapper.selectMenuZtreeNodeById", 0);
 	}
-	
 	private List<ZtreeNode> getNodesByPid(SqlSession session, String statement, int pId) {
 		List<ZtreeNode> list = session.selectList(statement, pId);
 		if(list != null) {

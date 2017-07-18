@@ -23,7 +23,7 @@
 </body>
 <script type="text/javascript">
 
-//tab页显示菜单
+//tab栏添加一个菜单项
 function tabAddHandler(mid,mtitle,murl){
 	tab.update({
 		id :mid,

@@ -89,4 +89,5 @@ public class DaoImpl extends  SqlSessionDaoSupport implements Dao {
 		page.setPageSize(rows);
 		return page;
 	}
+	
 }

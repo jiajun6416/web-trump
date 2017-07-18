@@ -41,17 +41,19 @@ public interface SysMenuService {
 	
 	void update(SysMenuEntity menuEntity)throws Exception;
 	
-	/**
-	 * 通过递归查找所有的菜单
-	 * @return
-	 */
-	List<SysMenuEntity> getAllMenu()throws Exception;
 	
 	/**
-	 * 获得所有的treeNode
+	 * 获得所有的treeNode 
 	 * @return
 	 */
 	List<ZtreeNode> selectAllMenuZtreeNode() throws Exception;
-
+	
+	
+	/**
+	 * 获得角色对应的菜单并且层级排好
+	 * @return
+	 * @throws Exception
+	 */
+	List<SysMenuEntity> getMenuListByRoleId(int roleId) throws Exception;
 
 }
