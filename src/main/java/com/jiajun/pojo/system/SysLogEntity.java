@@ -1,9 +1,20 @@
 package com.jiajun.pojo.system;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SysLogEntity {
-    private Integer id;
+import com.jiajun.util.JsonUtils;
+
+/**
+ * @desc 
+ * @author JIAJUN
+ * @date da2017年7月18日
+ */
+public class SysLogEntity implements Serializable{
+
+	private static final long serialVersionUID = 2708839047848267671L;
+
+	private Integer id;
 
     private String opearUser;
 
@@ -52,4 +63,10 @@ public class SysLogEntity {
     public void setEvent(String event) {
         this.event = event;
     }
+
+	@Override
+	public String toString() {
+		return JsonUtils.encode(this);
+	}
+    
 }

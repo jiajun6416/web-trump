@@ -18,7 +18,7 @@ public class ZtreeNode {
 	/*0表示不是,1表示是*/
 	private int isParent;
 	/*如果是父节点,则是open=true*/
-	private boolean open = false;
+	private boolean open = true;
 	
 	/*是否被选中*/
 	private boolean checked = false;

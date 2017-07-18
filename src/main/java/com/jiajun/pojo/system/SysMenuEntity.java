@@ -1,10 +1,19 @@
 package com.jiajun.pojo.system;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SysMenuEntity {
-    private Integer id;
+import org.apache.xmlbeans.impl.store.PathDelegate.SelectPathInterface;
+
+import com.jiajun.util.JsonUtils;
+
+public class SysMenuEntity implements Serializable{
+
+	private static final long serialVersionUID = 9120906392629723215L;
+
+	private Integer id;
 
     private String menuName;
 
@@ -24,7 +33,7 @@ public class SysMenuEntity {
 
     private Date gmtModifyed;
 
-    private List<SysMenuEntity> menuList;
+    private List<SysMenuEntity> menuList = new ArrayList<>();
     
     private List<SysMenuPremission> premissionList;
     
@@ -123,4 +132,9 @@ public class SysMenuEntity {
     public void setGmtModifyed(Date gmtModifyed) {
         this.gmtModifyed = gmtModifyed;
     }
+    
+	@Override
+	public String toString() {
+		return JsonUtils.encode(this);
+	}
 }

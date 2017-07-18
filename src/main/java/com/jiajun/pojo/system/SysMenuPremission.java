@@ -1,7 +1,14 @@
 package com.jiajun.pojo.system;
 
-public class SysMenuPremission {
-    private Integer id;
+import java.io.Serializable;
+
+import com.jiajun.util.JsonUtils;
+
+public class SysMenuPremission implements Serializable{
+
+	private static final long serialVersionUID = -3998237534443416651L;
+
+	private Integer id;
 
     private Integer menuId;
 
@@ -40,4 +47,9 @@ public class SysMenuPremission {
     public void setPremissionCode(String premissionCode) {
         this.premissionCode = premissionCode;
     }
+	@Override
+	public String toString() {
+		return JsonUtils.encode(this);
+	}
+    
 }

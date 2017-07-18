@@ -166,9 +166,23 @@ public class SysMenuServiceImpl implements SysMenuService{
 				menuIds.add(Integer.valueOf(menuId));
 			}
 			List<SysMenuEntity> menuEntitys = (List<SysMenuEntity>) dao.selectList(NAME_SPACE+"selectByMenuIds", menuIds);
+			//进行递归,将子菜单和父亲菜单进行关联起来
+			List<SysMenuEntity> result = new ArrayList<>();
+			for (SysMenuEntity menu1 : menuEntitys) {
+				if(menu1.getParentId() == 0) {
+					result.add(menu1);
+				} else {
+					for (SysMenuEntity menu2 : result) {
+						if(menu1.getParentId() == menu2.getId()) {
+							menu2.getMenuList().add(menu1);
+						}
+					}
+				}
+			}
+			return result;
+		} else {
+			return null;
 		}
-		
-		return null;
 	}
 
 }

@@ -41,4 +41,5 @@ public interface SysUserService {
 	 * @return
 	 */
 	Page<SysUserEntity> getPage(ParameMap params)throws Exception;
+	
 }

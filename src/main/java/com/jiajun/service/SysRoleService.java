@@ -25,6 +25,15 @@ public interface SysRoleService {
 	 * @return
 	 */
 	SysRoleEntity getRoleById(int roleId) throws Exception;
+	
+	/**
+	 * 通过userId查询
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	SysRoleEntity getByUserId(int userId) throws Exception;
+	
 	/**
 	 * 删除
 	 * @param roleId
@@ -38,6 +47,7 @@ public interface SysRoleService {
 	 * @throws Exception
 	 */
 	void deleteType(int roleType) throws Exception;
+	
 	/**
 	 * 改
 	 * @param roleEntity

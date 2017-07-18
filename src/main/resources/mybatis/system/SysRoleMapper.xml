@@ -25,6 +25,10 @@
   	select max(role_type) from sys_role
   </select>
   
+  <select id="getByUserId" parameterType="int" resultMap="BaseResultMap">
+	SELECT r.* from sys_user u, sys_user_role ur, sys_role r where u.id=ur.user_id and ur.role_id=r.id and u.id = #{userId}; 
+  </select>
+  
   <select id="getRoleNumByType" parameterType="int" resultType="int">
 	select count(*) from sys_role where parent_id !=0 and role_type = #{roleType}  
   </select>

@@ -1,11 +1,16 @@
 package com.jiajun.pojo.system;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class SysUserEntity {
-	
-    private Integer id;
+import com.jiajun.util.JsonUtils;
+
+public class SysUserEntity implements Serializable{
+
+	private static final long serialVersionUID = -8189821437638122251L;
+
+	private Integer id;
 
     private String username;
 
@@ -154,4 +159,10 @@ public class SysUserEntity {
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
+    
+	@Override
+	public String toString() {
+		return JsonUtils.encode(this);
+	}
+    
 }

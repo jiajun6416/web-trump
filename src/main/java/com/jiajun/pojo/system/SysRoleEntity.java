@@ -1,14 +1,19 @@
 package com.jiajun.pojo.system;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.jiajun.util.JsonUtils;
 import com.jiajun.util.Tools;
 
-public class SysRoleEntity {
-    private Integer id;
+public class SysRoleEntity implements Serializable{
+
+	private static final long serialVersionUID = -8337217684212227184L;
+
+	private Integer id;
 
     private String roleName;
 
@@ -90,4 +95,10 @@ public class SysRoleEntity {
 			}
         }
     }
+    
+	@Override
+	public String toString() {
+		return JsonUtils.encode(this);
+	}
+    
 }

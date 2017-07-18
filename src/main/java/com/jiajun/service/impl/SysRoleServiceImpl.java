@@ -29,8 +29,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Qualifier("daoImpl")
 	private Dao dao;
 	
-	
-	Logger logger = LoggerFactory.getLogger(SysRoleServiceImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(SysRoleServiceImpl.class);
 	
 	private static final String ROLE_NAME_SPACE = "SysRoleMapper.";
 	
@@ -74,7 +73,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 		
 		dao.delete(ROLE_NAME_SPACE+"deleteByPrimaryKey", roleId);
 	}
-
+	
+	
 	@Override
 	public void deleteType(int roleType) throws Exception {
 		//查询当前角色组下是否有角色
@@ -208,6 +208,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public void saveRoleMenus(int roleId, String menuIds) throws Exception {
 		SysRoleEntity role = new SysRoleEntity();
 		role.setId(roleId);
+		List<Integer> idsList = new ArrayList<>();
 		if(StringUtils.isEmpty(menuIds)) {
 			role.setMenuIds("");
 		} else {
@@ -234,8 +235,13 @@ public class SysRoleServiceImpl implements SysRoleService {
 				throw new SysCustomException("非法参数!当前角色的菜单权限越界!");
 			}
 			role.setMenuIds(menuIds);
+			for(String id:ids) {
+				idsList.add(Integer.valueOf(id));
+			}
 		}
 		dao.update(ROLE_NAME_SPACE+"updateByPrimaryKeySelective", role);
+		//清理角色对应的菜单权限的数据
+		dao.delete(MENU_NAME_SPACE+"deleteRoleListByListIds", idsList);
 	}
 
 
@@ -329,6 +335,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 		role.setOperationIds(newOperaStr);
 		dao.update(ROLE_NAME_SPACE+"updateByPrimaryKey", role);
+	}
+
+
+	@Override
+	public SysRoleEntity getByUserId(int userId) throws Exception {
+		return (SysRoleEntity) dao.selectObject(ROLE_NAME_SPACE+"getByUserId", userId);
 	}
 
 }

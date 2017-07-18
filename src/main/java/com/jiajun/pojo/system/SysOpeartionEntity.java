@@ -1,8 +1,14 @@
 package com.jiajun.pojo.system;
 
-public class SysOpeartionEntity {
+import java.io.Serializable;
+
+import com.jiajun.util.JsonUtils;
+
+public class SysOpeartionEntity implements Serializable{
 	
-    private Integer id;
+	private static final long serialVersionUID = -3103113641511841093L;
+
+	private Integer id;
 
     private String opeartionName;
 
@@ -41,4 +47,10 @@ public class SysOpeartionEntity {
     public void setOperationDesc(String operationDesc) {
         this.operationDesc = operationDesc;
     }
+    
+	@Override
+	public String toString() {
+		return JsonUtils.encode(this);
+	}
+    
 }

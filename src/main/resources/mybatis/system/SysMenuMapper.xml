@@ -52,7 +52,7 @@
  	select 
  	<include refid="Base_Column_List"/>
  	from  sys_menu where id in 
- 	<foreach collection="menuIds" open="(" close=")" separator="," item="menuId">
+ 	<foreach collection="list" open="(" close=")" separator="," item="menuId">
  		#{menuId}
  	</foreach>
   	
@@ -198,6 +198,27 @@
     from sys_menu
     where id = #{id,jdbcType=INTEGER} 
   </select>
+  
+   <!-- 删除菜单权限的时候, 必须清除掉role-menu表数据 -->
+  <delete id="deleteRoleListByListIds" parameterType="list">
+	DELETE
+	FROM
+		sys_role_prem 
+	WHERE
+		prem_type = 0
+	AND NOT EXISTS (
+		SELECT
+			*
+		FROM
+			sys_menu_premission p
+		WHERE
+			p.menu_id IN 
+			<foreach collection="list" item="menuId" open="(" close=")" separator=",">
+				#{menuId}
+			</foreach>			
+		AND prem_id = p.id
+	)
+  </delete>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_menu

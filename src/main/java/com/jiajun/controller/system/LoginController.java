@@ -1,5 +1,7 @@
 package com.jiajun.controller.system;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,8 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jiajun.controller.base.BaseController;
 import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.ResultModel;
+import com.jiajun.pojo.system.SysMenuEntity;
+import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.pojo.system.SysUserEntity;
 import com.jiajun.service.SysLogService;
+import com.jiajun.service.SysMenuService;
+import com.jiajun.service.SysRoleService;
 import com.jiajun.service.SysUserService;
 import com.jiajun.util.Constant;
 import com.jiajun.util.Tools;
@@ -32,6 +38,10 @@ public class LoginController extends BaseController{
 	private SysUserService sysUserService;
 	@Autowired
 	private SysLogService sysLogService;
+	@Autowired
+	private SysRoleService sysRoleService;
+	@Autowired
+	private SysMenuService sysMenuService;
 	
 	//跳转登录
 	@RequestMapping("/toLogin") 
@@ -72,6 +82,13 @@ public class LoginController extends BaseController{
 					//清除验证码
 					session.removeAttribute(Constant.SESSION_SECURITY_CODE);
 					sysLogService.save(username, this.getIP(request), "登录成功");
+					
+					//将用户菜单加入到session中
+					SysRoleEntity role = sysRoleService.getByUserId(sysUser.getId());
+					List<SysMenuEntity> menuList = sysMenuService.getMenuListByRoleId(role.getId());
+					System.out.println(menuList);
+					session.setAttribute("menuList", menuList);
+					
 					return ResultModel.build(200, "success");
 				} else {
 					sysLogService.save(this.getLoginUser(session), this.getIP(request), "登录用户名或者密码错误");

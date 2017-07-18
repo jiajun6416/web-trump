@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 import com.jiajun.base.BaseTest;
 import com.jiajun.dao.menu.MenuDao;
 import com.jiajun.pojo.ZtreeNode;
+import com.jiajun.pojo.system.SysMenuEntity;
 
 public class SysMenuServiceTest  extends BaseTest{
 
@@ -35,9 +36,10 @@ public class SysMenuServiceTest  extends BaseTest{
 	}
 	
 	@Test
+	@SuppressWarnings("unused")
 	public void getMenuListByRoleId()  {
 		try {
-			menuService.getMenuListByRoleId(2);
+			List<SysMenuEntity> list = menuService.getMenuListByRoleId(2);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
