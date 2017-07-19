@@ -200,12 +200,12 @@
   </select>
   
    <!-- 删除菜单权限的时候, 必须清除掉role-menu表数据 -->
-  <delete id="deleteRoleListByListIds" parameterType="list">
+  <delete id="deleteRoleListByListIds" parameterType="map">
 	DELETE
 	FROM
 		sys_role_prem 
 	WHERE
-		prem_type = 0
+		prem_type = 1
 	AND NOT EXISTS (
 		SELECT
 			*
@@ -213,11 +213,19 @@
 			sys_menu_premission p
 		WHERE
 			p.menu_id IN 
-			<foreach collection="list" item="menuId" open="(" close=")" separator=",">
-				#{menuId}
-			</foreach>			
+			<choose>
+				<when test="idsList!=null and idsList.size()>0">
+					<foreach collection="idsList" item="menuId" open="(" close=")" separator=",">
+						#{menuId}
+					</foreach>			
+				</when>
+				<otherwise>
+					(null)
+				</otherwise>
+			</choose>
 		AND prem_id = p.id
 	)
+	AND role_id= #{roleId}
   </delete>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">

@@ -121,21 +121,22 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 
 	@Override
-	public void saveRoleTypeMneu(int roleType, String menuIds) throws Exception {
+	public void saveRoleTypeMneu(int roleType, String menuIdsStr) throws Exception {
 		if(roleType != 0) {
-			if(StringUtils.isNotEmpty(menuIds)) {
-				if(!Tools.regular(menuIds)) {
-					logger.error("角色类型授予菜单, 传入参数类型错误: {}", menuIds);
+			List<Integer> menuIds = new ArrayList<>();
+			if(StringUtils.isNotEmpty(menuIdsStr)) {
+				if(!Tools.regular(menuIdsStr)) {
+					logger.error("角色类型授予菜单, 传入参数类型错误: {}", menuIdsStr);
 					throw new SysCustomException("参数类型错误");
 				}
 				Map<String, Object> params = new HashMap<>();
 				params.put("roleType", roleType);
-				params.put("menuIds", menuIds);
+				params.put("menuIdsStr", menuIdsStr);
 				dao.update(ROLE_NAME_SPACE+"updateByRoleType", params);
 				//角色组已有的菜单都同步更新,不在角色组最大菜单权限内的全部移除
 				List<SysRoleEntity> subRoleList = (List<SysRoleEntity>) dao.selectList(ROLE_NAME_SPACE+"getByType", roleType);
 				String roleMenus = null;
-				String[] typeMenus = menuIds.split(",");
+				String[] typeMenus = menuIdsStr.split(",");
 				int length  = typeMenus.length;
 				int index;
 				String newMenus = ""; //子角色同步后的菜单 
@@ -144,6 +145,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 					roleMenus = role.getMenuIds();
 					if(!StringUtils.isEmpty(roleMenus)) {
 						String[] roleMenuIds = roleMenus.split(",");
+						//筛选在父菜单内的菜单项
 						for (String id : roleMenuIds) {
 							if(Integer.valueOf(id) == Integer.valueOf(typeMenus[index])) {
 								newMenus+=id+",";
@@ -151,7 +153,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 								if(index == length) break;
 							}
 						}
-						newMenus = newMenus.substring(0, newMenus.lastIndexOf(","));
+						if(!"".equals(newMenus) && newMenus.lastIndexOf(",")!=-1) {
+							newMenus = newMenus.substring(0, newMenus.lastIndexOf(","));
+						}
 						role.setMenuIds(newMenus);
 					}
 				}
@@ -169,6 +173,11 @@ public class SysRoleServiceImpl implements SysRoleService {
 				}
 				dao.batchUpdate(ROLE_NAME_SPACE+"updateMenuIds", subRoleList);
 			}
+			
+			//改角色类型下所有角色对应的菜单权限如果不在这些菜单项下, 都移除
+			Map<String, Object> params = new HashMap<>();
+			params.put("roleType", roleType);
+			dao.delete(MENU_PREMISSION_NAME_SPACE+"deleteMenuPremissioByRoleType", roleType);
 		} else {
 			logger.error("角色类型授予菜单, 传入参数类型错误: {}", roleType);
 			throw new SysCustomException("参数类型错误");
@@ -241,7 +250,10 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 		dao.update(ROLE_NAME_SPACE+"updateByPrimaryKeySelective", role);
 		//清理角色对应的菜单权限的数据
-		dao.delete(MENU_NAME_SPACE+"deleteRoleListByListIds", idsList);
+		Map<String, Object> params = new HashMap<>();
+		params.put("roleId", roleId);
+		params.put("idsList", idsList);
+		dao.delete(MENU_NAME_SPACE+"deleteRoleListByListIds", params);
 	}
 
 

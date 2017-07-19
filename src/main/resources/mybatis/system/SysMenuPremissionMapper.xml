@@ -41,6 +41,23 @@
 	delete from sys_role_prem where  prem_type=1 and menu_type=#{type} and role_id=#{roleId}
 </delete>
 
+<!-- 移除角色类型对应的所有菜单权限 -->
+<delete id="deleteMenuPremissioByRoleType" parameterType="int">
+	DELETE
+	FROM
+		sys_role_prem
+	WHERE
+		EXISTS (
+			SELECT
+				r.id
+			FROM
+				sys_role r
+			WHERE
+				role_id = r.id
+			AND r.role_type = #{roleType}
+		)
+</delete>
+
  <delete id="deleteByMenuId" parameterType="java.lang.Integer">
 	 delete from sys_menu_premission
     where menu_id = #{menuId,jdbcType=INTEGER}
