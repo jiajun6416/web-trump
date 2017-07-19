@@ -86,7 +86,7 @@ public class LoginController extends BaseController{
 					//将用户菜单加入到session中
 					SysRoleEntity role = sysRoleService.getByUserId(sysUser.getId());
 					List<SysMenuEntity> menuList = sysMenuService.getMenuListByRoleId(role.getId());
-					System.out.println(menuList);
+				//	System.out.println(menuList);
 					session.setAttribute("menuList", menuList);
 					
 					return ResultModel.build(200, "success");

@@ -63,6 +63,29 @@
     where menu_id = #{menuId,jdbcType=INTEGER}
  </delete>
 
+<!-- 当角色类型对应最大菜单为空时候, 删除该类型下所有角色的菜单权限 -->
+<delete id="deleteAllByRoleType" parameterType="int">
+	DELETE rp
+	FROM
+		sys_role_prem rp,
+		sys_role r
+	WHERE
+		rp.role_id = r.id
+	AND r.role_type = #{roleType}
+</delete>
+
+<!-- 修改角色类型后, 修改对应的子角色具有的菜单权限 -->
+<delete id="deleteByRoleTypeHasMenus" parameterType="map">
+	DELETE rp
+	FROM
+		sys_role_prem rp,
+		sys_role r,
+		sys_menu_premission mp
+	WHERE
+		rp.role_id = r.id AND mp.id=rp.prem_id AND mp.menu_id NOT IN (${menuIds})
+	AND r.role_type = 1 
+</delete>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_menu_premission
     where id = #{id,jdbcType=INTEGER}

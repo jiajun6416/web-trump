@@ -123,7 +123,6 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Override
 	public void saveRoleTypeMneu(int roleType, String menuIdsStr) throws Exception {
 		if(roleType != 0) {
-			List<Integer> menuIds = new ArrayList<>();
 			if(StringUtils.isNotEmpty(menuIdsStr)) {
 				if(!Tools.regular(menuIdsStr)) {
 					logger.error("角色类型授予菜单, 传入参数类型错误: {}", menuIdsStr);
@@ -131,7 +130,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 				}
 				Map<String, Object> params = new HashMap<>();
 				params.put("roleType", roleType);
-				params.put("menuIdsStr", menuIdsStr);
+				params.put("menuIds", menuIdsStr);
 				dao.update(ROLE_NAME_SPACE+"updateByRoleType", params);
 				//角色组已有的菜单都同步更新,不在角色组最大菜单权限内的全部移除
 				List<SysRoleEntity> subRoleList = (List<SysRoleEntity>) dao.selectList(ROLE_NAME_SPACE+"getByType", roleType);
@@ -161,23 +160,23 @@ public class SysRoleServiceImpl implements SysRoleService {
 				}
 				//批量更新子节点权限
 				dao.batchUpdate(ROLE_NAME_SPACE+"updateMenuIds", subRoleList);
+				//清除该角色类型下所有角色对应的菜单权限
+				dao.delete(MENU_PREMISSION_NAME_SPACE+"deleteByRoleTypeHasMenus", params);
 			} else {
 				//当前类型角色最大菜单为空, 子角色所有的菜单都移除
 				Map<String, Object> params = new HashMap<>();
 				params.put("roleType", roleType);
-				params.put("menuIds", menuIds);
+				params.put("menuIds", "");
 				dao.update(ROLE_NAME_SPACE+"updateByRoleType", params);
 				List<SysRoleEntity> subRoleList = (List<SysRoleEntity>) dao.selectList(ROLE_NAME_SPACE+"getByType", roleType);
 				for (SysRoleEntity sysRoleEntity : subRoleList) {
 					sysRoleEntity.setMenuIds("");
 				}
 				dao.batchUpdate(ROLE_NAME_SPACE+"updateMenuIds", subRoleList);
+				//删除该角色类型下所有角色对应的菜单权限
+				dao.delete(MENU_PREMISSION_NAME_SPACE+"deleteAllByRoleType", roleType);
 			}
 			
-			//改角色类型下所有角色对应的菜单权限如果不在这些菜单项下, 都移除
-			Map<String, Object> params = new HashMap<>();
-			params.put("roleType", roleType);
-			dao.delete(MENU_PREMISSION_NAME_SPACE+"deleteMenuPremissioByRoleType", roleType);
 		} else {
 			logger.error("角色类型授予菜单, 传入参数类型错误: {}", roleType);
 			throw new SysCustomException("参数类型错误");

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+ xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+ <description>menu list jstl</description>
+ <tlib-version>1.0</tlib-version>
+ <!-- prefix-name -->
+ <short-name>menu</short-name>
+ <uri>http://www.jiajun.trump.com/menu</uri>
+ 
+ <!-- 配置自定义标签 -->
+ <tag>
+ 	<!-- 配置标签名称 -->
+ 	<name>view</name>
+ 	<!-- 配置标签的类 -->
+ 	<tag-class>com.jiajun.util.jstl.MenuViewTag</tag-class>
+ 	<!-- 配置标签主体, SimpleTagSupport只支持scriptless和empty -->
+ 	<body-content>scriptless</body-content>
+ 	<attribute>
+ 	 	<!-- 配置属性名称 -->
+ 		<name>menuList</name>
+ 		<!-- 属性是否是必须的 -->
+ 		<required>true</required>
+ 		<!-- 是否支持EL表达式 -->
+ 		<rtexprvalue>true</rtexprvalue>
+ 		<!-- 属性的类型 -->
+ 		<type>java.util.List</type>
+ 	</attribute>
+ </tag>
+ 
+</taglib>

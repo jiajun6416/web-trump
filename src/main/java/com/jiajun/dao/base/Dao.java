@@ -53,7 +53,7 @@ public interface Dao {
 	 * @return
 	 * @throws Exception
 	 */
-	Object selectList(String statement, Object obj) throws Exception;
+	List selectList(String statement, Object obj) throws Exception;
 	
 	/**
 	 * 获得分页对象

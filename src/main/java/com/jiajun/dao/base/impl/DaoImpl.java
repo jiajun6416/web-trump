@@ -40,7 +40,7 @@ public class DaoImpl extends  SqlSessionDaoSupport implements Dao {
 	}
 
 	@Override
-	public Object selectList(String statement, Object obj) throws Exception {
+	public List selectList(String statement, Object obj) throws Exception {
 		return this.getSqlSession().selectList(statement, obj);
 	}
 
