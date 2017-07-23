@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2017-07-17 01:01:28
+Date: 2017-07-24 00:35:44
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `sys_log` (
   `opear_time` datetime NOT NULL,
   `event` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=536 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=757 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_log
@@ -554,6 +554,227 @@ INSERT INTO `sys_log` VALUES ('532', '', '127.0.0.1', '2017-07-17 00:59:25', '�
 INSERT INTO `sys_log` VALUES ('533', '', '127.0.0.1', '2017-07-17 00:59:25', '修改角色按钮权限');
 INSERT INTO `sys_log` VALUES ('534', '', '127.0.0.1', '2017-07-17 00:59:26', '修改角色按钮权限');
 INSERT INTO `sys_log` VALUES ('535', '', '127.0.0.1', '2017-07-17 00:59:56', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('536', 'jiajun', '127.0.0.1', '2017-07-17 21:06:00', '登录成功');
+INSERT INTO `sys_log` VALUES ('537', 'jiajun', '127.0.0.1', '2017-07-17 21:11:05', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('538', 'jiajun', '127.0.0.1', '2017-07-17 21:11:05', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('539', 'jiajun', '127.0.0.1', '2017-07-17 21:11:06', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('540', 'jiajun', '127.0.0.1', '2017-07-17 21:11:06', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('541', 'jiajun', '127.0.0.1', '2017-07-17 21:13:30', '删除菜单');
+INSERT INTO `sys_log` VALUES ('542', 'jiajun', '127.0.0.1', '2017-07-18 22:23:30', '登录成功');
+INSERT INTO `sys_log` VALUES ('543', 'jiajun', '127.0.0.1', '2017-07-18 23:33:42', '登录成功');
+INSERT INTO `sys_log` VALUES ('544', 'jiajun', '127.0.0.1', '2017-07-18 23:34:43', '登录成功');
+INSERT INTO `sys_log` VALUES ('545', 'jiajun', '127.0.0.1', '2017-07-18 23:37:40', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('546', 'jiajun', '127.0.0.1', '2017-07-18 23:38:17', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('547', 'jiajun', '127.0.0.1', '2017-07-18 23:38:55', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('548', 'jiajun', '127.0.0.1', '2017-07-18 23:40:08', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('549', 'jiajun', '127.0.0.1', '2017-07-18 23:40:29', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('550', 'jiajun', '127.0.0.1', '2017-07-18 23:40:43', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('551', 'jiajun', '127.0.0.1', '2017-07-18 23:41:03', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('552', 'jiajun', '127.0.0.1', '2017-07-18 23:41:59', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('553', 'jiajun', '127.0.0.1', '2017-07-18 23:42:19', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('554', 'jiajun', '127.0.0.1', '2017-07-18 23:42:22', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('555', 'jiajun', '127.0.0.1', '2017-07-18 23:43:13', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('556', 'jiajun', '127.0.0.1', '2017-07-18 23:43:41', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('557', 'jiajun', '127.0.0.1', '2017-07-18 23:43:53', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('558', 'jiajun', '127.0.0.1', '2017-07-18 23:46:22', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('559', 'jiajun', '127.0.0.1', '2017-07-18 23:46:28', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('560', 'jiajun', '127.0.0.1', '2017-07-18 23:46:38', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('561', 'jiajun', '127.0.0.1', '2017-07-18 23:48:25', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('562', '', '127.0.0.1', '2017-07-19 00:26:13', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('563', '', '127.0.0.1', '2017-07-19 00:26:20', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('564', '', '127.0.0.1', '2017-07-19 00:26:45', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('565', '', '127.0.0.1', '2017-07-19 00:29:07', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('566', 'jiajun', '127.0.0.1', '2017-07-19 20:39:07', '登录成功');
+INSERT INTO `sys_log` VALUES ('567', 'jiajun', '127.0.0.1', '2017-07-19 20:42:39', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('568', 'jiajun', '127.0.0.1', '2017-07-19 20:42:45', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('569', 'jiajun', '127.0.0.1', '2017-07-19 20:42:48', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('570', 'jiajun', '127.0.0.1', '2017-07-19 20:42:53', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('571', 'jiajun', '127.0.0.1', '2017-07-19 20:43:00', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('572', 'jiajun', '127.0.0.1', '2017-07-19 20:43:06', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('573', 'jiajun', '127.0.0.1', '2017-07-19 20:43:08', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('574', 'jiajun', '127.0.0.1', '2017-07-19 20:43:12', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('575', 'jiajun', '127.0.0.1', '2017-07-19 20:44:46', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('576', 'jiajun', '127.0.0.1', '2017-07-19 21:01:24', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('577', 'jiajun', '127.0.0.1', '2017-07-19 21:08:45', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('578', 'jiajun', '127.0.0.1', '2017-07-19 21:09:26', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('579', 'jiajun', '127.0.0.1', '2017-07-19 21:11:18', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('580', 'jiajun', '127.0.0.1', '2017-07-19 21:16:20', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('581', 'jiajun', '127.0.0.1', '2017-07-19 21:16:29', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('582', 'jiajun', '127.0.0.1', '2017-07-19 21:18:59', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('583', 'jiajun', '127.0.0.1', '2017-07-19 21:19:12', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('584', 'jiajun', '127.0.0.1', '2017-07-19 21:19:29', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('585', '', '127.0.0.1', '2017-07-19 22:11:41', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('586', '', '127.0.0.1', '2017-07-19 22:12:18', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('587', '', '127.0.0.1', '2017-07-19 22:12:22', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('588', '', '127.0.0.1', '2017-07-19 22:12:25', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('589', '', '127.0.0.1', '2017-07-19 22:12:40', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('590', '', '127.0.0.1', '2017-07-19 22:12:59', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('591', '', '127.0.0.1', '2017-07-19 22:13:03', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('592', '', '127.0.0.1', '2017-07-19 22:13:07', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('593', '', '127.0.0.1', '2017-07-19 22:13:11', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('594', '', '127.0.0.1', '2017-07-19 22:13:17', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('595', '', '127.0.0.1', '2017-07-19 22:13:21', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('596', '', '127.0.0.1', '2017-07-19 22:13:26', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('597', '', '127.0.0.1', '2017-07-19 22:13:30', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('598', '', '127.0.0.1', '2017-07-19 22:13:35', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('599', '', '127.0.0.1', '2017-07-19 22:14:02', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('600', '', '127.0.0.1', '2017-07-19 22:14:14', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('601', '', '127.0.0.1', '2017-07-19 22:14:17', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('602', '', '127.0.0.1', '2017-07-19 22:19:36', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('603', '', '127.0.0.1', '2017-07-19 22:28:44', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('604', '', '127.0.0.1', '2017-07-19 22:28:55', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('605', '', '127.0.0.1', '2017-07-19 22:29:03', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('606', '', '127.0.0.1', '2017-07-19 22:29:10', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('607', '', '127.0.0.1', '2017-07-19 22:29:17', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('608', '', '127.0.0.1', '2017-07-19 22:29:24', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('609', '', '127.0.0.1', '2017-07-19 22:29:35', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('610', '', '127.0.0.1', '2017-07-19 22:29:40', '删除角色, id是11');
+INSERT INTO `sys_log` VALUES ('611', '', '127.0.0.1', '2017-07-19 22:29:47', '删除角色, id是12');
+INSERT INTO `sys_log` VALUES ('612', '', '127.0.0.1', '2017-07-19 22:32:25', '登录用户名或者密码错误');
+INSERT INTO `sys_log` VALUES ('613', 'jiajun', '127.0.0.1', '2017-07-19 22:32:31', '登录成功');
+INSERT INTO `sys_log` VALUES ('614', 'jiajun', '127.0.0.1', '2017-07-21 22:11:52', '登录成功');
+INSERT INTO `sys_log` VALUES ('615', 'jiajun', '127.0.0.1', '2017-07-21 23:40:36', '登录成功');
+INSERT INTO `sys_log` VALUES ('616', 'jiajun', '127.0.0.1', '2017-07-22 11:16:25', '登录成功');
+INSERT INTO `sys_log` VALUES ('617', 'jiajun', '127.0.0.1', '2017-07-22 11:46:18', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('618', 'jiajun', '127.0.0.1', '2017-07-22 11:54:56', '登录成功');
+INSERT INTO `sys_log` VALUES ('619', 'jiajun', '127.0.0.1', '2017-07-22 11:55:17', '登录成功');
+INSERT INTO `sys_log` VALUES ('620', 'jiajun', '127.0.0.1', '2017-07-22 12:06:15', '登录成功');
+INSERT INTO `sys_log` VALUES ('621', 'jiajun', '127.0.0.1', '2017-07-22 12:18:16', '登录成功');
+INSERT INTO `sys_log` VALUES ('622', 'jiajun', '127.0.0.1', '2017-07-22 12:22:03', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('623', 'jiajun', '127.0.0.1', '2017-07-22 12:22:18', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('624', 'jiajun', '127.0.0.1', '2017-07-22 12:22:34', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('625', 'jiajun', '127.0.0.1', '2017-07-22 12:22:45', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('626', 'jiajun', '127.0.0.1', '2017-07-22 12:23:38', '登录成功');
+INSERT INTO `sys_log` VALUES ('627', 'jiajun', '127.0.0.1', '2017-07-22 12:24:14', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('628', 'jiajun', '127.0.0.1', '2017-07-22 12:24:23', '登录成功');
+INSERT INTO `sys_log` VALUES ('629', 'jiajun', '127.0.0.1', '2017-07-22 12:25:48', '登录成功');
+INSERT INTO `sys_log` VALUES ('630', 'jiajun', '127.0.0.1', '2017-07-22 12:26:05', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('631', 'jiajun', '127.0.0.1', '2017-07-22 12:26:08', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('632', 'jiajun', '127.0.0.1', '2017-07-22 12:26:12', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('633', 'jiajun', '127.0.0.1', '2017-07-22 13:02:15', '登录成功');
+INSERT INTO `sys_log` VALUES ('634', 'jiajun', '127.0.0.1', '2017-07-22 13:12:45', '登录成功');
+INSERT INTO `sys_log` VALUES ('635', 'jiajun', '127.0.0.1', '2017-07-22 13:16:42', '登录成功');
+INSERT INTO `sys_log` VALUES ('636', 'jiajun', '127.0.0.1', '2017-07-22 13:19:08', '登录成功');
+INSERT INTO `sys_log` VALUES ('637', 'jiajun', '127.0.0.1', '2017-07-22 13:21:12', '登录成功');
+INSERT INTO `sys_log` VALUES ('638', 'jiajun', '127.0.0.1', '2017-07-22 13:27:16', '修改按钮操作!');
+INSERT INTO `sys_log` VALUES ('639', 'jiajun', '127.0.0.1', '2017-07-22 14:20:01', '登录成功');
+INSERT INTO `sys_log` VALUES ('640', 'jiajun', '127.0.0.1', '2017-07-22 15:20:56', '登录成功');
+INSERT INTO `sys_log` VALUES ('641', '', '127.0.0.1', '2017-07-22 16:58:15', '修改jiajun用户信息');
+INSERT INTO `sys_log` VALUES ('642', 'jiajun', '127.0.0.1', '2017-07-22 16:58:27', '登录成功');
+INSERT INTO `sys_log` VALUES ('643', '', '127.0.0.1', '2017-07-22 17:41:11', '删除系统用户');
+INSERT INTO `sys_log` VALUES ('644', '', '127.0.0.1', '2017-07-22 17:56:14', '登录用户名或者密码错误');
+INSERT INTO `sys_log` VALUES ('645', 'jiajun', '127.0.0.1', '2017-07-22 17:56:16', '登录成功');
+INSERT INTO `sys_log` VALUES ('646', '', '127.0.0.1', '2017-07-22 18:12:23', '添加系统用户');
+INSERT INTO `sys_log` VALUES ('647', 'fly', '127.0.0.1', '2017-07-22 18:13:08', '登录成功');
+INSERT INTO `sys_log` VALUES ('648', 'fly', '127.0.0.1', '2017-07-22 18:15:19', '登录用户名或者密码错误');
+INSERT INTO `sys_log` VALUES ('649', 'jiajun', '127.0.0.1', '2017-07-22 18:15:28', '登录成功');
+INSERT INTO `sys_log` VALUES ('650', 'jiajun', '127.0.0.1', '2017-07-22 18:15:45', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('651', 'fly', '127.0.0.1', '2017-07-22 18:15:55', '登录成功');
+INSERT INTO `sys_log` VALUES ('652', 'fly', '127.0.0.1', '2017-07-22 18:43:20', '登录成功');
+INSERT INTO `sys_log` VALUES ('653', 'fly', '127.0.0.1', '2017-07-22 18:47:54', '登录成功');
+INSERT INTO `sys_log` VALUES ('654', 'fly', '127.0.0.1', '2017-07-22 18:51:07', '修改null用户信息');
+INSERT INTO `sys_log` VALUES ('655', 'fly', '127.0.0.1', '2017-07-22 18:51:13', '修改null用户信息');
+INSERT INTO `sys_log` VALUES ('656', '', '127.0.0.1', '2017-07-22 19:30:18', '登录用户名或者密码错误');
+INSERT INTO `sys_log` VALUES ('657', '', '127.0.0.1', '2017-07-22 19:30:25', '登录用户名或者密码错误');
+INSERT INTO `sys_log` VALUES ('658', 'fly', '127.0.0.1', '2017-07-22 19:30:43', '登录成功');
+INSERT INTO `sys_log` VALUES ('659', 'fly', '127.0.0.1', '2017-07-22 19:32:56', '登录成功');
+INSERT INTO `sys_log` VALUES ('660', 'fly', '127.0.0.1', '2017-07-22 19:39:54', '登录成功');
+INSERT INTO `sys_log` VALUES ('661', 'fly', '127.0.0.1', '2017-07-22 19:42:47', '修改个人资料');
+INSERT INTO `sys_log` VALUES ('662', 'fly', '127.0.0.1', '2017-07-22 19:42:47', '退出登录');
+INSERT INTO `sys_log` VALUES ('663', '', '127.0.0.1', '2017-07-22 19:43:01', '登录用户名或者密码错误');
+INSERT INTO `sys_log` VALUES ('664', 'fly', '127.0.0.1', '2017-07-22 19:43:24', '登录成功');
+INSERT INTO `sys_log` VALUES ('665', 'fly', '127.0.0.1', '2017-07-22 19:43:44', '修改个人资料');
+INSERT INTO `sys_log` VALUES ('666', 'fly', '127.0.0.1', '2017-07-22 19:43:44', '退出登录');
+INSERT INTO `sys_log` VALUES ('667', 'fly', '127.0.0.1', '2017-07-22 19:44:30', '登录成功');
+INSERT INTO `sys_log` VALUES ('668', 'fly', '127.0.0.1', '2017-07-22 19:44:56', '修改个人资料');
+INSERT INTO `sys_log` VALUES ('669', 'fly', '127.0.0.1', '2017-07-22 19:44:56', '退出登录');
+INSERT INTO `sys_log` VALUES ('670', '', '127.0.0.1', '2017-07-22 19:45:02', '登录用户名或者密码错误');
+INSERT INTO `sys_log` VALUES ('671', 'fly', '127.0.0.1', '2017-07-22 19:46:31', '登录成功');
+INSERT INTO `sys_log` VALUES ('672', 'fly', '127.0.0.1', '2017-07-22 19:46:35', '修改个人资料');
+INSERT INTO `sys_log` VALUES ('673', 'fly', '127.0.0.1', '2017-07-22 19:46:35', '退出登录');
+INSERT INTO `sys_log` VALUES ('674', 'fly', '127.0.0.1', '2017-07-22 19:46:46', '登录成功');
+INSERT INTO `sys_log` VALUES ('675', 'jiajun', '127.0.0.1', '2017-07-23 15:53:31', '登录成功');
+INSERT INTO `sys_log` VALUES ('676', 'jiajun', '127.0.0.1', '2017-07-23 15:54:10', '登录成功');
+INSERT INTO `sys_log` VALUES ('677', 'jiajun', '127.0.0.1', '2017-07-23 15:59:12', '登录成功');
+INSERT INTO `sys_log` VALUES ('678', 'jiajun', '127.0.0.1', '2017-07-23 16:04:52', '登录成功');
+INSERT INTO `sys_log` VALUES ('679', 'jiajun', '127.0.0.1', '2017-07-23 16:09:25', '登录成功');
+INSERT INTO `sys_log` VALUES ('680', 'jiajun', '127.0.0.1', '2017-07-23 16:17:46', '登录成功');
+INSERT INTO `sys_log` VALUES ('681', 'jiajun', '127.0.0.1', '2017-07-23 16:27:28', '登录成功');
+INSERT INTO `sys_log` VALUES ('682', 'jiajun', '127.0.0.1', '2017-07-23 16:34:26', '登录成功');
+INSERT INTO `sys_log` VALUES ('683', 'jiajun', '127.0.0.1', '2017-07-23 16:45:36', '登录成功');
+INSERT INTO `sys_log` VALUES ('684', 'jiajun', '127.0.0.1', '2017-07-23 16:50:39', '登录成功');
+INSERT INTO `sys_log` VALUES ('685', 'jiajun', '127.0.0.1', '2017-07-23 17:02:28', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('686', 'jiajun', '127.0.0.1', '2017-07-23 17:42:47', '登录成功');
+INSERT INTO `sys_log` VALUES ('687', 'jiajun', '127.0.0.1', '2017-07-23 19:00:34', '登录成功');
+INSERT INTO `sys_log` VALUES ('688', 'jiajun', '127.0.0.1', '2017-07-23 20:08:24', '登录成功');
+INSERT INTO `sys_log` VALUES ('689', 'jiajun', '127.0.0.1', '2017-07-23 21:06:42', '登录成功');
+INSERT INTO `sys_log` VALUES ('690', 'jiajun', '127.0.0.1', '2017-07-23 21:23:06', '登录成功');
+INSERT INTO `sys_log` VALUES ('691', 'jiajun', '127.0.0.1', '2017-07-23 22:17:09', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('692', 'jiajun', '127.0.0.1', '2017-07-23 22:17:18', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('693', 'jiajun', '127.0.0.1', '2017-07-23 22:17:25', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('694', 'jiajun', '127.0.0.1', '2017-07-23 22:17:32', '登录成功');
+INSERT INTO `sys_log` VALUES ('695', 'jiajun', '127.0.0.1', '2017-07-23 22:18:16', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('696', 'jiajun', '127.0.0.1', '2017-07-23 22:29:20', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('697', 'jiajun', '127.0.0.1', '2017-07-23 22:29:53', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('698', 'jiajun', '127.0.0.1', '2017-07-23 22:31:17', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('699', 'jiajun', '127.0.0.1', '2017-07-23 22:32:13', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('700', 'jiajun', '127.0.0.1', '2017-07-23 22:37:39', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('701', 'jiajun', '127.0.0.1', '2017-07-23 22:43:03', '登录成功');
+INSERT INTO `sys_log` VALUES ('702', 'admin', '127.0.0.1', '2017-07-23 22:43:38', '登录成功');
+INSERT INTO `sys_log` VALUES ('703', 'admin', '127.0.0.1', '2017-07-23 22:44:00', '登录成功');
+INSERT INTO `sys_log` VALUES ('704', 'jiajun', '127.0.0.1', '2017-07-23 22:44:08', '登录成功');
+INSERT INTO `sys_log` VALUES ('705', 'admin', '127.0.0.1', '2017-07-23 22:46:49', '登录成功');
+INSERT INTO `sys_log` VALUES ('706', 'admin', '127.0.0.1', '2017-07-23 22:47:23', '登录成功');
+INSERT INTO `sys_log` VALUES ('707', 'admin', '127.0.0.1', '2017-07-23 22:48:54', '登录成功');
+INSERT INTO `sys_log` VALUES ('708', 'admin', '127.0.0.1', '2017-07-23 22:49:07', '登录成功');
+INSERT INTO `sys_log` VALUES ('709', 'admin', '127.0.0.1', '2017-07-23 22:49:17', '登录成功');
+INSERT INTO `sys_log` VALUES ('710', 'admin', '127.0.0.1', '2017-07-23 22:50:18', '登录成功');
+INSERT INTO `sys_log` VALUES ('711', 'admin', '127.0.0.1', '2017-07-23 22:51:06', '登录成功');
+INSERT INTO `sys_log` VALUES ('712', 'admin', '127.0.0.1', '2017-07-23 22:51:55', '登录成功');
+INSERT INTO `sys_log` VALUES ('713', 'admin', '127.0.0.1', '2017-07-23 22:58:01', '登录成功');
+INSERT INTO `sys_log` VALUES ('714', 'admin', '127.0.0.1', '2017-07-23 23:00:11', '登录成功');
+INSERT INTO `sys_log` VALUES ('715', 'admin', '127.0.0.1', '2017-07-23 23:00:29', '修改角色类型最大菜单权限');
+INSERT INTO `sys_log` VALUES ('716', 'admin', '127.0.0.1', '2017-07-23 23:00:37', '添加角色:www');
+INSERT INTO `sys_log` VALUES ('717', 'admin', '127.0.0.1', '2017-07-23 23:01:02', '添加角色类型:222');
+INSERT INTO `sys_log` VALUES ('718', 'admin', '127.0.0.1', '2017-07-23 23:01:06', '删除角色组, 类型是3');
+INSERT INTO `sys_log` VALUES ('719', 'admin', '127.0.0.1', '2017-07-23 23:01:41', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('720', 'admin', '127.0.0.1', '2017-07-23 23:01:53', '保存角色对应的菜单');
+INSERT INTO `sys_log` VALUES ('721', 'admin', '127.0.0.1', '2017-07-23 23:02:51', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('722', 'admin', '127.0.0.1', '2017-07-23 23:02:52', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('723', 'admin', '127.0.0.1', '2017-07-23 23:04:14', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('724', 'admin', '127.0.0.1', '2017-07-23 23:04:19', '修改角色按钮权限');
+INSERT INTO `sys_log` VALUES ('725', 'fly', '127.0.0.1', '2017-07-23 23:04:48', '登录成功');
+INSERT INTO `sys_log` VALUES ('726', 'fly', '127.0.0.1', '2017-07-23 23:14:33', '登录成功');
+INSERT INTO `sys_log` VALUES ('727', 'jiajun', '127.0.0.1', '2017-07-23 23:22:10', '登录成功');
+INSERT INTO `sys_log` VALUES ('728', 'fly', '127.0.0.1', '2017-07-23 23:24:38', '登录成功');
+INSERT INTO `sys_log` VALUES ('729', 'jiajun', '127.0.0.1', '2017-07-23 23:35:27', '登录成功');
+INSERT INTO `sys_log` VALUES ('730', 'jiajun', '127.0.0.1', '2017-07-23 23:36:20', '登录成功');
+INSERT INTO `sys_log` VALUES ('731', 'jiajun', '127.0.0.1', '2017-07-23 23:37:45', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('732', 'jiajun', '127.0.0.1', '2017-07-23 23:37:49', '保存角色对应的菜单权限');
+INSERT INTO `sys_log` VALUES ('733', 'jiajun', '127.0.0.1', '2017-07-23 23:37:55', '登录成功');
+INSERT INTO `sys_log` VALUES ('734', 'jiajun', '127.0.0.1', '2017-07-23 23:49:00', '登录成功');
+INSERT INTO `sys_log` VALUES ('735', 'jiajun', '127.0.0.1', '2017-07-23 23:49:11', '修改null用户信息');
+INSERT INTO `sys_log` VALUES ('736', 'jiajun', '127.0.0.1', '2017-07-23 23:49:24', '修改个人资料');
+INSERT INTO `sys_log` VALUES ('737', 'jiajun', '127.0.0.1', '2017-07-23 23:49:24', '退出登录');
+INSERT INTO `sys_log` VALUES ('738', 'jiajun', '127.0.0.1', '2017-07-23 23:49:54', '登录成功');
+INSERT INTO `sys_log` VALUES ('739', 'jiajun', '127.0.0.1', '2017-07-23 23:59:57', '登录成功');
+INSERT INTO `sys_log` VALUES ('740', 'fly', '127.0.0.1', '2017-07-24 00:01:41', '登录成功');
+INSERT INTO `sys_log` VALUES ('741', 'jiajun', '127.0.0.1', '2017-07-24 00:11:49', '登录成功');
+INSERT INTO `sys_log` VALUES ('742', 'jiajun', '127.0.0.1', '2017-07-24 00:13:04', '登录成功');
+INSERT INTO `sys_log` VALUES ('743', 'jiajun', '127.0.0.1', '2017-07-24 00:13:55', '登录成功');
+INSERT INTO `sys_log` VALUES ('744', 'jiajun', '127.0.0.1', '2017-07-24 00:14:38', '登录成功');
+INSERT INTO `sys_log` VALUES ('745', 'jiajun', '127.0.0.1', '2017-07-24 00:15:30', '登录成功');
+INSERT INTO `sys_log` VALUES ('746', 'jiajun', '127.0.0.1', '2017-07-24 00:16:55', '登录成功');
+INSERT INTO `sys_log` VALUES ('747', 'jiajun', '127.0.0.1', '2017-07-24 00:21:39', '登录成功');
+INSERT INTO `sys_log` VALUES ('748', 'jiajun', '127.0.0.1', '2017-07-24 00:22:03', '登录成功');
+INSERT INTO `sys_log` VALUES ('749', 'jiajun', '127.0.0.1', '2017-07-24 00:22:30', '登录成功');
+INSERT INTO `sys_log` VALUES ('750', 'jiajun', '127.0.0.1', '2017-07-24 00:22:49', '登录成功');
+INSERT INTO `sys_log` VALUES ('751', 'fly', '127.0.0.1', '2017-07-24 00:23:21', '登录成功');
+INSERT INTO `sys_log` VALUES ('752', 'fly', '127.0.0.1', '2017-07-24 00:23:39', '登录成功');
+INSERT INTO `sys_log` VALUES ('753', 'admin', '127.0.0.1', '2017-07-24 00:26:34', '登录成功');
+INSERT INTO `sys_log` VALUES ('754', 'admin', '127.0.0.1', '2017-07-24 00:26:58', '修改菜单信息');
+INSERT INTO `sys_log` VALUES ('755', 'fly', '127.0.0.1', '2017-07-24 00:27:09', '登录成功');
+INSERT INTO `sys_log` VALUES ('756', 'fly', '127.0.0.1', '2017-07-24 00:27:38', '登录成功');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -581,13 +802,13 @@ INSERT INTO `sys_menu` VALUES ('2', '用户管理', '0', '1', '#', '20', 'menu-i
 INSERT INTO `sys_menu` VALUES ('3', '系统工具', '0', '1', '#', '30', 'menu-icon fa fa-cog  black', '1', null, '2017-07-08 23:19:58');
 INSERT INTO `sys_menu` VALUES ('4', '微信管理', '0', '1', '#', '40', 'menu-icon fa fa-comments  green', '1', null, '2017-07-08 23:20:17');
 INSERT INTO `sys_menu` VALUES ('5', '权限管理', '1', '1', '#', '10', 'menu-icon fa fa-lock  orange', '1', null, '2017-07-08 23:19:14');
-INSERT INTO `sys_menu` VALUES ('17', '菜单权限', '5', '0', 'role/menuList.do?roleType=1', '10', 'menu-icon fa fa-key  brown', '1', null, '2017-07-12 23:26:03');
-INSERT INTO `sys_menu` VALUES ('18', '按钮权限', '5', '0', 'role/buttonList.do?roleType=1', '20', 'menu-icon fa fa-key  purple', '1', null, '2017-07-12 23:28:33');
-INSERT INTO `sys_menu` VALUES ('19', '按钮管理', '1', '0', 'button/list.do', '20', 'menu-icon fa fa-hdd-o  blue', '1', null, '2017-07-12 23:29:00');
+INSERT INTO `sys_menu` VALUES ('17', '菜单权限', '5', '0', 'role/list.do', '10', 'menu-icon fa fa-key  brown', '1', null, '2017-07-24 00:26:58');
+INSERT INTO `sys_menu` VALUES ('18', '按钮权限', '5', '0', 'role/operation/list.do', '20', 'menu-icon fa fa-key  purple', '1', null, '2017-07-22 12:22:18');
+INSERT INTO `sys_menu` VALUES ('19', '按钮管理', '1', '0', 'operation/list.do', '20', 'menu-icon fa fa-hdd-o  blue', '1', null, '2017-07-22 12:22:34');
 INSERT INTO `sys_menu` VALUES ('20', '在线管理', '1', '0', 'user/onlineList.do', '40', 'menu-icon fa fa-users  green', '1', null, '2017-07-12 23:36:11');
-INSERT INTO `sys_menu` VALUES ('21', '菜单管理', '1', '0', 'menu/listAllMenu.do', '30', 'menu-icon fa fa-folder-open-o  grey', '1', null, '2017-07-12 23:29:29');
-INSERT INTO `sys_menu` VALUES ('22', '日志管理', '1', '0', 'log/list.do', '50', 'menu-icon fa fa-bolt  black', '1', '2017-07-08 22:23:45', '2017-07-12 23:36:59');
-INSERT INTO `sys_menu` VALUES ('23', '系统用户', '2', '0', 'user/listUser.do', '10', 'menu-icon fa fa-users  green', '1', '2017-07-08 22:26:25', '2017-07-12 23:38:48');
+INSERT INTO `sys_menu` VALUES ('21', '菜单管理', '1', '0', 'menu/listAllMenu.do', '30', 'menu-icon fa fa-folder-open-o  grey', '1', null, '2017-07-22 12:22:45');
+INSERT INTO `sys_menu` VALUES ('22', '日志管理', '1', '0', 'log/list.do', '50', 'menu-icon fa fa-bolt  black', '1', '2017-07-08 22:23:45', '2017-07-23 22:18:16');
+INSERT INTO `sys_menu` VALUES ('23', '系统用户', '2', '0', 'user/listUser.do', '10', 'menu-icon fa fa-users  green', '1', '2017-07-08 22:26:25', '2017-07-23 22:37:39');
 INSERT INTO `sys_menu` VALUES ('24', '会员管理', '2', '0', 'vip/listVip.do', '20', 'menu-icon fa fa-users  pink', '1', '2017-07-08 22:27:33', '2017-07-12 23:39:13');
 INSERT INTO `sys_menu` VALUES ('25', '代码生成器', '3', '0', 'codeGenerator.do', '10', 'menu-icon fa fa-cogs  purple', '1', '2017-07-08 22:31:48', '2017-07-12 23:40:56');
 INSERT INTO `sys_menu` VALUES ('26', '表单构造器', '3', '0', '#', '20', 'menu-icon fa fa-barcode  green', '1', '2017-07-08 22:33:40', '2017-07-12 23:41:18');
@@ -602,7 +823,6 @@ INSERT INTO `sys_menu` VALUES ('34', '数据库管理', '0', '1', '#', '60', 'me
 INSERT INTO `sys_menu` VALUES ('35', '关注回复', '4', '0', '#', '10', 'menu-icon fa fa-bell-o  grey', '1', '2017-07-08 22:48:07', '2017-07-12 23:45:54');
 INSERT INTO `sys_menu` VALUES ('36', '文本回复', '4', '0', '#', '20', 'menu-icon fa fa-bell  blue', '1', '2017-07-08 22:48:21', '2017-07-12 23:47:36');
 INSERT INTO `sys_menu` VALUES ('37', '图文回复', '4', '0', '#', '30', 'menu-icon fa fa-leaf  black', '1', '2017-07-08 22:48:36', '2017-07-08 22:49:54');
-INSERT INTO `sys_menu` VALUES ('38', '应用命令', '4', '0', '#', '40', 'menu-icon fa fa-cutlery  brown', '1', '2017-07-08 22:48:57', '2017-07-08 22:50:13');
 INSERT INTO `sys_menu` VALUES ('39', '图片管理', '33', '1', '#', '10', 'menu-icon fa fa-camera-retro  purple', '1', '2017-07-08 22:50:36', '2017-07-08 23:21:22');
 INSERT INTO `sys_menu` VALUES ('40', '站内信', '33', '0', '#', '20', 'menu-icon fa fa-comments-o  pink', '1', '2017-07-08 22:55:50', '2017-07-08 22:56:32');
 INSERT INTO `sys_menu` VALUES ('41', '图片列表', '39', '0', '#', '10', 'menu-icon fa fa-briefcase  grey', '1', '2017-07-08 22:56:53', '2017-07-12 23:48:58');
@@ -623,15 +843,14 @@ CREATE TABLE `sys_menu_premission` (
   `premission_type` smallint(2) DEFAULT NULL COMMENT '1:query 2:insert 3:update 4:delete 5:other',
   `premission_code` varchar(32) CHARACTER SET utf8 DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records of sys_menu_premission
 -- ----------------------------
-INSERT INTO `sys_menu_premission` VALUES ('63', '17', '1', 'menu:query');
-INSERT INTO `sys_menu_premission` VALUES ('64', '17', '2', 'menu:insert');
-INSERT INTO `sys_menu_premission` VALUES ('65', '17', '3', 'menu:update');
-INSERT INTO `sys_menu_premission` VALUES ('66', '17', '4', 'menu:delete');
+INSERT INTO `sys_menu_premission` VALUES ('63', '17', '1', 'role:query');
+INSERT INTO `sys_menu_premission` VALUES ('65', '17', '3', 'role:update');
+INSERT INTO `sys_menu_premission` VALUES ('66', '17', '4', 'role:delete');
 INSERT INTO `sys_menu_premission` VALUES ('72', '18', '5', 'premission:button');
 INSERT INTO `sys_menu_premission` VALUES ('74', '19', '1', 'button:query');
 INSERT INTO `sys_menu_premission` VALUES ('75', '19', '2', 'button:insert');
@@ -645,12 +864,11 @@ INSERT INTO `sys_menu_premission` VALUES ('84', '20', '1', 'online:query');
 INSERT INTO `sys_menu_premission` VALUES ('85', '20', '4', 'online:delete');
 INSERT INTO `sys_menu_premission` VALUES ('86', '22', '1', 'log:query');
 INSERT INTO `sys_menu_premission` VALUES ('87', '22', '2', 'log:insert');
-INSERT INTO `sys_menu_premission` VALUES ('88', '22', '3', 'log:update');
 INSERT INTO `sys_menu_premission` VALUES ('89', '22', '4', 'log:delete');
-INSERT INTO `sys_menu_premission` VALUES ('90', '23', '1', 'user:query');
-INSERT INTO `sys_menu_premission` VALUES ('91', '23', '2', 'user:insert');
-INSERT INTO `sys_menu_premission` VALUES ('92', '23', '3', 'user:update');
-INSERT INTO `sys_menu_premission` VALUES ('93', '23', '4', 'user:delete');
+INSERT INTO `sys_menu_premission` VALUES ('90', '23', '1', 'sysUser:query');
+INSERT INTO `sys_menu_premission` VALUES ('91', '23', '2', 'sysUser:insert');
+INSERT INTO `sys_menu_premission` VALUES ('92', '23', '3', 'sysUser:update');
+INSERT INTO `sys_menu_premission` VALUES ('93', '23', '4', 'sysUser:delete');
 INSERT INTO `sys_menu_premission` VALUES ('94', '24', '1', 'vip:query');
 INSERT INTO `sys_menu_premission` VALUES ('95', '24', '2', 'vip:insert');
 INSERT INTO `sys_menu_premission` VALUES ('96', '24', '3', 'vip:update');
@@ -686,6 +904,7 @@ INSERT INTO `sys_menu_premission` VALUES ('125', '45', '2', 'db:insert');
 INSERT INTO `sys_menu_premission` VALUES ('126', '45', '3', 'db:update');
 INSERT INTO `sys_menu_premission` VALUES ('127', '45', '4', 'db:delete');
 INSERT INTO `sys_menu_premission` VALUES ('128', '56', '5', 'tool:sqlEdit');
+INSERT INTO `sys_menu_premission` VALUES ('129', '17', '2', 'role:insert');
 
 -- ----------------------------
 -- Table structure for sys_opeartion
@@ -721,22 +940,21 @@ CREATE TABLE `sys_role` (
   `menu_ids` varchar(255) DEFAULT NULL COMMENT '角色对应的菜单id, 以,分隔开',
   `operation_ids` varchar(255) DEFAULT NULL COMMENT '角色对应的按钮权限, 以 逗号分隔开',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
 INSERT INTO `sys_role` VALUES ('1', 'admin', '0', '0', '0', null, null);
-INSERT INTO `sys_role` VALUES ('2', '系统用户组', '0', '10', '1', '1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40,84,34,43,44,45,56', null);
-INSERT INTO `sys_role` VALUES ('3', '一级管理员', '2', '10', '1', '1,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40,84,34,43,44,45,56', '11,12,15,13,14');
-INSERT INTO `sys_role` VALUES ('5', '二级管理员', '2', '20', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,23', '12,11,14,13');
-INSERT INTO `sys_role` VALUES ('6', '会员组', '0', '20', '2', '2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38,33,39,41,42,40', null);
-INSERT INTO `sys_role` VALUES ('7', '超级会员', '6', '10', '2', null, '11,13,15,12');
-INSERT INTO `sys_role` VALUES ('8', '普通会员', '6', '20', '2', null, '11,12,13,15');
-INSERT INTO `sys_role` VALUES ('9', '注册用户', '6', '30', '2', null, '11,14');
-INSERT INTO `sys_role` VALUES ('10', '三级管理员', '2', '30', '1', null, '12,11,15');
-INSERT INTO `sys_role` VALUES ('11', '50', '2', '50', '1', null, '11,14,13');
-INSERT INTO `sys_role` VALUES ('12', '6', '2', '69', '1', '1,19,21,20,22,2,23,241,19,21,20,22,2,231,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,38', '11,14,15');
+INSERT INTO `sys_role` VALUES ('2', '系统用户组', '0', '10', '1', '1,5,17,18,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,33,39,41,42,40,84,34,43,44,45,56', null);
+INSERT INTO `sys_role` VALUES ('3', '一级管理员', '2', '10', '1', '1,5,17,18,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37,33,39,41,42,40,84,34,43,44,45,56', '12,15,13,14,11');
+INSERT INTO `sys_role` VALUES ('5', '二级管理员', '2', '20', '1', '1,5,17,18,19,21,20,22,2,23,24,3,25,26,27,28,29,30,31,32,4,35,36,37', '12,11,13,15');
+INSERT INTO `sys_role` VALUES ('6', '会员组', '0', '20', '2', '1,5,17,18,19,21,20,22,2,23,24', null);
+INSERT INTO `sys_role` VALUES ('7', '超级会员', '6', '10', '2', '', '11,13,15,12');
+INSERT INTO `sys_role` VALUES ('8', '普通会员', '6', '20', '2', '', '11,12,13,15');
+INSERT INTO `sys_role` VALUES ('9', '注册用户', '6', '30', '2', '', '11,14');
+INSERT INTO `sys_role` VALUES ('10', '三级管理员', '2', '30', '1', '', '12,11,15,13,14');
+INSERT INTO `sys_role` VALUES ('11', 'www', '6', '34', '2', null, null);
 
 -- ----------------------------
 -- Table structure for sys_role_prem
@@ -749,49 +967,69 @@ CREATE TABLE `sys_role_prem` (
   `menu_type` smallint(1) DEFAULT NULL COMMENT 'prem_type是1的时候, menu_type才有效,  1 2 3 4 冗余字段',
   `prem_type` smallint(1) NOT NULL COMMENT '权限类型, 1是菜单权限, 2是按钮权限',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=316 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_prem
 -- ----------------------------
-INSERT INTO `sys_role_prem` VALUES ('55', '5', '75', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('56', '5', '80', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('57', '5', '87', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('58', '5', '91', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('71', '3', '98', '5', '1');
-INSERT INTO `sys_role_prem` VALUES ('72', '3', '99', '5', '1');
-INSERT INTO `sys_role_prem` VALUES ('73', '3', '100', '5', '1');
-INSERT INTO `sys_role_prem` VALUES ('74', '3', '101', '5', '1');
-INSERT INTO `sys_role_prem` VALUES ('75', '3', '102', '5', '1');
-INSERT INTO `sys_role_prem` VALUES ('76', '3', '103', '5', '1');
-INSERT INTO `sys_role_prem` VALUES ('77', '3', '104', '5', '1');
-INSERT INTO `sys_role_prem` VALUES ('78', '3', '105', '5', '1');
-INSERT INTO `sys_role_prem` VALUES ('79', '3', '106', '5', '1');
-INSERT INTO `sys_role_prem` VALUES ('102', '3', '74', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('103', '3', '79', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('104', '3', '84', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('105', '3', '86', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('106', '3', '90', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('107', '3', '94', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('108', '3', '107', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('109', '3', '108', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('110', '3', '111', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('111', '3', '116', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('112', '3', '120', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('113', '3', '124', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('124', '3', '75', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('125', '3', '80', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('126', '3', '87', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('127', '3', '91', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('128', '3', '95', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('129', '3', '109', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('130', '3', '112', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('131', '3', '117', '2', '1');
-INSERT INTO `sys_role_prem` VALUES ('132', '5', '74', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('133', '5', '79', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('134', '5', '84', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('135', '5', '86', '1', '1');
-INSERT INTO `sys_role_prem` VALUES ('136', '5', '90', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('228', '3', '85', '4', '1');
+INSERT INTO `sys_role_prem` VALUES ('229', '3', '89', '4', '1');
+INSERT INTO `sys_role_prem` VALUES ('232', '3', '110', '4', '1');
+INSERT INTO `sys_role_prem` VALUES ('233', '3', '114', '4', '1');
+INSERT INTO `sys_role_prem` VALUES ('234', '3', '118', '4', '1');
+INSERT INTO `sys_role_prem` VALUES ('235', '3', '122', '4', '1');
+INSERT INTO `sys_role_prem` VALUES ('236', '3', '127', '4', '1');
+INSERT INTO `sys_role_prem` VALUES ('251', '3', '63', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('252', '3', '74', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('253', '3', '79', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('254', '3', '84', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('255', '3', '86', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('256', '3', '90', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('257', '3', '94', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('258', '3', '107', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('259', '3', '108', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('260', '3', '111', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('261', '3', '116', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('262', '3', '120', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('263', '3', '124', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('264', '3', '64', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('265', '3', '75', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('266', '3', '80', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('267', '3', '87', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('268', '3', '91', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('269', '3', '95', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('270', '3', '109', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('271', '3', '112', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('272', '3', '117', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('273', '3', '121', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('274', '3', '125', '2', '1');
+INSERT INTO `sys_role_prem` VALUES ('283', '3', '72', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('284', '3', '98', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('285', '3', '99', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('286', '3', '100', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('287', '3', '101', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('288', '3', '102', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('289', '3', '103', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('290', '3', '104', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('291', '3', '105', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('292', '3', '106', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('293', '3', '115', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('294', '3', '119', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('295', '3', '123', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('296', '3', '128', '5', '1');
+INSERT INTO `sys_role_prem` VALUES ('297', '5', '63', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('298', '5', '74', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('299', '5', '79', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('300', '5', '84', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('301', '5', '86', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('302', '5', '90', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('303', '5', '94', '1', '1');
+INSERT INTO `sys_role_prem` VALUES ('310', '3', '76', '3', '1');
+INSERT INTO `sys_role_prem` VALUES ('311', '3', '81', '3', '1');
+INSERT INTO `sys_role_prem` VALUES ('312', '3', '92', '3', '1');
+INSERT INTO `sys_role_prem` VALUES ('313', '3', '96', '3', '1');
+INSERT INTO `sys_role_prem` VALUES ('314', '3', '113', '3', '1');
+INSERT INTO `sys_role_prem` VALUES ('315', '3', '126', '3', '1');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -802,10 +1040,11 @@ CREATE TABLE `sys_user` (
   `username` varchar(16) NOT NULL COMMENT '登录名,唯一',
   `password` varchar(32) NOT NULL,
   `name` varchar(32) NOT NULL COMMENT '实际名称, 可以重复',
-  `login_time` date DEFAULT NULL COMMENT '上次登录时间',
-  `last_id` varchar(32) DEFAULT NULL COMMENT '上次登录ip',
+  `login_time` datetime DEFAULT NULL COMMENT '上次登录时间',
+  `last_ip` varchar(32) DEFAULT NULL COMMENT '上次登录ip',
   `skin` varchar(10) DEFAULT NULL COMMENT '皮肤',
   `sort` int(16) NOT NULL COMMENT '排序',
+  `role_id` int(16) DEFAULT NULL,
   `phone` varchar(32) NOT NULL,
   `email` varchar(32) NOT NULL,
   `status` smallint(1) NOT NULL COMMENT '状态0表示不在线, 1表示在线',
@@ -813,31 +1052,11 @@ CREATE TABLE `sys_user` (
   `gmt_create` datetime DEFAULT NULL,
   `gmt_modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'admin', '123', '系统管理员_admin', null, null, null, '1', '13888888888', '1234@qq.com', '0', '最高权限用户', null, null);
-INSERT INTO `sys_user` VALUES ('2', 'jiajun', '123', 'jiajun', null, null, null, '2', '12333333333', '123@qq.com', '0', '测试用户', null, null);
-INSERT INTO `sys_user` VALUES ('3', 'jerry', '123', '测试用户2', null, null, null, '3', '1111111111', '12345@qq.com', '0', '测试用户', null, null);
-
--- ----------------------------
--- Table structure for sys_user_role
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role` (
-  `id` int(16) NOT NULL AUTO_INCREMENT,
-  `user_id` int(16) NOT NULL,
-  `role_id` int(16) NOT NULL,
-  `gmt_create` datetime DEFAULT NULL,
-  `gmt_modified` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_user_role
--- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('1', '1', '1', null, null);
-INSERT INTO `sys_user_role` VALUES ('2', '2', '2', null, null);
-INSERT INTO `sys_user_role` VALUES ('4', '3', '3', null, null);
+INSERT INTO `sys_user` VALUES ('1', 'admin', '4b648eafa57386cfe1f386d943f6a6c5', '系统管理员_admin', '2017-07-24 00:26:34', '127.0.0.1', null, '1', '1', '13888888888', '1234@qq.com', '1', '最高权限用户', null, null);
+INSERT INTO `sys_user` VALUES ('2', 'jiajun', '4b648eafa57386cfe1f386d943f6a6c5', '佳俊', '2017-07-24 00:22:49', '127.0.0.1', null, '2', '3', '12333333333', '123@qq.com', '1', '测试用户', null, null);
+INSERT INTO `sys_user` VALUES ('4', 'fly', '4b648eafa57386cfe1f386d943f6a6c5', '时间', '2017-07-24 00:27:38', '127.0.0.1', null, '3', '5', '12345678910', '12345@qq.com', '1', '外卖怎么还没到', '2017-07-22 18:12:23', null);
