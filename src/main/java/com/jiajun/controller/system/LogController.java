@@ -3,6 +3,7 @@ package com.jiajun.controller.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,6 +25,7 @@ public class LogController  extends BaseController {
 	private SysLogService sysLogService;
 	
 	@RequestMapping("/list")
+	@RequiresPermissions("log:query")
 	public String list(Model model) throws Exception {
 		ParameMap params = getParaMap();
 		String currentPage = (String) params.get("currentPage");
@@ -46,6 +48,7 @@ public class LogController  extends BaseController {
 	
 	@RequestMapping("/delete")
 	@ResponseBody
+	@RequiresPermissions("log:delete")
 	public String delete(int logId) {
 		String result = null;
 		try {
@@ -61,6 +64,7 @@ public class LogController  extends BaseController {
 	
 	@RequestMapping("/batchDelete")
 	@ResponseBody
+	@RequiresPermissions("log:delete")
 	public String batchDelete(String logIds) {
 		String result = null;
 		try {

@@ -1,5 +1,7 @@
 package com.jiajun.service;
 
+import java.util.List;
+
 import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.system.SysUserEntity;
@@ -20,6 +22,15 @@ public interface SysUserService {
 	 */
 	SysUserEntity getSysUserByNameAndPwd(ParameMap params) throws Exception ;
 	
+	SysUserEntity getUserById(int userId) throws Exception;
+	
+	/**
+	 * 修改上次登陆的ip地址
+	 * @param ip
+	 * @throws Exception
+	 */
+	void updateLoginInfo(int userId, String ip) throws Exception;
+	
 	/**
 	 * 修改用户
 	 * @param sysUser
@@ -33,7 +44,7 @@ public interface SysUserService {
 	 * @param email
 	 * @return
 	 */
-	boolean hasExistEmail(ParameMap params)throws Exception;
+	boolean hasExistEmail(String email)throws Exception;
 	
 	/**
 	 * 根据条件获得用户的分页查询对象
@@ -41,5 +52,51 @@ public interface SysUserService {
 	 * @return
 	 */
 	Page<SysUserEntity> getPage(ParameMap params)throws Exception;
+	
+	/**
+	 * 排序重复验证
+	 * @param sort
+	 * @return
+	 */
+	boolean hasExistSort(int sort) throws Exception;
+
+	/**
+	 * 判断用户名是否存在
+	 * @param username
+	 * @return
+	 */
+	boolean hasExistUsername(String username) throws Exception;
+
+	/**
+	 * 删除用户
+	 * @param userId
+	 */
+	void deleteUserById(int userId) throws Exception;
+	
+	/**
+	 * 添加用户
+	 * @param userEntity
+	 */
+	void save(SysUserEntity userEntity) throws Exception;
+	
+	/**
+	 * 通过name查询
+	 * @param username
+	 * @return
+	 */
+	SysUserEntity getUserByUsername(String username) throws Exception;
+
+	/**
+	 * 通过角色id查询具备的资源
+	 * @param id
+	 * @return
+	 */
+	List<String> getPermissionListById(Integer id) throws Exception;
+
+	/**
+	 * 获得admin的资源, 即所有的资源
+	 * @return
+	 */
+	List<String> getAdminPermissionList() throws Exception;
 	
 }

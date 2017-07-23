@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jiajun.controller.base.BaseController;
+import com.jiajun.exception.SysCustomException;
 import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.ResultModel;
@@ -41,33 +44,36 @@ public class UserController extends BaseController{
 	private SysLogService sysLogService;
 	
 	/**
-	 * 前往修改自己资料页面
+	 * 修改自己
+	 * @throws Exception 
 	 */
 	@RequestMapping("toEditMyself")
-	public String toEditMyselfPage(HttpSession session, Model model) {
+	public String toEditMyselfPage(HttpSession session, Model model) throws Exception {
 		SysUserEntity loginUser = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
-		//表示修改自己
+		if(loginUser == null) {
+			throw new SysCustomException("请先登陆");
+		}
+		SysRoleEntity role = sysRoleService.getRoleById(loginUser.getRoleId());
+		loginUser.setRole(role);
 		model.addAttribute("edit_other", false);
 		model.addAttribute("editType","updateMyself");
 		model.addAttribute("user", loginUser);
-		return "system/user/user_editSelf";
+		model.addAttribute("msg", "editSelef");
+		model.addAttribute("action", "updateSelf");
+		return "system/user/user_input";
 	}
-
 	/**
 	 * 保存修改自己
 	 */
-	@RequestMapping("updateSelf")
+	@RequestMapping("/updateSelf")
 	public String updateMyself(SysUserEntity sysUser, Model model, HttpSession session, HttpServletRequest request) {
 		SysUserEntity loginUser = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
 		String username = loginUser.getUsername();
-		//用户名不允许修改
-		if(StringUtils.isNotEmpty(username) ) {
-			sysUser.setUsername(null);
-		}
 		String ip = this.getIP(request);
 		try {
-			sysLogService.save(username, ip, "修改个人资料");
 			sysUserService.updateSysUser(sysUser);
+			sysUser.setRole(null);
+			sysLogService.save(username, ip, "修改个人资料");
 			//清空sesion重新登录
 			session.invalidate();
 			sysLogService.save(username, ip, "退出登录");
@@ -77,38 +83,117 @@ public class UserController extends BaseController{
 			e.printStackTrace();
 			sysLogService.save(username, ip, "修改个人资料失败");
 			return "forward:/toEditMyself";
-		}
+		} 
+	}
+	/*
+	 * 修改其他系统用户
+	 */
+	@RequestMapping("/toEditSysUser")
+	@RequiresPermissions("sysUser:update")
+	public String toEditSysUser(int userId, Model model) throws Exception {
+		SysUserEntity user = sysUserService.getUserById(userId);
+		model.addAttribute("user", user);
+		model.addAttribute("action", "updateSysUser");
+		//查询所有系统角色
+		List<SysRoleEntity> roleList = sysRoleService.getListByType(Constant.SYSTEM_ROLE);
+		model.addAttribute("roleList", roleList);
+		return "system/user/user_input";
+	}
+	
+	@RequestMapping("/updateSysUser")
+	@RequiresPermissions("sysUser:update")
+	public String updateSysUse(SysUserEntity userEntity, HttpServletRequest request,HttpSession session, Model model) throws Exception {
+		sysUserService.updateSysUser(userEntity);
+		sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改"+userEntity.getUsername()+"用户信息");
+		return "save_result";
+	}
+	
+	
+	@RequestMapping("toAddSysUser")
+	@RequiresPermissions("sysUser:insert")
+	public String toAddSysUser(Model model) throws Exception{
+		List<SysRoleEntity> roleList = sysRoleService.getListByType(Constant.SYSTEM_ROLE);
+		model.addAttribute("roleList", roleList);
+		model.addAttribute("action", "addSysUser");
+		return "system/user/user_input";
+	}
+	
+	@RequestMapping("/addSysUser")
+	@RequiresPermissions("sysUser:insert")
+	public String addSysUser(SysUserEntity userEntity, HttpServletRequest request,HttpSession session, Model model) throws Exception {
+		sysUserService.save(userEntity);
+		sysLogService.save(this.getLoginUser(session), this.getIP(request), "添加系统用户");
+		return "save_result";
 	}
 	
 	/**
-	 * 邮箱是否重复, 验证
-	 * @param email
-	 * 
+	 * username校验
+	 * @param username
 	 * @return
 	 */
-	@RequestMapping("/hasEmail")
+	@RequestMapping("/hasUsername")
 	@ResponseBody
-	public ResultModel isReEmail(HttpSession session) {
-		SysUserEntity loginUser = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
-		Integer id = loginUser.getId();
-		ParameMap params = getParaMap();
-		params.put("id", id);
+	public ResultModel hasUsername(String username) {
 		boolean exist;
 		try {
-			exist = sysUserService.hasExistEmail(params);
+			exist = sysUserService.hasExistUsername(username);
 			if(exist) {
 				return ResultModel.build(500, "邮箱已存在");
 			} else {
-				return ResultModel.build(200, "邮箱可用");
+				return ResultModel.build(200, "success");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResultModel.build(500, "服务异常");
 		}
-
+	}
+	
+	/**
+	 * 邮箱重名验证
+	 * @param email
+	 * @return
+	 */
+	@RequestMapping("/hasEmail")
+	@ResponseBody
+	public ResultModel hasReEmail(String email) {
+		boolean exist;
+		try {
+			exist = sysUserService.hasExistEmail(email);
+			if(exist) {
+				return ResultModel.build(500, "邮箱已存在");
+			} else {
+				return ResultModel.build(200, "success");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultModel.build(500, e.getMessage());
+		}
+	}
+	
+	/**
+	 * 排序重复验证
+	 * @param sort
+	 * @return
+	 */
+	@RequestMapping("/hasSort")
+	@ResponseBody
+	public ResultModel hasSort(int sort) {
+		boolean exist;
+		try {
+			exist = sysUserService.hasExistSort(sort);
+			if(exist) {
+				return ResultModel.build(500, "序号已经存在");
+			} else {
+				return ResultModel.build(200, "success");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultModel.build(500, "服务异常");
+		}
 	}
 	
 	@RequestMapping("/listUser")
+	@RequiresPermissions("sysUser:query")
 	public String listUser(Model model) {
 		//查询查询所有角色, 放入缓存中, 如果修改了则刷新缓存
 		List<SysRoleEntity> roleList;
@@ -135,5 +220,19 @@ public class UserController extends BaseController{
 		}
 		model.addAttribute("params", params);
 		return "system/user/user_list";
+	}
+	
+	@RequestMapping("/deleteUser")
+	@ResponseBody
+	@RequiresPermissions("sysUser:delete")
+	public ResultModel deleteUser(int userId, HttpServletRequest request, HttpSession session) {
+		try {
+			sysUserService.deleteUserById(userId);
+			sysLogService.save(this.getLoginUser(session), this.getIP(request), "删除系统用户");
+			return ResultModel.build(200, "success");
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return ResultModel.build(500, e.getMessage());
+		}
 	}
 }

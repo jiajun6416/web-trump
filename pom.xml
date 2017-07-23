@@ -149,8 +149,8 @@
 	
 			 <!-- ehcache -->
 		  <dependency>  
-		    <groupId>net.sf.ehcache</groupId>  
-		    <artifactId>ehcache</artifactId>  
+			  <groupId>org.ehcache</groupId>
+			  <artifactId>ehcache</artifactId>
 		  </dependency>   
 			
 	        <!-- shiro -->  
@@ -165,7 +165,20 @@
 	        <dependency>  
 	            <groupId>org.apache.shiro</groupId>  
 	            <artifactId>shiro-spring</artifactId>  
-	        </dependency> 	
+		   </dependency> 
+	          <dependency>
+			  <groupId>org.apache.shiro</groupId>
+			  <artifactId>shiro-aspectj</artifactId>
+			</dependency>
+	     	<dependency>
+			  <groupId>org.apache.shiro</groupId>
+			  <artifactId>shiro-ehcache</artifactId>
+			</dependency>
+		     <dependency>
+			  <groupId>org.apache.shiro</groupId>
+			  <artifactId>shiro-spring</artifactId>
+			</dependency> 
+		 
  	 </dependencies>
   
     

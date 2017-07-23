@@ -170,13 +170,14 @@
 						data:{"menuId":menuId},
 						dataType:"json",
 						success:function(result) {
-							if("success" == result.msg) {
+							var msg= result.msg;
+							if("success" == msg) {
 								//window.location.href = "menu/"+${pId};
 								parent.location.href="menu/listAllMenu.do?pId="+${pId};
 							} else {
 								top.hangge();
 								bootbox.dialog({
-									message: "<span class='bigger-110'>删除失败,请先删除子菜单!</span>",
+									message: "<span class='bigger-110'>"+msg+"!</span>",
 									buttons: 			
 									{
 										"button" :

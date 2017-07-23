@@ -254,38 +254,47 @@
 			if(check()){
 				var loginname = $("#loginname").val();
 				var password = $("#password").val();
-				//用户名+token+密码+验证码
-				var code = loginname+"${token}"+password+""+$("#code").val();
+				//密码加密
+				var md5_passoword = $.md5(password);
+				//remember
+				var rememberMe = false;
+				if($("#saveid").attr("checked")) {
+					rememberMe = true;
+				}
+				var code = $("#code").val();
 				$.ajax({
 					type: "POST",
 					url: 'login',
-			    	data: {loginInfo:code,timestamp:genTimestamp()},
+			    	data: {"username":loginname, "password":md5_passoword, "rememberMe":rememberMe, "code":code},
 					dataType:'json',
 					cache: false,
 					success: function(data) {
 						if(data.status == 200) {
 							saveCookie();
 							window.location.href="main/index";
-						} 
-						if(data.status == 400) {
-							$("#code").tips({
-								side : 1,
-								msg : "验证码输入有误",
-								bg : '#FF5080',
-								time : 3
-							});
-							showfh();
-							$("#code").focus();
-						} 
-						if (data.status == 500){ 
-							$("#loginname").tips({
-								side : 1,
-								msg : "用户名或密码有误",
-								bg : '#FF5080',
-								time : 3
-							});
-							showfh();
-							$("#loginname").focus();
+						} else {
+							changeCode1();
+							if(data.status == 403) {
+								$("#code").tips({
+									side : 1,
+									msg : "验证码输入有误",
+									bg : '#FF5080',
+									time : 3
+								});
+								showfh();
+								$("#code").focus();
+							} 
+							if (data.status == 500){ 
+								$("#loginname").tips({
+									side : 1,
+									msg : data.msg,
+									bg : '#FF5080',
+									time : 3
+								});
+								showfh();
+								$("#loginname").focus();
+							}
+							
 						}
 					}
 				});
@@ -365,31 +374,16 @@
 			return true;
 		}
 
-		//由保存密码转换为不保存密码会将cookie和输入置空, 废弃
-/* 		function savePaw() {
-			if (!$("#saveid").attr("checked")) {
-				//将cooki值设置为空
-				$.cookie('loginname', '', {
-					expires : -1, path:'/'
-				});
-				$.cookie('password', '', {
-					expires : -1, path:'/'
-				});
-				$("#loginname").val('');
-				$("#password").val('');
-			}
-		} */
-
 		function saveCookie() {
 			//保存密码
 			if ($("#saveid").attr("checked")) {
-				$.cookie('loginname', $("#loginname").val(), {
+				$.cookie('username', $("#loginname").val(), {
 					expires : 7, path:'/'
 				});
 				$.cookie('password', $("#password").val(), {
 					expires : 7,path:'/'
 				});
-			} else { //不保存密码, 设置-1不生效
+			} else { //不保存密码, 设置-1不生效, 和java中有点不一样
 				$.cookie('loginname', $("#loginname").val(), {
 					expires : 365, path:'/'
 				});
@@ -397,11 +391,11 @@
 					expires : -1, path:'/'
 				});
 			}
-		}
+		} 
 		
 		//进入页面的时候通过判断cookie是否为空来确定上次是否保存了cookie
-		jQuery(function() {
-			var loginname = $.cookie('loginname');
+ 		jQuery(function() {
+			var loginname = $.cookie('username');
 			var password = $.cookie('password');
 			if ( typeof(password) != "undefined") {
 				$("#loginname").val(loginname);
@@ -412,7 +406,7 @@
 				$("#loginname").val(loginname);
 				$("#password").focus();
 			}
-		});
+		}); 
 		
 		//登录注册页面切换
 		function changepage(value) {

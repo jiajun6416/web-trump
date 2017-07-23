@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +37,7 @@ public class MenuController extends BaseController{
 	private SysMenuService sysMenuService;
 	
 	@RequestMapping("/listAllMenu")
+	@RequiresPermissions("menu:query")
 	public String zTreeList(Model model) throws Exception {
 		ParameMap params = getParaMap();
 		List<ZtreeNode> ztreeList = sysMenuService.selectAllMenuZtreeNode();
@@ -53,6 +55,7 @@ public class MenuController extends BaseController{
 	}
 	
 	@RequestMapping("/{pId}")
+	@RequiresPermissions("menu:query")
 	public String menuByPid(@PathVariable("pId") int pId, Model model) throws Exception {
 		List<SysMenuEntity> menuList = sysMenuService.getMenuByParentId(pId);
 		model.addAttribute("menuList", menuList);
@@ -65,6 +68,7 @@ public class MenuController extends BaseController{
 	}
 	
 	@RequestMapping("/toEdit")
+	@RequiresPermissions("menu:update")
 	public String toEditMenu(int menuId, Model model) throws Exception {
 		SysMenuEntity menu = sysMenuService.getById(menuId);
 		model.addAttribute("menu", menu);
@@ -96,6 +100,7 @@ public class MenuController extends BaseController{
 	}
 	
 	@RequestMapping("toAdd")
+	@RequiresPermissions("menu:insert")
 	public String toAdd(int pId, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 		if(pId != 0) {
 			SysMenuEntity pMenu = sysMenuService.getById(pId);
@@ -107,6 +112,7 @@ public class MenuController extends BaseController{
 	}
 	
 	@RequestMapping(value="/save", method=RequestMethod.POST)
+	@RequiresPermissions("menu:insert")
 	@ResponseBody
 	public ResultModel insert(SysMenuEntity menu, HttpSession session, HttpServletRequest request)  {
 		String status = request.getParameter("status");
@@ -133,6 +139,7 @@ public class MenuController extends BaseController{
 	
 	@RequestMapping("/update")
 	@ResponseBody
+	@RequiresPermissions("menu:update")
 	public ResultModel update(SysMenuEntity menu,HttpSession session, HttpServletRequest request) {
 		String status = request.getParameter("status");
 		if(StringUtils.isEmpty(menu.getAccessUrl())) {
@@ -154,14 +161,15 @@ public class MenuController extends BaseController{
 			return ResultModel.build(500, e.getMessage());
 		}
 	}
-	
 	@RequestMapping("/toEditIcon")
+	@RequiresPermissions("menu:update")
 	public String toEditIcon(int menuId, Model model) {
 		model.addAttribute("menuId", menuId);
 		return "system/menu/menu_icon";
 	}
 	
 	@RequestMapping("/editIcon")
+	@RequiresPermissions("menu:update")
 	public String editIcon(int menuId, String menuIcon, Model model, String iconColor, HttpServletRequest request ,
 			HttpSession session) throws Exception {
 		if(StringUtils.isNotEmpty(menuIcon) && StringUtils.isNotEmpty(iconColor)) {
@@ -176,6 +184,7 @@ public class MenuController extends BaseController{
 	
 	@RequestMapping(value="/delete", method=RequestMethod.POST)
 	@ResponseBody
+	@RequiresPermissions("menu:delete")
 	public ResultModel Delete(@RequestParam(required=true) String menuId, HttpSession session, HttpServletRequest request) {
 		try {
 			Integer id = Integer.valueOf(menuId);
@@ -187,9 +196,9 @@ public class MenuController extends BaseController{
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return  ResultModel.build(200, e.getMessage());
+			return  ResultModel.build(500, e.getMessage());
 		}
-		return  ResultModel.build(500, "error");
+		return  ResultModel.build(500, "请先删除子菜单!");
 	}
 	
 }

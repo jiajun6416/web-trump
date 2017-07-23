@@ -33,12 +33,16 @@ public class Constant {
 	/*本机ip*/
 	public static final String LOCALHOST = "127.0.0.1";
 	
+	//admin角色id
+	public static final int ADMIN_ROLE_ID = 1;
 	/*系统角色*/
 	public static final int SYSTEM_ROLE =1;
 	/*会员角色*/
 	public  static final int VIP_ROLE = 2;
 	/*组织角色*/
 	public static final int ORGANIZE_ROLE = 3;
+	
+	public static final Short USER_LOGIN = 1;
 	
 	
 	/*系统用户注册接口_请求协议参数)*/

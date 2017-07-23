@@ -1,17 +1,25 @@
 package com.jiajun.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
+
+import java.util.List;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 import com.jiajun.base.BaseTest;
-import com.jiajun.service.SysUserService;
 
 public class SysUserServicetest extends BaseTest{
 	
 	@Autowired
 	private SysUserService userService;
+	
+	@Test
+	public void TestGetPermissionListById() throws Exception {
+		List<String> list = userService.getPermissionListById(2);
+		Assert.notEmpty(list);
+	}
 	
 	@Test
 	public void testGetSysUserByNameAndPwd() {
@@ -33,5 +41,6 @@ public class SysUserServicetest extends BaseTest{
 		
 		fail("Not yet implemented");
 	}
-
+	
+	
 }

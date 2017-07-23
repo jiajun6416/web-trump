@@ -55,8 +55,14 @@
  	<foreach collection="list" open="(" close=")" separator="," item="menuId">
  		#{menuId}
  	</foreach>
-  	
   </select>
+
+  <select id="selectAllMenu" resultMap="BaseResultMap">
+   	select 
+ 	<include refid="Base_Column_List"/>
+ 	from  sys_menu
+  </select>
+  
   <!-- ======================================ztree 查询=============================== -->
   <select id="selectMenuIdByRoleType" parameterType="map" resultMap="checkedZtreeNode">
 	SELECT

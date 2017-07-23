@@ -122,7 +122,7 @@ function online(){
 
 //下线
 function goOut(msg){
-	window.location.href=locat+"/logout.do?msg="+msg;
+	window.location.href=locat+"/logout";
 }
 
 //去通知收信人有站内信接收
@@ -163,8 +163,8 @@ function editMyself(){
 	 diag.Drag=true;
 	 diag.Title ="个人资料";
 	 diag.URL = locat+'/user/toEditMyself';
-	 diag.Width = 469;
-	 diag.Height = 465;
+	 diag.Width = 486;
+	 diag.Height = 560;
 	 diag.CancelEvent = function(){ //关闭事件
 		diag.close();
 	 };

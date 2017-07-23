@@ -1,6 +1,7 @@
 package com.jiajun.dao.base.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -80,6 +81,25 @@ public class DaoImpl extends  SqlSessionDaoSupport implements Dao {
 			int begin  = (currentPage-1)*rows;
 			params.put("begin", begin);
 			List list = (List) selectList(listMethod, params);
+			page.setList(list);
+		}
+		int totalPage = (count-1)/rows + 1;
+		page.setCount(count);
+		page.setTotalPage(totalPage);
+		page.setCurrentPage(currentPage);
+		page.setPageSize(rows);
+		return page;
+	}
+
+	@Override
+	public Page getPage(String listMethod, String countMethod, int currentPage, int rows,
+			Map<String, Object> conditions) throws Exception {
+		Page<SysUserEntity> page = new Page<SysUserEntity>();
+		int count = (int) selectObject(countMethod, conditions);
+		if(count > 0) {
+			int begin  = (currentPage-1)*rows;
+			conditions.put("begin", begin);
+			List list = (List) selectList(listMethod, conditions);
 			page.setList(list);
 		}
 		int totalPage = (count-1)/rows + 1;

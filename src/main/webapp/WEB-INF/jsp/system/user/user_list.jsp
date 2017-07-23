@@ -43,15 +43,21 @@
 									</span>
 									</div>
 								</td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="beginTime" id="lastLoginStart"  value="${params.beginTime}"type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="最近登录开始"/></td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="endTime" name="lastLoginEnd"   value="${params.endTime}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="最近登录结束"/></td>
 								<td style="vertical-align:top;padding-left:2px;">
 								 	<select class="chosen-select form-control" name="roleId" id="role_id" data-placeholder="请选择角色" style="vertical-align:top;width: 120px;">
 									<option value=""></option>
 									<option value="">全部</option>
 									<c:forEach items="${roleList}" var="role">
-										<option value="${role.id}" <c:if test="${params.roleId == role.id}">selected</c:if>>${role.roleName}</option>
+										<c:choose>
+											<c:when test="${role.id == params.roleId}">
+												<option value="${role.id}" selected="">${role.roleName}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${role.id}">${role.roleName}</option>
+											</c:otherwise>
+										</c:choose>
 									</c:forEach>
+									
 								  	</select>
 								</td>
 								<td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="searchs();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
@@ -84,18 +90,19 @@
 								<c:when test="${not empty page.list}">
 									<c:forEach items="${page.list}" var="user" varStatus="vs">
 										<tr>
-											<c:set var="roleSize" value="${fn:length(user.roleList)}"></c:set>
-											<td class='center' style="width: 20px;vertical-align:middle;" rowspan="${roleSize}">
+											<td class='center' style="width: 20px;vertical-align:middle;" >
 												<label><input type='checkbox' name='ids' value="${user.id }" id="${user.email }" alt="${user.phone }" title="${user.username }" class="ace"/><span class="lbl"></span></label>
 											</td>
-											<td class='center' style="width: 30px;vertical-align:middle;" rowspan="${roleSize}">${vs.count}</td>
-											<td class="center" rowspan="${roleSize}" style="vertical-align:middle;"><a onclick="viewUser('${user.username}')" style="cursor:pointer;" >${user.username}</a></td>
-											<td class="center" rowspan="${roleSize}" style="vertical-align:middle;">${user.name}</td>
-											<td class="center" >${user.roleList[0].roleName}</td>
-											<td class="center" rowspan="${roleSize}" style="vertical-align:middle;"><a title="发送电子邮件" style="text-decoration:none;cursor:pointer;" onclick="sendEmail('${user.email}');">${user.email }&nbsp;<i class="ace-icon fa fa-envelope-o"></i></a></td>
-											<td class="center" rowspan="${roleSize}" style="vertical-align:middle;">${user.loginTime}</td>
-											<td class="center" rowspan="${roleSize}" style="vertical-align:middle;">${user.lastId}</td>
-											<td class="center" rowspan="${roleSize}" style="vertical-align:middle;">
+											<td class='center' style="width: 30px;vertical-align:middle;" >${vs.count}</td>
+											<td class="center"  style="vertical-align:middle;"><a onclick="viewUser('${user.username}')" style="cursor:pointer;" >${user.username}</a></td>
+											<td class="center"  style="vertical-align:middle;">${user.name}</td>
+											<td class="center" >${user.role.roleName}</td>
+											<td class="center"  style="vertical-align:middle;"><a title="发送电子邮件" style="text-decoration:none;cursor:pointer;" onclick="sendEmail('${user.email}');">${user.email }&nbsp;<i class="ace-icon fa fa-envelope-o"></i></a></td>
+											<td class="center"  style="vertical-align:middle;">
+												<fmt:formatDate value="${user.loginTime}" pattern="yyyy/MM/dd HH:mm:ss"/>
+											</td>
+											<td class="center"  style="vertical-align:middle;">${user.lastIp}</td>
+											<td class="center"  style="vertical-align:middle;">
 												<div class="hidden-sm hidden-xs btn-group">
 													<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${user.username}');">
 														<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>
@@ -103,7 +110,7 @@
 													<a class="btn btn-xs btn-warning" title='发送短信' onclick="sendSms('${user.phone}');">
 														<i class="ace-icon fa fa-envelope-o bigger-120" title="发送短信"></i>
 													</a>
-													<a class="btn btn-xs btn-success" title="编辑" onclick="editUser('${user.id}');">
+													<a class="btn btn-xs btn-success" title="编辑" onclick="editSysUser('${user.id}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													<a class="btn btn-xs btn-danger" onclick="delUser('${user.id}','${user.username}');">
@@ -112,10 +119,7 @@
 												</div>
 											</td>
 										</tr>
-										<c:forEach begin="1" end="${roleSize-1}" var="index">
-											<tr><td class="center"> ${user.roleList[index].roleName}</td></tr>
-										</c:forEach>
-										</c:forEach>
+									</c:forEach>
 								</c:when>
 								<c:otherwise>
 									<tr class="main_info">
@@ -134,7 +138,7 @@
 								<a title="批量发送站内信" class="btn btn-mini btn-info" onclick="makeAll('确定要给选中的用户发送站内信吗?');"><i class="ace-icon fa fa-envelope-o bigger-120"></i></a>
 								<a title="批量发送电子邮件" class="btn btn-mini btn-primary" onclick="makeAll('确定要给选中的用户发送邮件吗?');"><i class="ace-icon fa fa-envelope bigger-120"></i></a>
 								<a title="批量发送短信" class="btn btn-mini btn-warning" onclick="makeAll('确定要给选中的用户发送短信吗?');"><i class="ace-icon fa fa-envelope-o bigger-120"></i></a>
-								<a title="批量删除" class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
+								<!-- <a title="批量删除" class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a> -->
 							</td>
 							<td style="vertical-align:top;">
 								<div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">
@@ -188,6 +192,7 @@
 <!-- basic scripts -->
 <!-- 页面底部js¨ -->
 <%@ include file="../index/foot.jsp"%>
+</html>
 <!-- 删除时确认窗口 -->
 <script src="static/ace/js/bootbox.js"></script>
 <!-- ace scripts -->
@@ -216,10 +221,24 @@ function delUser(userId,msg){
 	bootbox.confirm("确定要删除["+msg+"]吗?", function(result) {
 		if(result) {
 			top.jzts();
-			var url = "<%=basePath%>user/deleteU.do?USER_ID="+userId+"&tm="+new Date().getTime();
-			$.get(url,function(data){
-				nextPage(${page.currentPage});
-			});
+			$.ajax({
+				method:'POST',
+				url:'<%=basePath%>user/deleteUser.do',
+				data:{"userId":userId},
+				dataType:'json',
+				success: function(data) {
+					if("success"==data.msg) {
+						setTimeout("self.location=self.location",100);
+					} else {
+						$(top.hangge());
+						alert(data.msg);
+					}
+				},
+				error: function() {
+					top.hangge();
+					alert("未知错误");
+				}
+			});			
 		};
 	});
 }
@@ -230,35 +249,30 @@ function add(){
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
 	 diag.Title ="新增";
-	 diag.URL = '<%=basePath%>user/goAddU.do';
+	 diag.URL = '<%=basePath%>user/toAddSysUser.do';
 	 diag.Width = 469;
 	 diag.Height = 510;
 	 diag.CancelEvent = function(){ //关闭事件
-		 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-			 if('${page.currentPage}' == '0'){
-				 top.jzts();
-				 setTimeout("self.location=self.location",100);
-			 }else{
-				 nextPage(${page.currentPage});
-			 }
-		}
+		 top.jzts();
+		 setTimeout("self.location=self.location",100);
 		diag.close();
 	 };
 	 diag.show();
 }
 
 //修改
-function editUser(user_id){
+function editSysUser(userId){
 	 top.jzts();
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
-	 diag.Title ="资料";
-	 diag.URL = '<%=basePath%>user/goEditU.do?USER_ID='+user_id;
+	 diag.Title ="修改用户信息";
+	 diag.URL = '<%=basePath%>user/toEditSysUser.do?userId='+userId;
 	 diag.Width = 469;
 	 diag.Height = 510;
 	 diag.CancelEvent = function(){ //关闭事件
 		 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-			nextPage(${page.currentPage});
+			 setTimeout("self.location=self.location",100);
+			//nextPage(${page.currentPage});
 		}
 		diag.close();
 	 };
@@ -474,11 +488,9 @@ function viewUser(USERNAME){
 	 diag.show();
 }
 
-
 function changeCount() {
 	$("form")[0].submit();
 }
-
 </script>		
 </script>
-</html>
+

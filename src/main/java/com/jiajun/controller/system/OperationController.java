@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,6 +28,7 @@ public class OperationController extends BaseController{
 	private SysLogService sysLogService;
 	
 	@RequestMapping("/list")
+	@RequiresPermissions("button:query")
 	public String list(Model model) throws Exception {
 		List<SysOpeartionEntity> list = operationService.getAll();
 		model.addAttribute("list", list);
@@ -34,6 +36,7 @@ public class OperationController extends BaseController{
 	}
 	
 	@RequestMapping("/toEdit")
+	@RequiresPermissions("button:update")
 	public String toEdit(int operaId, Model model) throws Exception {
 		SysOpeartionEntity operation = operationService.getById(operaId);
 		model.addAttribute("action", "update");
@@ -42,12 +45,14 @@ public class OperationController extends BaseController{
 	}
 	
 	@RequestMapping("/toSave")
+	@RequiresPermissions("button:insert")
 	public String to(Model model) throws Exception {
 		model.addAttribute("action", "save");
 		return "system/operation/input";
 	}
 	
 	@RequestMapping("/update")
+	@RequiresPermissions("button:update")
 	public String update(SysOpeartionEntity operation, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 		operationService.update(operation);
 		sysLogService.save(this.getLoginUser(session), this.getIP(request),  "修改按钮操作!");
@@ -56,6 +61,7 @@ public class OperationController extends BaseController{
 	}
 	
 	@RequestMapping("save")
+	@RequiresPermissions("button:insert")
 	public String save(SysOpeartionEntity operation, Model model, HttpServletRequest request, HttpSession session) throws Exception {
 		operationService.insert(operation);
 		sysLogService.save(this.getLoginUser(session), this.getIP(request),  "添加按钮操作!");
@@ -65,24 +71,26 @@ public class OperationController extends BaseController{
 	
 	@RequestMapping("/delete")
 	@ResponseBody
+	@RequiresPermissions("button:delete")
 	public ResultModel deleteById(int operaId) {
 		try {
 			operationService.delete(operaId);
 			return ResultModel.build(200, "success");
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return ResultModel.build(500, "error");
+			return ResultModel.build(500, e.getMessage());
 		}
 	}
 	@RequestMapping("/deleteSelect")
 	@ResponseBody
+	@RequiresPermissions("button:delete")
 	public ResultModel deleteSelect(String operaIds) {
 		try {
 			operationService.batchDelete(operaIds);
 			return ResultModel.build(200, "success");
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return ResultModel.build(500, "error");
+			return ResultModel.build(500, e.getMessage());
 		}
 	}
 

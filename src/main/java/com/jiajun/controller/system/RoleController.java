@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +43,7 @@ public class RoleController extends BaseController{
 	private SysOperationService sysOperaService;
 
 	@RequestMapping("/list")
+	@RequiresPermissions("role:query")
 	public String roRole(Model model, HttpServletRequest request) throws Exception {
 		int roleType = 0;
 		String roleTypeStr = request.getParameter("roleType");
@@ -64,7 +67,8 @@ public class RoleController extends BaseController{
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/maxMenuList") 
+	@RequestMapping("/maxMenuList")
+	@RequiresRoles("admin")
 	public String maxMenuOftype(int roleType, Model model) throws Exception {
 		List<ZtreeNode> treeNodes = sysRoleService.getCheckTreeNodeByType(roleType);
 		model.addAttribute("treeNodes", JsonUtils.encode(treeNodes));
@@ -84,6 +88,7 @@ public class RoleController extends BaseController{
 	 */
 	@RequestMapping("/saveMaxTypeMenu")
 	@ResponseBody
+	@RequiresRoles("admin")
 	public ResultModel saveMaxTypeMenu(int roleType, String menuIds, HttpServletRequest request, HttpSession session) throws Exception{
 		try {
 			sysRoleService.saveRoleTypeMneu(roleType, menuIds);
@@ -102,6 +107,7 @@ public class RoleController extends BaseController{
 	 * @throws Exception
 	 */
 	@RequestMapping("/menuList")
+	@RequiresPermissions("role:query")
 	public String menuList(int roleId, Model model) throws Exception {
 		List<ZtreeNode> treeNodes = sysRoleService.getMenuNodesById(roleId);
 		model.addAttribute("roleId", roleId);
@@ -120,6 +126,7 @@ public class RoleController extends BaseController{
 	 */
 	@RequestMapping("/saveRoleMenus")
 	@ResponseBody
+	@RequiresPermissions("role:update")
 	public ResultModel saveRoleMenus(int roleId, String menuIds, HttpServletRequest request, HttpSession session) throws Exception {
 		try {
 			sysRoleService.saveRoleMenus(roleId, menuIds);
@@ -132,6 +139,7 @@ public class RoleController extends BaseController{
 	}
 	
 	@RequestMapping("/toAdd")
+	@RequiresPermissions("role:insert")
 	public String toAdd(int roleType, Model model) {
 		model.addAttribute("roleType", roleType);
 		model.addAttribute("action", "save");
@@ -139,6 +147,7 @@ public class RoleController extends BaseController{
 	}
 	
 	@RequestMapping("/save")
+	@RequiresPermissions("role:update")
 	public String save(SysRoleEntity roleEntity, Model model, HttpSession session, HttpServletRequest request) throws Exception  {
 		sysRoleService.saveRole(roleEntity);
 		sysLogService.save(this.getLoginUser(session), this.getIP(request), "添加角色:" +roleEntity.getRoleName());
@@ -147,6 +156,7 @@ public class RoleController extends BaseController{
 	}
 	
 	@RequestMapping("/toEdit")
+	@RequiresPermissions("role:update")
 	public String toEdit(int roleId, Model model) throws Exception {
 		SysRoleEntity role = sysRoleService.getRoleById(roleId);
 		model.addAttribute("role", role);
@@ -155,6 +165,7 @@ public class RoleController extends BaseController{
 	}
 	
 	@RequestMapping("/update")
+	@RequiresPermissions("role:update")
 	public String  update(SysRoleEntity roleEntity, Model model, HttpSession session, HttpServletRequest request) throws Exception {
 			sysRoleService.update(roleEntity);
 			sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改角色信息:" +roleEntity.getRoleName());
@@ -164,6 +175,7 @@ public class RoleController extends BaseController{
 	
 	@RequestMapping("/delete")
 	@ResponseBody
+	@RequiresPermissions("role:delete")
 	public ResultModel delete(int roleId, Model model, HttpSession session, HttpServletRequest request)  {
 		try {
 			sysRoleService.delete(roleId);
@@ -179,6 +191,7 @@ public class RoleController extends BaseController{
 	}
 	
 	@RequestMapping("/toEditRoleType")
+	@RequiresRoles("admin")
 	public String toEditRoleType(int roleType, Model model) throws Exception {
 		SysRoleEntity role = sysRoleService.getRoleByRoleType(roleType);
 		model.addAttribute("role", role);
@@ -187,6 +200,7 @@ public class RoleController extends BaseController{
 	}
 	
 	@RequestMapping("/updateType")
+	@RequiresRoles("admin")
 	public String  updateType(SysRoleEntity roleEntity, Model model, HttpSession session, HttpServletRequest request) throws Exception {
 			sysRoleService.update(roleEntity);
 			sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改角色类型信息:" +roleEntity.getRoleName());
@@ -195,12 +209,14 @@ public class RoleController extends BaseController{
 	}
 	
 	@RequestMapping("/toAddRoleType")
+	@RequiresRoles("admin")
 	public String toAddRoleType(Model model) throws Exception {
 		model.addAttribute("action", "saveRoleType");
 		return "system/role/role_edit";
 	}
 	
 	@RequestMapping("/saveRoleType")
+	@RequiresRoles("admin")
 	public String saveRoleType(SysRoleEntity roleEntity, Model model, HttpSession session, HttpServletRequest request) throws Exception  {
 		sysRoleService.saveRoleType(roleEntity);
 		sysLogService.save(this.getLoginUser(session), this.getIP(request), "添加角色类型:" + roleEntity.getRoleName());
@@ -210,6 +226,7 @@ public class RoleController extends BaseController{
 	
 	@RequestMapping("/deleteType")
 	@ResponseBody
+	@RequiresRoles("admin")
 	public ResultModel deleteType(int roleType, Model model, HttpSession session, HttpServletRequest request) throws Exception  {
 		if(roleType == 1 || roleType == 2) {
 			return ResultModel.build(500, "系统角色组, 不允许删除!");
@@ -229,6 +246,7 @@ public class RoleController extends BaseController{
 	
 	/*=====================================================增删查改授权============================================*/
 	@RequestMapping("/permission")
+	@RequiresPermissions("role:query")
 	public String permission(int roleId, int type, Model model) throws Exception {
 		
 		model.addAttribute("action", "premission");
@@ -241,6 +259,7 @@ public class RoleController extends BaseController{
 	
 	@RequestMapping("/saveRolePremission")
 	@ResponseBody
+	@RequiresPermissions("role:update")
 	public ResultModel saveRolePremission(String menuIds, int type, int roleId, HttpServletRequest request, HttpSession session) throws Exception {
 		sysRoleService.saveRoleMenuPremission(roleId, menuIds, type);
 		sysLogService.save(this.getLoginUser(session), this.getIP(request), "保存角色对应的菜单权限");
@@ -248,6 +267,7 @@ public class RoleController extends BaseController{
 	}
 	
 	@RequestMapping("/operation/list")
+	@RequiresPermissions("premission:button")
 	public String operationList(Model model, HttpServletRequest request) throws Exception {
 		//query all role type
 		List<SysRoleEntity> roleTypes = sysRoleService.getAllTypeRole();
@@ -276,6 +296,7 @@ public class RoleController extends BaseController{
 	}
 	
 	@RequestMapping("/operation/update")
+	@RequiresPermissions("premission:button")
 	public ResultModel updateOperation(int roleId, int opearId, HttpServletRequest request, HttpSession session) {
 		try {
 			sysRoleService.updateOpera(roleId, opearId);
@@ -283,7 +304,7 @@ public class RoleController extends BaseController{
 			return ResultModel.build(200, "success");
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
-			return ResultModel.build(500, "error");
+			return ResultModel.build(500, e.getMessage());
 		}
 	}
 }

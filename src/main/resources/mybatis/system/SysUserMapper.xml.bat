@@ -7,10 +7,9 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="login_time" jdbcType="TIMESTAMP" property="loginTime" />
-    <result column="last_ip" jdbcType="VARCHAR" property="lastIp" />
+    <result column="last_id" jdbcType="VARCHAR" property="lastId" />
     <result column="skin" jdbcType="VARCHAR" property="skin" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="status" jdbcType="SMALLINT" property="status" />
@@ -19,17 +18,39 @@
     <result column="gmt_modified" jdbcType="TIMESTAMP" property="gmtModified" />
   </resultMap>
   
-  <!-- 用户和角色是一对一关系 -->
   <resultMap id="hasRoleResultMap" type="com.jiajun.pojo.system.SysUserEntity" extends="BaseResultMap">
-  	<association property="role"  javaType="com.jiajun.pojo.system.SysRoleEntity" column="role_id" select="SysRoleMapper.selectByPrimaryKey"/>
+  	<!-- 级联查询 -->
+	<collection property="roleList" ofType="com.jiajun.pojo.system.SysRoleEntity" column="id" select="SysRoleMapper.selectByUserId"/>
   </resultMap>
-    
+  
   <sql id="Base_Column_List">
-    id, username, password, name, login_time, last_ip, skin, sort, role_id, phone, email, 
-    status, remark, gmt_create, gmt_modified
+    id, username, password, name, login_time, last_id, skin, sort, phone, email, status, 
+    remark, gmt_create, gmt_modified
   </sql>
   
-   <sql id="condiction">
+  <select id="getUserNumByRole" parameterType="int" resultType="int">
+	SELECT
+		COUNT(*)
+	FROM
+		SYS_USER,
+		SYS_USER_ROLE
+	WHERE
+		SYS_USER.ID = SYS_USER_ROLE.USER_ID
+	AND SYS_USER_ROLE.ROLE_ID = #{roleId}
+  </select>
+  
+  <select id="getNumByEmail" resultType="int" parameterType="params">
+  	select count(*) from sys_user where id != #{id,jdbcType=INTEGER} and email = #{email, jdbcType=VARCHAR}
+  </select>
+  
+  <select id="getCount" parameterType="params" resultType="Integer">
+  	select 
+  		count(*) 
+  		from sys_user t1
+	<include refid="condiction"/>
+  </select>
+  
+ <sql id="condiction">
    	<where>
   	 	<!-- 排除掉系统管理员 -->
   		id != 1
@@ -49,83 +70,24 @@
 			and t1.login_time &lt;=  str_to_date(#{endTime}, '%Y-%m-%d')
 		</if>
 		<if test="roleId != null and roleId != ''">
-			and role_id = #{roleId}
+			and exists (select * from sys_user_role t2 where t2.user_id = t1.id and t2.role_id = #{roleId})
 		</if>
   	</where>
  </sql>
-    <select id="selectByNameAndPwd" resultMap="BaseResultMap" parameterType="params">
-    select 
-    <include refid="Base_Column_List" />
-  	  from sys_user
-  	  where username = #{username,jdbcType=VARCHAR} and password = #{password, jdbcType=VARCHAR}
-  	</select>
  
-   <select id="getCount" parameterType="params" resultType="Integer">
-  	select 
-  		count(*) 
-  		from sys_user t1
-	<include refid="condiction"/>
-  </select>
-  
   <select id="getList" parameterType="params" resultMap="hasRoleResultMap">
   	select 
   		<include refid="Base_Column_List"/>
   		from sys_user t1
   	<include refid="condiction"/>
   		limit #{begin}, #{rows}
-   </select>
-   
-   <select id="selectPermissionListById" parameterType="int" resultType="string">
-	  	(
-		SELECT
-			mp.premission_code
-		FROM
-			sys_user u,
-			sys_role_prem rp,
-			sys_menu_premission mp
-		WHERE
-			u.role_id = rp.role_id
-		AND rp.prem_id = mp.id
-		AND u.id = #{userId}
-	)
-	UNION ALL
-		(
-			SELECT
-				o.privileges_code
-			FROM
-				sys_user u,
-				sys_role_prem rp,
-				sys_opeartion o
-			WHERE
-				u.role_id = rp.role_id
-			AND rp.prem_id = o.id
-			AND u.id = #{userId}
-		)
-  </select>
-   
-   <select id="getAdminPermissionList" resultType="string">
-	  SELECT
-			mp.premission_code
-		FROM
-			sys_menu_premission mp
-		UNION ALL
-			SELECT
-				p.privileges_code
-			FROM
-				sys_opeartion p 	
-   </select>
-   
-   <select id="selectNumByEmail" resultType="int" parameterType="string">
-  	select count(*) from sys_user where email = #{email, jdbcType=VARCHAR}
   </select>
   
-  <select id="selectCountBySort" resultType="int" parameterType="int">
-  	select count(*) from sys_user where sort = #{sort,jdbcType=INTEGER}
-  </select>
-  
- 
-  <select id="selectCountByUsername" parameterType="String" resultType="int">
- 	 select count(*) from sys_user where username = #{username, jdbcType=VARCHAR}
+  <select id="selectByNameAndPwd" resultMap="BaseResultMap" parameterType="params">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where username = #{username,jdbcType=VARCHAR} and password = #{password, jdbcType=VARCHAR}
   </select>
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -134,31 +96,21 @@
     from sys_user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  
-   <select id="selectByUsername" parameterType="string" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from sys_user
-    where username = #{username,jdbcType=VARCHAR}
-  </select>
-  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sys_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jiajun.pojo.system.SysUserEntity">
     insert into sys_user (id, username, password, 
-      name, login_time, last_ip, 
-      skin, sort, role_id, 
-      phone, email, status, 
-      remark, gmt_create, gmt_modified
-      )
+      name, login_time, last_id, 
+      skin, sort, phone, 
+      email, status, remark, 
+      gmt_create, gmt_modified)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, #{lastIp,jdbcType=VARCHAR}, 
-      #{skin,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 
-      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
-      #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
-      )
+      #{name,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, #{lastId,jdbcType=VARCHAR}, 
+      #{skin,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{remark,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jiajun.pojo.system.SysUserEntity">
     insert into sys_user
@@ -178,17 +130,14 @@
       <if test="loginTime != null">
         login_time,
       </if>
-      <if test="lastIp != null">
-        last_ip,
+      <if test="lastId != null">
+        last_id,
       </if>
       <if test="skin != null">
         skin,
       </if>
       <if test="sort != null">
         sort,
-      </if>
-      <if test="roleId != null">
-        role_id,
       </if>
       <if test="phone != null">
         phone,
@@ -225,17 +174,14 @@
       <if test="loginTime != null">
         #{loginTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="lastIp != null">
-        #{lastIp,jdbcType=VARCHAR},
+      <if test="lastId != null">
+        #{lastId,jdbcType=VARCHAR},
       </if>
       <if test="skin != null">
         #{skin,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=INTEGER},
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
@@ -272,17 +218,14 @@
       <if test="loginTime != null">
         login_time = #{loginTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="lastIp != null">
-        last_ip = #{lastIp,jdbcType=VARCHAR},
+      <if test="lastId != null">
+        last_id = #{lastId,jdbcType=VARCHAR},
       </if>
       <if test="skin != null">
         skin = #{skin,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="roleId != null">
-        role_id = #{roleId,jdbcType=INTEGER},
       </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
@@ -311,10 +254,9 @@
       password = #{password,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},
       login_time = #{loginTime,jdbcType=TIMESTAMP},
-      last_ip = #{lastIp,jdbcType=VARCHAR},
+      last_id = #{lastId,jdbcType=VARCHAR},
       skin = #{skin,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
-      role_id = #{roleId,jdbcType=INTEGER},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       status = #{status,jdbcType=SMALLINT},

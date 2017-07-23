@@ -16,6 +16,7 @@ import com.jiajun.pojo.ZtreeNode;
 import com.jiajun.pojo.system.SysMenuEntity;
 import com.jiajun.pojo.system.SysMenuPremission;
 import com.jiajun.service.SysMenuService;
+import com.jiajun.util.Constant;
 import com.jiajun.util.Tools;
 
 @Service
@@ -158,31 +159,38 @@ public class SysMenuServiceImpl implements SysMenuService{
 
 	@Override
 	public List<SysMenuEntity> getMenuListByRoleId(int roleId) throws Exception {
-		String hasMenuId = (String) dao.selectObject(SYS_ROLE_NAME_SPACE+"selectMenuIdsById", roleId);
-		if(!StringUtils.isEmpty(hasMenuId) && Tools.regular(hasMenuId)) {
-			String[] hasMenuIds = hasMenuId.split(",");
-			List<Integer> menuIds = new ArrayList<>();
-			for (String menuId : hasMenuIds) {
-				menuIds.add(Integer.valueOf(menuId));
+		
+		List<SysMenuEntity> menuEntitys = null; 
+		
+		if(roleId == Constant.SYSTEM_ROLE) {
+			menuEntitys = (List<SysMenuEntity>) dao.selectList(NAME_SPACE+"selectAllMenu", null);
+		} else {
+			String hasMenuId = (String) dao.selectObject(SYS_ROLE_NAME_SPACE+"selectMenuIdsById", roleId);
+			if(!StringUtils.isEmpty(hasMenuId) && Tools.regular(hasMenuId)) {
+				String[] hasMenuIds = hasMenuId.split(",");
+				List<Integer> menuIds = new ArrayList<>();
+				for (String menuId : hasMenuIds) {
+					menuIds.add(Integer.valueOf(menuId));
+				}
+				menuEntitys = (List<SysMenuEntity>) dao.selectList(NAME_SPACE+"selectByMenuIds", menuIds);
 			}
-			List<SysMenuEntity> menuEntitys = (List<SysMenuEntity>) dao.selectList(NAME_SPACE+"selectByMenuIds", menuIds);
-			//进行递归,将子菜单和父亲菜单进行关联起来
-			List<SysMenuEntity> result = new ArrayList<>();
-			for (SysMenuEntity menu1 : menuEntitys) {
-				if(menu1.getParentId() == 0) {
-					result.add(menu1);
-				} else {
-					for (SysMenuEntity menu2 : result) {
-						if(menu1.getParentId() == menu2.getId()) {
-							menu2.getMenuList().add(menu1);
-						}
+		}
+		
+		//进行递归,将子菜单和父亲菜单进行关联起来
+		List<SysMenuEntity> result = new ArrayList<>();
+		for (SysMenuEntity menu : menuEntitys) {
+			Integer menuId = menu.getParentId();
+			if(menuId == 0) {
+				result.add(menu);
+			} else {
+				for (SysMenuEntity menu2 : menuEntitys) {
+					if(menu2.getId().equals(menuId)) {
+						menu2.getMenuList().add(menu);
 					}
 				}
 			}
-			return result;
-		} else {
-			return null;
 		}
+		return result;
 	}
 
 }

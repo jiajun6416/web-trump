@@ -1,6 +1,7 @@
 package com.jiajun.dao.base;
 
 import java.util.List;
+import java.util.Map;
 
 import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
@@ -64,6 +65,18 @@ public interface Dao {
 	 * @throws Exception
 	 */
 	Page getPage(String listMethod, String countMethod, ParameMap params) throws Exception;
+	
+	/**
+	 * 
+	 * @param listMethod 
+	 * @param countMethod
+	 * @param currentPage
+	 * @param rows
+	 * @param conditions
+	 * @return
+	 * @throws Exception
+	 */
+	Page getPage(String listMethod, String countMethod, int currentPage, int rows, Map<String, Object> conditions) throws Exception;
 	
 	/**
 	 * 批量插入

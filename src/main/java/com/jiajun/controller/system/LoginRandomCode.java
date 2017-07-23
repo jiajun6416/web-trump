@@ -27,10 +27,9 @@ import com.jiajun.util.Constant;
  * @date 2017年6月11日下午10:47:59
  */
 @Controller
-@RequestMapping("/randomCode")
 public class LoginRandomCode extends BaseController{
 	
-	@RequestMapping
+	@RequestMapping("/randomCode")
 	public void generate(HttpServletResponse response, HttpSession session){
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String code = drawImg(output);

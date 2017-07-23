@@ -26,7 +26,7 @@
   </select>
   
   <select id="getByUserId" parameterType="int" resultMap="BaseResultMap">
-	SELECT r.* from sys_user u, sys_user_role ur, sys_role r where u.id=ur.user_id and ur.role_id=r.id and u.id = #{userId}; 
+	SELECT r.* from sys_user u, sys_role r where u.role_id=r.id and u.id=#{userId}
   </select>
   
   <select id="getRoleNumByType" parameterType="int" resultType="int">

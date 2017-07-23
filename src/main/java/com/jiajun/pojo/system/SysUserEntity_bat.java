@@ -2,12 +2,13 @@ package com.jiajun.pojo.system;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.jiajun.util.JsonUtils;
 
-public class SysUserEntity  implements Serializable{
-	
-	private static final long serialVersionUID = -7522668131578278017L;
+public class SysUserEntity_bat implements Serializable{
+
+	private static final long serialVersionUID = -8189821437638122251L;
 
 	private Integer id;
 
@@ -19,13 +20,11 @@ public class SysUserEntity  implements Serializable{
 
     private Date loginTime;
 
-    private String lastIp;
+    private String lastId;
 
     private String skin;
 
     private Integer sort;
-
-    private Integer roleId;
 
     private String phone;
 
@@ -39,14 +38,14 @@ public class SysUserEntity  implements Serializable{
 
     private Date gmtModified;
     
-    private SysRoleEntity role;
-    
-    public SysRoleEntity getRole() {
-		return role;
+    private List<SysRoleEntity> roleList;
+
+    public List<SysRoleEntity> getRoleList() {
+		return roleList;
 	}
 
-	public void setRole(SysRoleEntity role) {
-		this.role = role;
+	public void setRoleList(List<SysRoleEntity> roleList) {
+		this.roleList = roleList;
 	}
 
 	public Integer getId() {
@@ -89,15 +88,15 @@ public class SysUserEntity  implements Serializable{
         this.loginTime = loginTime;
     }
 
-    public String getLastIp() {
-		return lastIp;
-	}
+    public String getLastId() {
+        return lastId;
+    }
 
-	public void setLastIp(String lastIp) {
-		this.lastIp = lastIp;
-	}
+    public void setLastId(String lastId) {
+        this.lastId = lastId;
+    }
 
-	public String getSkin() {
+    public String getSkin() {
         return skin;
     }
 
@@ -111,14 +110,6 @@ public class SysUserEntity  implements Serializable{
 
     public void setSort(Integer sort) {
         this.sort = sort;
-    }
-
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
     }
 
     public String getPhone() {
@@ -173,4 +164,5 @@ public class SysUserEntity  implements Serializable{
 	public String toString() {
 		return JsonUtils.encode(this);
 	}
+    
 }

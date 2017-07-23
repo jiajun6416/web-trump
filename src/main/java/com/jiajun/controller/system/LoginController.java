@@ -6,15 +6,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jiajun.controller.base.BaseController;
-import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.ResultModel;
 import com.jiajun.pojo.system.SysMenuEntity;
 import com.jiajun.pojo.system.SysRoleEntity;
@@ -46,17 +51,57 @@ public class LoginController extends BaseController{
 	//跳转登录
 	@RequestMapping("/toLogin") 
 	public String toLoginPage(Model model, HttpSession session, HttpServletRequest request) {
-		String token = Tools.getUUID();
-		//加入一个token进行密码加密
-		session.setAttribute(Constant.SESSION_TOKEN_CODE, token);
-		model.addAttribute("token", token);
+		//设置登陆页面的信息
 		model.addAttribute("title", Tools.getProperties("/config/config.properties", "title"));
 		model.addAttribute("music", Tools.getProperties("/config/config.properties", "music"));
 		return "system/index/login";
 	}
-
-	//登录
+	
+	
 	@RequestMapping("/login")
+	@ResponseBody
+	public ResultModel login(@RequestParam(required=true)String username, @RequestParam(required=true)String password,
+			@RequestParam(required=true)boolean rememberMe,@RequestParam(required=true)String code,
+			HttpServletRequest request, HttpSession session) {
+		String randCode = (String) session.getAttribute(Constant.SESSION_SECURITY_CODE);
+		if(StringUtils.isEmpty(code) || !code.equalsIgnoreCase(randCode)) {
+			return ResultModel.build(403, "验证码错误");
+		}
+		//认证
+		Subject subject = SecurityUtils.getSubject();  
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password);  
+		token.setRememberMe(rememberMe);
+		try {
+			subject.login(token);
+			
+			//认证成功后的一些操作
+			SysUserEntity sysUser  = (SysUserEntity) subject.getPrincipal();
+			sysUserService.updateLoginInfo(sysUser.getId(), this.getIP(request));
+			sysUser.setPassword(null);
+			session.setAttribute(Constant.SESSION_USER, sysUser);
+			session.removeAttribute(Constant.SESSION_SECURITY_CODE);
+			sysLogService.save(username, this.getIP(request), "登录成功");
+			SysRoleEntity role = sysRoleService.getRoleById(sysUser.getRoleId());
+			List<SysMenuEntity> menuList = sysMenuService.getMenuListByRoleId(role.getId());
+			session.setAttribute("menuList", menuList);
+
+		} catch (Exception e) {
+			if(e instanceof UnknownAccountException) {
+				logger.info("用户名不存在");
+				return ResultModel.build(500, "用户名不存在");
+			} else if (e instanceof IncorrectCredentialsException) {
+				logger.info("用户名或者密码错误");
+				return  ResultModel.build(500, "用户名或者密码错误");
+			} else {
+				logger.error(e.getMessage(),e);
+				return ResultModel.build(500, "系统异常");
+			}
+		}
+		return ResultModel.build(200, "success");
+	}
+	
+	//登录, 使用shiro的表单filter进行认证
+/*	@RequestMapping("/login")
 	@ResponseBody
 	public ResultModel login(String loginInfo, String timestamp, Model model, HttpServletRequest request, HttpSession session) {
 		
@@ -77,18 +122,18 @@ public class LoginController extends BaseController{
 			try {
 				SysUserEntity sysUser = sysUserService.getSysUserByNameAndPwd(params);
 				if(sysUser != null) {
-					sysUser.setPassword("");
+					//修改用户的登陆状态
+					sysUserService.updateLoginInfo(sysUser.getId(), this.getIP(request));
+					sysUser.setPassword(null);
 					session.setAttribute(Constant.SESSION_USER, sysUser);
 					//清除验证码
 					session.removeAttribute(Constant.SESSION_SECURITY_CODE);
 					sysLogService.save(username, this.getIP(request), "登录成功");
-					
 					//将用户菜单加入到session中
-					SysRoleEntity role = sysRoleService.getByUserId(sysUser.getId());
+					SysRoleEntity role = sysRoleService.getRoleById(sysUser.getRoleId());
 					List<SysMenuEntity> menuList = sysMenuService.getMenuListByRoleId(role.getId());
-				//	System.out.println(menuList);
+					//System.out.println(menuList);
 					session.setAttribute("menuList", menuList);
-					
 					return ResultModel.build(200, "success");
 				} else {
 					sysLogService.save(this.getLoginUser(session), this.getIP(request), "登录用户名或者密码错误");
@@ -102,7 +147,11 @@ public class LoginController extends BaseController{
 			//验证码错误
 			return ResultModel.build(400, "codeError");
 		}
-		
+	}*/
+	
+	@RequestMapping("/refuse")
+	public String refuse(Model model) {
+		return "refuse";
 	}
 	
 	/**
@@ -110,7 +159,7 @@ public class LoginController extends BaseController{
 	 * @param menu
 	 * @return
 	 */
-	@RequestMapping("main/{menu}")
+	@RequestMapping("/main/{menu}")
 	public String changeMainMenu(@PathVariable("menu")String menu) {
 		return "system/index/main";
 	}

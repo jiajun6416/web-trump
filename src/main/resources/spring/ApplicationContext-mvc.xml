@@ -2,15 +2,21 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd	
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/mvc 
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd	
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd">
 	
 	<context:component-scan base-package="com.jiajun.controller"/>		
 	
-	<!-- 使用默认的handler映射器和handler适配器 -->
-	<mvc:annotation-driven/>
+	<!-- 使用默认的handler映射器和handler适配器 , 注意: 自定义转换器不能取名conversionService, mvc自带了-->
+	<mvc:annotation-driven conversion-service="myConversionService"  />
 	
 	<!--静态资源的映射-->     
 	<mvc:resources mapping="/admin/**" location="/admin/" />
@@ -27,6 +33,16 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
+	<!-- 转换器 -->
+	<bean id="myConversionService"
+		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.jiajun.converter.StringTrimConverter"/>
+			</list>
+		</property>
+	</bean>
+		
 	<!--编码设置 -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 	    <property name="messageConverters">
@@ -50,8 +66,11 @@
 	        </list>
 	    </property>
 	</bean> 
- 	   	
-		<!-- 上传拦截，如最大上传值及最小上传值 -->
+ 	
+ 	<!-- /跳转页面 -->
+ 	<mvc:view-controller path="/" view-name="redirect:/main/index"/>
+ 	 
+	<!-- 上传拦截，如最大上传值及最小上传值 -->
 	  <bean id="multipartResolver"   class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >   
 		  <property name="maxUploadSize">    
 	          <value>104857600</value>    
@@ -64,7 +83,27 @@
 	        </property> 
  	   </bean> 
     
-    <!-- 全局异常处理器 -->
-    <bean class="com.jiajun.exception.SyetemExceptionHandler"/>
+    <!-- 全局异常处理器,方式一 -->
+    <!-- <bean class="com.jiajun.exception.SyetemExceptionHandler"/> -->
+    <!-- 异常处理方式二 -->
+    <bean id="exceptionResolver" class="com.jiajun.exception.CustomSimpleMappingExceptionResolver">
+    	<!-- 这边只对http协议异常进行处理, ajax异常已经处理 -->
+    	<property name="exceptionMappings">
+    		<props>
+				<prop key="org.apache.shiro.authz.UnauthorizedException">refuse</prop> 
+				<prop key="com.jiajun.exception.SysCustomException">error</prop>
+				<prop key="java.lang.exception">error</prop>	
+    		</props>
+    	</property>
+    </bean>
+    
+	<!-- 开启contoller的代理, 和 proxy-target-class="true" 开启cglib代理冲突, 两者只能配置一个-->
+	<!-- <aop:config proxy-target-class="true"/> -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
+	
+	<!-- 开启shrio注解支持 -->
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
     
 </beans>

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.jiajun.trump.com/menu" prefix="menu" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -39,6 +40,7 @@
 	
 </head>
 	<body class="no-skin">
+	
 		<!-- #section:basics/navbar.layout -->
 		<!-- 页面顶部¨ -->
 		<%@ include file="head.jsp"%>
@@ -131,7 +133,6 @@
 						</div>
 						</div><!-- /.row -->	
 					</div><!-- /.page-content -->
-					
 				</div>
 			</div><!-- /.main-content -->
 
