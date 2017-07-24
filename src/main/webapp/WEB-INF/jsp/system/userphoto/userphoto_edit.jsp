@@ -15,8 +15,9 @@
 
 <!-- jsp文件头和头部 -->
 <%@ include file="../index/top.jsp"%>
-
+<!-- flush检测js -->
 <script type="text/javascript" src="plugins/photoEditor/scripts/swfobject.js"></script>
+<!-- 富头像上传js -->
 <script type="text/javascript" src="plugins/photoEditor/scripts/fullAvatarEditor.js"></script>
 
 </head>
@@ -125,11 +126,11 @@
 		$(top.hangge());
 		
 		//头像保存到数据库
-		function savePhoto(value,type){
+		function savePhoto(photo,type){
 			$.ajax({
 				type: "POST",
-				url: '<%=basePath%>userphoto/save.do?tm='+new Date().getTime(),
-		    	data: {strphotos:value,type:type},
+				url: '<%=basePath%>head/savePhoto.do?tm='+new Date().getTime(),
+		    	data: {"photo":photo,"type":type},
 				dataType:'json',
 				cache: false,
 				success: function(data){

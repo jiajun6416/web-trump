@@ -3,6 +3,8 @@ package com.jiajun.dao.base.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,10 +52,28 @@ public class DaoImpl extends  SqlSessionDaoSupport implements Dao {
 		return this.getSqlSession().selectOne(statement, obj);
 	}
 
+	
+/*	
+	需要注入sessionTemplat而不是继承daoSupport
+	SqlSessionFactory sqlSessionFactory = sqlSessionTemplate2.getSqlSessionFactory();
+	SqlSession sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH,false);
+	try{
+		if(objs!=null){
+			for(int i=0,size=objs.size();i<size;i++){
+				sqlSession.update(str, objs.get(i));
+			}
+			sqlSession.flushStatements();
+			sqlSession.commit();
+			sqlSession.clearCache();
+		}
+	}finally{
+		sqlSession.close();
+	}*/
+	
 	@Override
 	public void batchInsert(String statement, List list) throws Exception {
 		for (Object object : list) {
-			this.getSqlSession().insert(statement, object);
+			insert(statement, object);
 		}
 	}
 

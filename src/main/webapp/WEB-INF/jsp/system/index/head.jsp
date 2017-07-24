@@ -19,7 +19,7 @@
 		<div class="navbar-header pull-left">
 			<!-- #section:basics/navbar.layout.brand -->
 			<a class="navbar-brand">
-				<small> <i class="fa fa-leaf"></i> JAVA DEMO </small>
+				<small> <i class="fa fa-leaf"></i> Ace Admin</small>
 			</a>
 
 			<!-- /section:basics/navbar.layout.brand -->
@@ -76,8 +76,10 @@
 				<!-- #section:basics/navbar.user_menu -->
 				<li class="light-blue">
 					<a data-toggle="dropdown"  class="dropdown-toggle" href="#">
-						<img class="nav-user-photo" src="static/ace/avatars/user.jpg" alt="Jason's Photo" id="userPhoto" />
+						<img class="nav-user-photo" src="" alt="photo" id="userPhoto" />
 						<span class="user-info" id="user_info">
+						<small>Welcome,</small>
+							${sessionScope.sessionUser.username}
 						</span>
 						<i class="ace-icon fa fa-caret-down"></i>
 					</a>

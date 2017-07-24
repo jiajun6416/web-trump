@@ -29,7 +29,8 @@ public class CustomSimpleMappingExceptionResolver extends SimpleMappingException
                 Integer statusCode = determineStatusCode(request, viewName);  
                 if (statusCode != null) {  
                     applyStatusCodeIfPossible(request, response, statusCode);  
-                }  
+                } 
+                //可以在域中存入一些提示消息 ...requet.setAttribute
                 return getModelAndView(viewName, ex, request);  
             } else {
             	//返回json

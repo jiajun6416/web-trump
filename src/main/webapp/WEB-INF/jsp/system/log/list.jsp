@@ -273,7 +273,8 @@
 				        	 if(data=="success") {
 				        		 tosearch();
 				        	 } else{
-				        		 alert("删除失败");
+				        		 alert(data.msg);
+				        		 tosearch();	
 				        	 }
 				         },
 						 error:function() {
@@ -321,7 +322,8 @@
 						        	 if(data=="success") {
 						        		 tosearch();
 						        	 } else{
-						        		 alert("删除失败");
+						        		 alert(data.msg);
+						        		 tosearch();
 						        	 }
 						         },
 								 error:function() {

@@ -52,7 +52,7 @@ public class LoginController extends BaseController{
 	@RequestMapping("/toLogin") 
 	public String toLoginPage(Model model, HttpSession session, HttpServletRequest request) {
 		//设置登陆页面的信息
-		model.addAttribute("title", Tools.getProperties("/config/config.properties", "title"));
+	//	model.addAttribute("title", Tools.getProperties("/config/config.properties", "title"));
 		model.addAttribute("music", Tools.getProperties("/config/config.properties", "music"));
 		return "system/index/login";
 	}

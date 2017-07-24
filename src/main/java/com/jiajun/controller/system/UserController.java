@@ -235,4 +235,5 @@ public class UserController extends BaseController{
 			return ResultModel.build(500, e.getMessage());
 		}
 	}
+	
 }
