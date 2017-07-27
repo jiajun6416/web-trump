@@ -5,6 +5,7 @@ import java.util.List;
 import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.system.SysUserEntity;
+import com.jiajun.pojo.system.SysUserPhotoEntity;
 
 /**
  * @描述：
@@ -99,4 +100,23 @@ public interface SysUserService {
 	 */
 	List<String> getAdminPermissionList() throws Exception;
 	
+	/**
+	 * 插入用户头像信息
+	 * @param userPhoto
+	 * @throws Exception
+	 */
+	void saveUserPhoto(SysUserPhotoEntity userPhoto) throws Exception;
+
+	/**
+	 * 获得用户的头像信息
+	 * @param id
+	 * @throws Exception
+	 */
+	SysUserPhotoEntity getUserPhoto(Integer id) throws Exception;
+	/**
+	 * 修改用户头像
+	 * @param userPhoto
+	 * @throws Exception
+	 */
+	void updateUserPhoto(SysUserPhotoEntity userPhoto, List<String> prePhoto) throws Exception;
 }

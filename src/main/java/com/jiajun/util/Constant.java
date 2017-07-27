@@ -12,6 +12,7 @@ public class Constant {
 	public static final String SESSION_TOKEN_CODE = "sessionTokenCode";
 	/*session中的当前用户*/
 	public static  final String SESSION_USER = "sessionUser";
+	public static final String SESSION_USER_PHOTO = "userPhoto";
 	/*邮箱服务器配置路径*/
 	public static  final String EMAIL = "";
 	/*短信账户配置路径1*/
@@ -23,7 +24,9 @@ public class Constant {
 	/*webscoket配置路径*/
 	public static final String WEBSOCKET = "";
 	/*图片上传路径*/
-	public static final String FILEPATHIMG = "uploadFiles/uploadImgs/";		
+	public static final String FILEPATHIMG = "uploadFiles/uploadImgs/";
+	/*用户头像保存位置*/
+	public static final String FILEPATHUSERPHOTO = "uploadFiles/uploadUserPhoto/";
 	/*文件上传路径*/
 	public static final String FILEPATHFILE = "uploadFiles/file/";			
 	/*系统文件上传路径*/
@@ -37,6 +40,7 @@ public class Constant {
 	public static final int ADMIN_ROLE_ID = 1;
 	/*系统角色*/
 	public static final int SYSTEM_ROLE =1;
+
 	/*会员角色*/
 	public  static final int VIP_ROLE = 2;
 	/*组织角色*/

@@ -85,7 +85,7 @@
 			<form action="" method="post" name="loginForm" id="loginForm">
 				<div class="control-group normal_text">
 					<h3>
-						<img src="static/login/logo.png" alt="Logo" />
+						<!-- <img src="static/login/logo.png" alt="Logo" /> -->
 					</h3>
 				</div>
 				<div class="control-group">
@@ -128,9 +128,7 @@
 						<div style="float: left;">
 							<i><img style="height:22px;" id="codeImg" alt="点击更换" title="点击更换" src="" /></i>
 						</div>
-						<c:if test="${isZhuce == 'yes' }">
 						<span class="pull-right" style="padding-right:3%;"><a href="javascript:changepage(1);" class="btn btn-success">注册</a></span>
-						</c:if>
 						<span class="pull-right"><a onclick="severCheck();" class="flip-link btn btn-info" id="to-recover">登录</a></span>
 					</div>
 				</div>
@@ -143,12 +141,12 @@
 		</div>
 		</div>
 		<!-- 注册 -->
-		<div id="windows2" style="display: none;">
+		<div id="windows2" style="display: none; ">
 		<div id="loginbox">
 			<form action="" method="post" name="loginForm" id="loginForm">
 				<div class="control-group normal_text">
 					<h3>
-						<img src="static/login/logo.png" alt="Logo" />
+						<!-- <img src="static/login/logo.png" alt="Logo" /> -->
 					</h3>
 				</div>
 				<div class="control-group">

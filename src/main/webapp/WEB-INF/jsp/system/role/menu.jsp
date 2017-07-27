@@ -139,9 +139,7 @@
 			$.post(url,postData,function(data){
 				if(data.status != 200) {
 					alert(data.msg);
-				} else {
-					alert(data.msg);
-				}
+				} 
 				top.Dialog.close();
 			});
 		 }	

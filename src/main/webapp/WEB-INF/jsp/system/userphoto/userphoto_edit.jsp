@@ -39,13 +39,13 @@
 				                   	 本组件需要安装Flash Player后才可使用，请从<a href="http://www.adobe.com/go/getflashplayer">这里</a>下载安装。
 								</p>
 							</div>
-							<!--  <button type="button" id="upload" style="display:none;margin-top:8px;">swf外定义的上传按钮，点击可执行上传保存操作</button>-->
+							 <button type="button" id="upload" style="display:none;margin-top:8px;">swf外定义的上传按钮，点击可执行上传保存操作</button>
 				        </div>
 						<script type="text/javascript">
 				            swfobject.addDomLoadEvent(function () {
 								var swf = new fullAvatarEditor("plugins/photoEditor/fullAvatarEditor.swf","plugins/photoEditor/expressInstall.swf", "swfContainer", {
 									    id : 'swf',
-										upload_url : '<%=basePath%>plugins/photoEditor/upload.jsp?userid=999',	//上传接口
+										upload_url : '<%=basePath%>file/photoEditor/upload.do',	//上传接口
 										method : 'post',	//传递到上传接口中的查询参数的提交方式。更改该值时，请注意更改上传接口中的查询参数的接收方式
 										src_upload : 2,		//是否上传原图片的选项，有以下值：0-不上传；1-上传；2-显示复选框由用户选择
 										avatar_box_border_width : 0,
@@ -73,29 +73,33 @@
 												}
 											break;
 											case 5 : 
-												if(msg.type == 0)
+												if(msg.type == 1)
 												{
-													if(msg.content.sourceUrl)
+													if(msg.content.status == 200)
 													{
 														//alert("原图已成功保存至服务器，url为：\n" + msg.content.sourceUrl+"\n\n" + "头像已成功保存至服务器，url为：\n" + msg.content.avatarUrls.join("\n\n")+"\n\n");
-														savePhoto(msg.content.sourceUrl+",fh,"+msg.content.avatarUrls.join(",fh,"),"1");
+														//savePhoto(msg.content.sourceUrl+",fh,"+msg.content.avatarUrls.join(",fh,"),"1");
+														reloadUserPhoto(msg.content.data);
 													}
 													else
 													{
 														//alert("头像已成功保存至服务器，url为：\n" + msg.content.avatarUrls.join("\n\n")+"\n\n");
-														savePhoto(msg.content.avatarUrls.join(",fh,"),"2");
+														//savePhoto(msg.content.avatarUrls.join(",fh,"),"2");
+														alert("上传失败!");
 													}
 												}
 											break;
 										}
 									}
 								);
-								document.getElementById("upload").onclick=function(){
+								document.getElementById("upload").onclick = function(){
 									swf.call("upload");
 								};
 				            });
 							var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+							
 							document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F5f036dd99455cb8adc9de73e2f052f72' type='text/javascript'%3E%3C/script%3E"));
+							
 						</script>
 							
 						</div>
@@ -125,8 +129,13 @@
 	<script type="text/javascript">
 		$(top.hangge());
 		
+		function reloadUserPhoto(newPhoto) {
+			top.updateUserPhoto(newPhoto);
+			top.Dialog.close();
+		}
+		
 		//头像保存到数据库
-		function savePhoto(photo,type){
+<%-- 		function savePhoto(photo,type){
 			$.ajax({
 				type: "POST",
 				url: '<%=basePath%>head/savePhoto.do?tm='+new Date().getTime(),
@@ -138,7 +147,7 @@
 					top.Dialog.close();
 				}
 			});
-		}
+		} --%>
 	</script>
 
 

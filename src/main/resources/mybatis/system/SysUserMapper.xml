@@ -23,7 +23,11 @@
   <resultMap id="hasRoleResultMap" type="com.jiajun.pojo.system.SysUserEntity" extends="BaseResultMap">
   	<association property="role"  javaType="com.jiajun.pojo.system.SysRoleEntity" column="role_id" select="SysRoleMapper.selectByPrimaryKey"/>
   </resultMap>
-    
+  
+   <resultMap type="com.jiajun.pojo.system.SysUserEntity" id="hasPhotoResultMap" extends="BaseResultMap">
+	<association property="userPhoto" javaType="com.jiajun.pojo.system.SysUserPhotoEntity" column="id" select="SysUserPhotoEntityMapper.selectByUserId"/>   
+   </resultMap>
+   
   <sql id="Base_Column_List">
     id, username, password, name, login_time, last_ip, skin, sort, role_id, phone, email, 
     status, remark, gmt_create, gmt_modified
@@ -53,7 +57,7 @@
 		</if>
   	</where>
  </sql>
-    <select id="selectByNameAndPwd" resultMap="BaseResultMap" parameterType="params">
+    <select id="selectByNameAndPwd" resultMap="hasPhotoResultMap" parameterType="params">
     select 
     <include refid="Base_Column_List" />
   	  from sys_user

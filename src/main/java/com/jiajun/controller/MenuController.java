@@ -1,4 +1,4 @@
-package com.jiajun.controller.system;
+package com.jiajun.controller;
 
 import java.util.ArrayList;
 import java.util.List;

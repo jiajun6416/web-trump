@@ -1,8 +1,10 @@
 package com.jiajun.service.impl;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +15,7 @@ import com.jiajun.dao.base.Dao;
 import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.system.SysUserEntity;
+import com.jiajun.pojo.system.SysUserPhotoEntity;
 import com.jiajun.service.SysUserService;
 import com.jiajun.util.Constant;
 import com.jiajun.util.ShiroMd5Utils;
@@ -21,6 +24,8 @@ import com.jiajun.util.ShiroMd5Utils;
 public class SysUserServiceImpl implements SysUserService{
 	
 	private final static String NAME_SPACE = "SysUserMapper.";
+	
+	private final static String USER_PHOTO_NAME_SPACE = "SysUserPhotoEntityMapper.";
 	
 	@Autowired
 	@Qualifier("daoImpl")
@@ -150,5 +155,34 @@ public class SysUserServiceImpl implements SysUserService{
 		// 第二次加密加盐
 		return ShiroMd5Utils.getMd5AddSalt(first, salt, hashIterations);
 	}
+
+
+	@Override
+	public void saveUserPhoto(SysUserPhotoEntity userPhoto) throws Exception {
+		userPhoto.setUpdateTime(new Date());
+		dao.insert(USER_PHOTO_NAME_SPACE+"insert", userPhoto);
+	}
+
+
+	@Override
+	public SysUserPhotoEntity getUserPhoto(Integer id) throws Exception {
+		return (SysUserPhotoEntity) dao.selectObject(USER_PHOTO_NAME_SPACE+"selectByUserId", id);
+	}
+
+	@Override
+	public void updateUserPhoto(SysUserPhotoEntity userPhoto, List<String> prePhoto) throws Exception {
+		userPhoto.setUpdateTime(new Date());
+		dao.update(USER_PHOTO_NAME_SPACE+"updateByPrimaryKeySelective", userPhoto);
+		if(CollectionUtils.isNotEmpty(prePhoto)) {
+			for (String path : prePhoto) {
+				File f = new File(path);
+				if(f.exists()) {
+					f.delete();
+				}
+			}
+		}
+	}
+	
+	
 	
 }

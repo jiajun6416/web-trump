@@ -1,4 +1,4 @@
-package com.jiajun.controller.system;
+package com.jiajun.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,17 +13,16 @@ import com.jiajun.pojo.ResultModel;
  * @date 2017年7月24日下午10:33:59
  */
 
-@Controller("head")
+@Controller
+@RequestMapping("/head")
 public class HeadController extends BaseController {
 
-	
-	
 	@RequestMapping("/editPhoto")
 	public String toEditPhoto() {
 		return "system/userphoto/userphoto_edit";
 	}
 	
-	@RequestMapping("savePhoto")
+	@RequestMapping("/savePhoto")
 	@ResponseBody
 	public ResultModel savePhoto() {
 		

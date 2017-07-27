@@ -41,8 +41,18 @@ public class SysUserEntity  implements Serializable{
     
     private SysRoleEntity role;
     
-    public SysRoleEntity getRole() {
+    private SysUserPhotoEntity userPhoto;
+    
+	public SysRoleEntity getRole() {
 		return role;
+	}
+
+	public SysUserPhotoEntity getUserPhoto() {
+		return userPhoto;
+	}
+
+	public void setUserPhoto(SysUserPhotoEntity userPhoto) {
+		this.userPhoto = userPhoto;
 	}
 
 	public void setRole(SysRoleEntity role) {

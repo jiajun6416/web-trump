@@ -76,7 +76,7 @@
 				<!-- #section:basics/navbar.user_menu -->
 				<li class="light-blue">
 					<a data-toggle="dropdown"  class="dropdown-toggle" href="#">
-						<img class="nav-user-photo" src="" alt="photo" id="userPhoto" />
+						<img class="nav-user-photo" src="${sessionScope.userPhoto.photo1}" alt="photo" id="userPhoto" />
 						<span class="user-info" id="user_info">
 						<small>Welcome,</small>
 							${sessionScope.sessionUser.username}

@@ -1,4 +1,4 @@
-package com.jiajun.controller.system;
+package com.jiajun.controller;
 
 import java.util.List;
 
@@ -24,6 +24,7 @@ import com.jiajun.pojo.ResultModel;
 import com.jiajun.pojo.system.SysMenuEntity;
 import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.pojo.system.SysUserEntity;
+import com.jiajun.pojo.system.SysUserPhotoEntity;
 import com.jiajun.service.SysLogService;
 import com.jiajun.service.SysMenuService;
 import com.jiajun.service.SysRoleService;
@@ -83,6 +84,8 @@ public class LoginController extends BaseController{
 			sysLogService.save(username, this.getIP(request), "登录成功");
 			SysRoleEntity role = sysRoleService.getRoleById(sysUser.getRoleId());
 			List<SysMenuEntity> menuList = sysMenuService.getMenuListByRoleId(role.getId());
+			SysUserPhotoEntity photo = sysUserService.getUserPhoto(sysUser.getId());
+			session.setAttribute(Constant.SESSION_USER_PHOTO, photo);
 			session.setAttribute("menuList", menuList);
 
 		} catch (Exception e) {
