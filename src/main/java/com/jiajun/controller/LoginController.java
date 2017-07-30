@@ -64,7 +64,7 @@ public class LoginController extends BaseController{
 	public ResultModel login(@RequestParam(required=true)String username, @RequestParam(required=true)String password,
 			@RequestParam(required=true)boolean rememberMe,@RequestParam(required=true)String code,
 			HttpServletRequest request, HttpSession session) {
-		String randCode = (String) session.getAttribute(Constant.SESSION_SECURITY_CODE);
+		String randCode = (String) session.getAttribute(Constant.SESSION_LOGION_CHECK_CODE);
 		if(StringUtils.isEmpty(code) || !code.equalsIgnoreCase(randCode)) {
 			return ResultModel.build(403, "验证码错误");
 		}
@@ -80,7 +80,7 @@ public class LoginController extends BaseController{
 			sysUserService.updateLoginInfo(sysUser.getId(), this.getIP(request));
 			sysUser.setPassword(null);
 			session.setAttribute(Constant.SESSION_USER, sysUser);
-			session.removeAttribute(Constant.SESSION_SECURITY_CODE);
+			session.removeAttribute(Constant.SESSION_LOGION_CHECK_CODE);
 			sysLogService.save(username, this.getIP(request), "登录成功");
 			SysRoleEntity role = sysRoleService.getRoleById(sysUser.getRoleId());
 			List<SysMenuEntity> menuList = sysMenuService.getMenuListByRoleId(role.getId());

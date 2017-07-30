@@ -45,6 +45,7 @@ body {   padding: 0;    margin-top:0px;margin: 0px;}
 #logo, #loginbox {    width: 32%;    margin-left: auto;  margin-right: auto;   position: relative;}
 #logo img {  margin: 0 auto;    display: block;}
 #loginbox { overflow: hidden !important; z-index: 100;  text-align: center;  position: relative; margin-top:10%;}
+#windows2 #loginbox { overflow: hidden !important; z-index: 100;  text-align: center;  position: relative; margin-top:5%;}
 
 /* #loginbox form{ width:100%; background:#2E363F; position:relative; top:0; left:0; } */
 #loginbox form{ width:100%; background-color: rgba(0, 0, 0, 0.5);  position:relative; top:0; left:0; }

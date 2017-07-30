@@ -38,11 +38,15 @@
 				/js/** = anon
 				/login = anon
 				<!-- 验证码 -->
-				/randomCode = anon
+				/checkCode/** = anon
+				<!-- 姓名和邮箱重复验证 -->
+				/user/hasUsername = anon
+				/user/hasEmail = anon
+				<!-- 注册匿名 -->
+				/user/regist = anon
 				<!--shiro拦截到请求,通过session管理清除掉session-->
 				/logout = logout
 				<!-- rememberMe -->
-				/main/index = user
 				/** = authc
 			</value>
 		</property>
@@ -74,12 +78,16 @@
     	<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache.xml"/>
     </bean>
 
+	<!-- sessionDao -->
+	<bean id="SessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
+
 	<!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <!-- session的失效时长，单位毫秒 -->
         <property name="globalSessionTimeout" value="600000"/>
         <!-- 删除失效的session -->
         <property name="deleteInvalidSessions" value="true"/>
+        <property name="SessionDAO" ref="SessionDAO"/>
     </bean>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 --> 

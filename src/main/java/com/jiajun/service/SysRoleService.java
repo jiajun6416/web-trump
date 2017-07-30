@@ -138,5 +138,11 @@ public interface SysRoleService {
 	 */
 	void updateOpera(int roleId, int operaId) throws Exception;
 	
+	/**
+	 * 获得所有的会员列表
+	 * @return
+	 */
+	List<SysRoleEntity> getAllVipRole() throws Exception;
+	
 	
 }

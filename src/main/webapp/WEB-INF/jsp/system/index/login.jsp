@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+		+ request.getServerName() + ":" + request.getServerPort()
+		+ path + "/";
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,8 +104,10 @@
 					<div class="controls">
 						<div class="main_input_box">
 							<span class="add-on bg_ly">
-							<i><img height="37" src="static/login/suo.png" /></i>
-							</span><input type="password" name="password" id="password" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
+								<i><img height="37" src="static/login/suo.png" /></i>
+							</span>
+							<!-- <input type="password" name="password" id="password" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/> -->
+							<input type="password" name="password" id="password" placeholder="请输入密码" value=""/>
 						</div>
 					</div>
 				</div>
@@ -154,7 +159,7 @@
 						<div class="main_input_box">
 							<span class="add-on bg_lg">
 							<i>用户</i>
-							</span><input type="text" name="USERNAME" id="USERNAME" value="" placeholder="请输入用户名" />
+							</span><input type="text" name="username" id="registUsername" value="" placeholder="请输入用户名" onblur="usernameCheck()"/>
 						</div>
 					</div>
 				</div>
@@ -163,7 +168,8 @@
 						<div class="main_input_box">
 							<span class="add-on bg_ly">
 							<i>密码</i>
-							</span><input type="password" name="PASSWORD" id="PASSWORD" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
+							<!-- </span><input type="password" name="PASSWORD" id="PASSWORD" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/> -->
+							</span><input type="password" name="password" id="PASSWORD" placeholder="请输入密码"  value=""/>
 						</div>
 					</div>
 				</div>
@@ -172,7 +178,8 @@
 						<div class="main_input_box">
 							<span class="add-on bg_ly">
 							<i>重输</i>
-							</span><input type="password" name="chkpwd" id="chkpwd" placeholder="请重新输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
+							<!-- </span><input type="password" name="chkpwd" id="chkpwd" placeholder="请重新输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/> -->
+							</span><input type="password" name="chkpwd" id="chkpwd" placeholder="请重新输入密码" value=""/>
 						</div>
 					</div>
 				</div>
@@ -181,7 +188,7 @@
 						<div class="main_input_box">
 							<span class="add-on bg_lg">
 							<i>姓名</i>
-							</span><input type="text" name="NAME" id="name" value="" placeholder="请输入姓名" />
+							</span><input type="text" name="name" id="name" value="" placeholder="请输入姓名" />
 						</div>
 					</div>
 				</div>
@@ -190,7 +197,7 @@
 						<div class="main_input_box">
 							<span class="add-on bg_lg">
 							<i>邮箱</i>
-							</span><input type="text" name="EMAIL" id="EMAIL" value="" placeholder="请输入邮箱" />
+							</span><input type="text" name="email" id="registEmail" value="" placeholder="请输入邮箱" onblur="registEmailCheck()"/>
 						</div>
 					</div>
 				</div>
@@ -205,7 +212,7 @@
 								style="height:16px; padding-top:4px;" />
 						</div>
 						<div style="float: left;">
-							<i><img style="height:22px;" name="zcodeImg" alt="点击更换" title="点击更换" src="" /></i>
+							<i><img style="height:22px;" id="zcodeImg" alt="点击更换" title="点击更换" src="" /></i>
 						</div>
 						<span class="pull-right" style="padding-right:3%;"><a href="javascript:changepage(2);" class="btn btn-success">取消</a></span>
 						<span class="pull-right"><a onclick="register();" class="flip-link btn btn-info" id="to-recover">提交</a></span>
@@ -247,7 +254,81 @@
 	</div>
 
 	<script type="text/javascript">
-		//服务器校验
+	
+	$(document).ready(function() {
+		changeCode1();
+		$("#codeImg").bind("click", changeCode1);
+		$("#zcodeImg").bind("click", changeCode2);
+	});
+	
+	/* 可以使用enter出发登录, trigger表示登录建出发click事件 */
+	$(document).keyup(function(event) {
+		if (event.keyCode == 13) {
+			$("#to-recover").trigger("click");
+		}
+	});
+
+	function genTimestamp() {
+		var time = new Date();
+		return time.getTime();
+	}
+
+	function changeCode1() {
+		$("#codeImg").attr("src", "checkCode/login?t="+ genTimestamp());
+	}
+	
+	function changeCode2() {
+		$("#zcodeImg").attr("src", "checkCode/regist?t="+ genTimestamp());
+	}
+	
+	
+	//登陆校验
+	function check() {
+		if ($("#loginname").val() == "") {
+			$("#loginname").tips({
+				side : 2,
+				msg : '用户名不得为空',
+				bg : '#AE81FF',
+				time : 3
+			});
+			showfh();
+			$("#loginname").focus();
+			return false;
+		} else {
+			$("#loginname").val(jQuery.trim($('#loginname').val()));
+		}
+		if ($("#password").val() == "") {
+			$("#password").tips({
+				side : 2,
+				msg : '密码不得为空',
+				bg : '#AE81FF',
+				time : 2
+			});
+			showfh();
+			$("#password").focus();
+			return false;
+		}
+		if ($("#code").val() == "") {
+			$("#code").tips({
+				side : 1,
+				msg : '验证码不得为空',
+				bg : '#AE81FF',
+				time : 2
+			});
+			showfh();
+			$("#code").focus();
+			return false;
+		}
+		$("#loginbox").tips({
+			side : 1,
+			msg : '正在登录 , 请稍后 ...',
+			bg : '#68B500',
+			time : 2
+		});
+		return true;
+	}
+
+		//登陆
 		function severCheck(){
 			if(check()){
 				var loginname = $("#loginname").val();
@@ -299,81 +380,8 @@
 			}
 		}
 	
-		$(document).ready(function() {
-			changeCode1();
-			$("#codeImg").bind("click", changeCode1);
-			$("#zcodeImg").bind("click", changeCode2);
-		});
-		
-		/* 可以使用enter出发登录, trigger表示登录建出发click事件 */
-		$(document).keyup(function(event) {
-			if (event.keyCode == 13) {
-				$("#to-recover").trigger("click");
-			}
-		});
-
-		function genTimestamp() {
-			var time = new Date();
-			return time.getTime();
-		}
-
-		function changeCode1() {
-			$("#codeImg").attr("src", "randomCode?t=" + genTimestamp());
-		}
-		
-		function changeCode2() {
-			$("#zcodeImg").attr("src", "randomCode?t=" + genTimestamp());
-		}
-
-		//客户端校验
-		function check() {
-			if ($("#loginname").val() == "") {
-				$("#loginname").tips({
-					side : 2,
-					msg : '用户名不得为空',
-					bg : '#AE81FF',
-					time : 3
-				});
-				showfh();
-				$("#loginname").focus();
-				return false;
-			} else {
-				$("#loginname").val(jQuery.trim($('#loginname').val()));
-			}
-			if ($("#password").val() == "") {
-				$("#password").tips({
-					side : 2,
-					msg : '密码不得为空',
-					bg : '#AE81FF',
-					time : 2
-				});
-				showfh();
-				$("#password").focus();
-				return false;
-			}
-			if ($("#code").val() == "") {
-				$("#code").tips({
-					side : 1,
-					msg : '验证码不得为空',
-					bg : '#AE81FF',
-					time : 2
-				});
-				showfh();
-				$("#code").focus();
-				return false;
-			}
-			$("#loginbox").tips({
-				side : 1,
-				msg : '正在登录 , 请稍后 ...',
-				bg : '#68B500',
-				time : 2
-			});
-
-			return true;
-		}
-
-		function saveCookie() {
 			//保存密码
+		function saveCookie() {
 			if ($("#saveid").attr("checked")) {
 				$.cookie('username', $("#loginname").val(), {
 					expires : 7, path:'/'
@@ -419,17 +427,103 @@
 			}
 		}
 		
+
+
 	//注册
+	
+	//重名校验
+	function usernameCheck() {
+		var username = $("#registUsername").val().trim();
+		lastInputName = username;
+		if(username == '') {
+			$("#registUsername").tips({
+				side:3,
+	            msg:'用户名不能为空',
+	            bg:'#AE81FF',
+	            time:2
+	        });
+			$("#registUsername").focus();
+			$("#registUsername").val('');
+		} else {
+			$.ajax({
+				url:'<%=basePath%>user/hasUsername',
+				method:'POST',
+				data:{"username":username},
+				cache:false,
+				dataType:'json',
+				success: function(data) {
+					if(data.msg != "success") {
+						$("#registUsername").tips({
+							side:3,
+				            msg:'用户名已经存在',
+				            bg:'#AE81FF',
+				            time:2
+				        });
+						$("#registUsername").focus();
+					}
+				},
+				error: function() {
+					alert("服务器忙")
+				}
+			});
+		}
+	}
+	
+	//邮箱验证
+	function registEmailCheck() {
+		var email = $("#registEmail").val().trim();
+		if(email == "") {
+			$("#registEmail").tips({
+				side:3,
+	            msg:'邮箱不能为空',
+	            bg:'#AE81FF',
+	            time:3
+	        });
+			$("#registEmail").focus();
+			$("#registEmail").val() = '';
+		} else if(!ismail(email)) {
+			$("#registEmail").tips({
+				side:3,
+	            msg:'邮箱格式不正确',
+	            bg:'#AE81FF',
+	            time:3
+	        });
+			$("#registEmail").focus();
+		} else {
+			$.ajax({
+				url:'<%=basePath%>user/hasEmail',
+				method:'POST',
+				data:{"email":email},
+				cache:false,
+				dataType:'json',
+				success: function(data) {
+					if(data.msg != "success") {
+						$("#registEmail").tips({
+							side:3,
+				            msg:'此邮箱已经存在',
+				            bg:'#AE81FF',
+				            time:2
+				        });
+						$("#registEmail").focus();
+					}
+				},
+				error: function() {
+					alert("服务器忙")
+				}
+			});
+		}	
+	}
+	
 	function rcheck(){
-		if($("#USERNAME").val()==""){
-			$("#USERNAME").tips({
+		if($("#registUsername").val().trim()==""){
+			$("#registUsername").tips({
 				side:3,
 	            msg:'输入用户名',
 	            bg:'#AE81FF',
 	            time:2
 	        });
-			$("#USERNAME").focus();
-			$("#USERNAME").val('');
+			$("#registUsername").focus();
+			$("#registUsername").val('');
 			return false;
 		}else{
 			$("#USERNAME").val(jQuery.trim($('#USERNAME').val()));
@@ -464,23 +558,23 @@
 			$("#name").focus();
 			return false;
 		}
-		if($("#EMAIL").val()==""){
-			$("#EMAIL").tips({
+		if($("#registEmail").val()==""){
+			$("#registEmail").tips({
 				side:3,
 	            msg:'输入邮箱',
 	            bg:'#AE81FF',
 	            time:3
 	        });
-			$("#EMAIL").focus();
+			$("#registEmail").focus();
 			return false;
-		}else if(!ismail($("#EMAIL").val())){
-			$("#EMAIL").tips({
+		}else if(!ismail($("#registEmail").val())){
+			$("#registEmail").tips({
 				side:3,
 	            msg:'邮箱格式不正确',
 	            bg:'#AE81FF',
 	            time:3
 	        });
-			$("#EMAIL").focus();
+			$("#registEmail").focus();
 			return false;
 		}
 		if ($("#rcode").val() == "") {
@@ -499,17 +593,19 @@
 	//提交注册
 	function register(){
 		if(rcheck()){
-			var nowtime = date2str(new Date(),"yyyyMMdd");
+			var password = $("#PASSWORD").val();
+			//密码加密
+			var md5_passoword = $.md5(password);
 			$.ajax({
 				type: "POST",
-				url: 'appSysUser/registerSysUser.do',
+				url: '<%=basePath%>user/regist',
 				//直接将form表单序列化成一个json字符串
 				//data:$("[name=loginForm]").serializeArray(), 
-		    	data: {USERNAME:$("#USERNAME").val(),PASSWORD:$("#PASSWORD").val(),NAME:$("#name").val(),EMAIL:$("#EMAIL").val(),rcode:$("#rcode").val(),FKEY:$.md5('USERNAME'+nowtime+',fh,'),tm:new Date().getTime()},
+		    	data: {"username":$("#registUsername").val(),"password":md5_passoword,"name":$("#name").val(),"email":$("#registEmail").val(),"checkCode":$("#rcode").val()},
 				dataType:'json',
 				cache: false,
 				success: function(data){
-					if("00" == data.result){
+					if("200" == data.status){
 						$("#windows2").hide();
 						$("#windows1").show();
 						$("#loginbox").tips({
@@ -519,7 +615,7 @@
 							time : 3
 						});
 						changeCode1();
-					}else if("04" == data.result){
+					}else if("403" == data.status){
 						$("#USERNAME").tips({
 							side : 1,
 							msg : "用户名已存在",
@@ -528,7 +624,7 @@
 						});
 						showfh();
 						$("#USERNAME").focus();
-					}else if("06" == data.result){
+					}else if("400" == data.status){
 						$("#rcode").tips({
 							side : 1,
 							msg : "验证码输入有误",
@@ -554,23 +650,6 @@
 	 	};
 	</script>
 	
-	<c:if test="${'1' == pd.msg}">
-		<script type="text/javascript">
-		$(tsMsg());
-		function tsMsg(){
-			alert('此用户在其它终端已经早于您登录,您暂时无法登录');
-		}
-		</script>
-	</c:if>
-	
-	<c:if test="${'2' == pd.msg}">
-		<script type="text/javascript">
-			$(tsMsg());
-			function tsMsg(){
-				alert('您被系统管理员强制下线');
-			}
-		</script>
-	</c:if>
 	
 	<script type="text/javascript">
 		if (window != top) {

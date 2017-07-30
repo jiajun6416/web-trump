@@ -6,13 +6,16 @@ package com.jiajun.util;
  * @date 2017年6月11日下午9:23:03
  */
 public class Constant {
-	/*验证码*/
-	public static final String SESSION_SECURITY_CODE = "sessionSecCode";
-	/*32位置随机token*/
-	public static final String SESSION_TOKEN_CODE = "sessionTokenCode";
 	/*session中的当前用户*/
 	public static  final String SESSION_USER = "sessionUser";
+	/*session中存放的用户头像位置*/
 	public static final String SESSION_USER_PHOTO = "userPhoto";
+	/*验证码*/
+	public static final String SESSION_LOGION_CHECK_CODE = "loginCheckCode";
+	public static final String SESSION_REGIST_CHECK_CODE = "registCheckCode";
+	/*32位置随机token*/
+	public static final String SESSION_TOKEN_CODE = "sessionTokenCode";
+
 	/*邮箱服务器配置路径*/
 	public static  final String EMAIL = "";
 	/*短信账户配置路径1*/
@@ -23,6 +26,7 @@ public class Constant {
 	public static final String WEIXIN	= "";
 	/*webscoket配置路径*/
 	public static final String WEBSOCKET = "";
+	
 	/*图片上传路径*/
 	public static final String FILEPATHIMG = "uploadFiles/uploadImgs/";
 	/*用户头像保存位置*/
@@ -33,19 +37,20 @@ public class Constant {
 	public static final String FILEPATHFILEOA = "uploadFiles/uploadFile/";	
 	/*二维码存放路径*/
 	public static final String FILEPATHTWODIMENSIONCODE = "uploadFiles/twoDimensionCode/"; 
+	
 	/*本机ip*/
 	public static final String LOCALHOST = "127.0.0.1";
 	
 	//admin角色id
 	public static final int ADMIN_ROLE_ID = 1;
+	
 	/*系统角色*/
 	public static final int SYSTEM_ROLE =1;
-
 	/*会员角色*/
-	public  static final int VIP_ROLE = 2;
+	public  static final short VIP_ROLE = 2;
+	public static final int LOGIN_USER_ROLE = 8;//普通会员
 	/*组织角色*/
 	public static final int ORGANIZE_ROLE = 3;
-	
 	public static final Short USER_LOGIN = 1;
 	
 	
@@ -56,4 +61,15 @@ public class Constant {
 	/*app根据用户名获取会员信息接口_请求协议中的参数*/
 	public static String[] APP_GETAPPUSER_PARAM_ARRAY = new String[]{"USERNAME"};
 	public static String[] APP_GETAPPUSER_VALUE_ARRAY = new String[]{"用户名"};
+
+	/*用户在线*/
+	public static final short SYS_USER_STATUS_ONLINE = 1;
+	/*用户离线*/
+	public static final short SYS_USER_STATUS_LEAVELINE = 0;
+	/*用户可用*/
+	public static final short SYS_USER_STATUS_IS_USEABLE = 1;
+	/*用户被禁用*/
+	public static final short SYS_USER_STATUS_NOT_USEABLE = 0;
 }
+
+

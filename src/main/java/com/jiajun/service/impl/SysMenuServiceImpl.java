@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -176,6 +177,9 @@ public class SysMenuServiceImpl implements SysMenuService{
 			}
 		}
 		
+		if(CollectionUtils.isEmpty(menuEntitys)) {
+			return null;
+		}
 		//进行递归,将子菜单和父亲菜单进行关联起来
 		List<SysMenuEntity> result = new ArrayList<>();
 		for (SysMenuEntity menu : menuEntitys) {

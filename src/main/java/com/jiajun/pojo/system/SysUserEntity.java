@@ -34,6 +34,10 @@ public class SysUserEntity  implements Serializable{
     private Short status;
 
     private String remark;
+    
+    private Short userType;
+    
+    private Short useable;
 
     private Date gmtCreate;
 
@@ -43,6 +47,22 @@ public class SysUserEntity  implements Serializable{
     
     private SysUserPhotoEntity userPhoto;
     
+	public Short getUserType() {
+		return userType;
+	}
+
+	public void setUserType(Short userType) {
+		this.userType = userType;
+	}
+
+	public Short getUseable() {
+		return useable;
+	}
+
+	public void setUseable(Short useable) {
+		this.useable = useable;
+	}
+
 	public SysRoleEntity getRole() {
 		return role;
 	}

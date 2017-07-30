@@ -2,8 +2,11 @@ package com.jiajun.service;
 
 import java.util.List;
 
+import org.apache.ibatis.binding.MapperMethod.ParamMap;
+
 import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
+import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.pojo.system.SysUserEntity;
 import com.jiajun.pojo.system.SysUserPhotoEntity;
 
@@ -52,7 +55,7 @@ public interface SysUserService {
 	 * @param queryModel
 	 * @return
 	 */
-	Page<SysUserEntity> getPage(ParameMap params)throws Exception;
+	Page<SysUserEntity> getSysUserPage(ParameMap params)throws Exception;
 	
 	/**
 	 * 排序重复验证
@@ -119,4 +122,18 @@ public interface SysUserService {
 	 * @throws Exception
 	 */
 	void updateUserPhoto(SysUserPhotoEntity userPhoto, List<String> prePhoto) throws Exception;
+
+	/**
+	 * 保存注册用户信息
+	 * @param userEntity
+	 */
+	void saveRegistUser(SysUserEntity userEntity) throws Exception;
+	
+	/**
+	 * 分页查询会员用户列表信息
+	 * @param params
+	 * @return
+	 * @throws Exception
+	 */
+	Page<SysUserEntity> getVipUserPage(ParameMap params) throws Exception;
 }

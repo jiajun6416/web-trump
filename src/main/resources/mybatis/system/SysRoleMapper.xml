@@ -62,7 +62,13 @@
     from sys_role 
     where parent_id != 0 and role_type = #{type,jdbcType=BIT}  order by sort
   </select>
-  	
+
+  <select id="selectRoleListByType" parameterType="int" resultMap="BaseResultMap">
+  	 select 
+    <include refid="Base_Column_List" />
+    from sys_role where parent_id != 0 and role_type=#{roleType} 
+  </select>
+  
   <select id="getParentByType" parameterType="int" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

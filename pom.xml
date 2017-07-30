@@ -83,14 +83,16 @@
 			</dependency>
 			
 			
-					<dependency>
+			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
 			</dependency>
+			
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-io</artifactId>
 			</dependency>
+			
 			<dependency>
 				<groupId>commons-net</groupId>
 				<artifactId>commons-net</artifactId>
@@ -118,9 +120,7 @@
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
-				<scope>test</scope>
 			</dependency>
-			
 			
 			<!-- httpclient -->
 			<dependency>
@@ -178,7 +178,19 @@
 			  <groupId>org.apache.shiro</groupId>
 			  <artifactId>shiro-spring</artifactId>
 			</dependency> 
-		 
+			
+		 	<!-- 注解 ws-->
+			<dependency>
+			    <groupId>javax.websocket</groupId>
+			    <artifactId>javax.websocket-api</artifactId>
+			</dependency>
+			
+			<!-- spring对redis客户端jedis的封装 -->		    
+			 <dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-redis</artifactId>
+			</dependency>
+			
  	 </dependencies>
   
     
@@ -191,18 +203,24 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 		        <configuration>
 					<!-- 远端tomcat的后台管理入口 -->
-	                <url>http://192.168.1.101:8080/manager/text</url>
+	                <url>http://192.168.1.202:8080/manager/text</url>
 	  		        <!-- 部署项目包名, 如果不写的话则是 / 代表root.war, 需要把自带的删除能部署 -->
-	                <path>/xunjian</path>
+	                <path>/trump</path>
 	                <!-- 也可以选择在maven.setting中设置登录用户名和密码 -->
-	                <username>jiajun</username>
-	                <password>jiajun</password>
-	                <!-- 部署项目端口号 -->
-	                <port>8080</port>
+	                <username>deployer</username>
+	                <password>deployer</password>
 	                <encoding>utf-8</encoding>
        				<uriEncoding>utf-8</uriEncoding>
 		        </configuration>
 			</plugin>
+			<!-- 跳过单元测试 -->
+		      <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <configuration>
+		          <skip>true</skip>
+		        </configuration>
+		      </plugin>
 		</plugins>
 	</build>
 	

@@ -27,21 +27,34 @@ import com.jiajun.util.Constant;
  * @date 2017年6月11日下午10:47:59
  */
 @Controller
-public class LoginRandomCode extends BaseController{
+@RequestMapping("/checkCode")
+public class CheckCode extends BaseController{
 	
-	@RequestMapping("/randomCode")
-	public void generate(HttpServletResponse response, HttpSession session){
+	@RequestMapping("/login")
+	public void loginCheckCode(HttpServletResponse response, HttpSession session){
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		String code = drawImg(output);
-		//Subject currentUser = SecurityUtils.getSubject();  
-		//Session session = currentUser.getSession();
-		session.setAttribute(Constant.SESSION_SECURITY_CODE, code);
+		session.setAttribute(Constant.SESSION_LOGION_CHECK_CODE, code);
 		try {
 			ServletOutputStream out = response.getOutputStream();
 			output.writeTo(out);
 			out.close();
 		} catch (IOException e) {
-			//e.printStackTrace();
+			logger.error(e.getMessage(), e);
+		}
+	}
+	
+	@RequestMapping("/regist")
+	public void registCheckCode(HttpServletResponse response, HttpSession session) {
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		String code = drawImg(output);
+		session.setAttribute(Constant.SESSION_REGIST_CHECK_CODE, code);
+		try {
+			ServletOutputStream out = response.getOutputStream();
+			output.writeTo(out);
+			out.close();
+		} catch (IOException e) {
+			logger.error(e.getMessage(), e);
 		}
 	}
 	
@@ -71,7 +84,7 @@ public class LoginRandomCode extends BaseController{
 		try {
 			ImageIO.write(bi, "jpg", output);
 		} catch (IOException e) {
-			//e.printStackTrace();
+			logger.error(e.getMessage(),e);
 		}
 		return code;
 	}

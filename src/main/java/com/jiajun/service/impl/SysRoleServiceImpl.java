@@ -19,6 +19,7 @@ import com.jiajun.pojo.ZtreeNode;
 import com.jiajun.pojo.system.SysMenuPremission;
 import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.service.SysRoleService;
+import com.jiajun.util.Constant;
 import com.jiajun.util.Tools;
 
 @Service
@@ -352,6 +353,13 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Override
 	public SysRoleEntity getByUserId(int userId) throws Exception {
 		return (SysRoleEntity) dao.selectObject(ROLE_NAME_SPACE+"getByUserId", userId);
+	}
+
+
+	@Override
+	public List<SysRoleEntity> getAllVipRole() throws Exception {
+		int vipRole = Constant.VIP_ROLE;
+		return dao.selectList(ROLE_NAME_SPACE+"selectRoleListByType", vipRole);
 	}
 
 }

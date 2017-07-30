@@ -7,11 +7,11 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jiajun.controller.base.BaseController;
@@ -138,7 +138,7 @@ public class UserController extends BaseController{
 		try {
 			exist = sysUserService.hasExistUsername(username);
 			if(exist) {
-				return ResultModel.build(500, "邮箱已存在");
+				return ResultModel.build(500, "姓名已经存在");
 			} else {
 				return ResultModel.build(200, "success");
 			}
@@ -212,7 +212,7 @@ public class UserController extends BaseController{
 				String rows =  (String) params.get("rows");
 				params.put("rows", Integer.parseInt(rows));
 			}
-			Page<SysUserEntity> page = sysUserService.getPage(params);
+			Page<SysUserEntity> page = sysUserService.getSysUserPage(params);
 			
 			model.addAttribute("page", page);
 		} catch (Exception e) {
@@ -234,6 +234,59 @@ public class UserController extends BaseController{
 			logger.error(e.getMessage(), e);
 			return ResultModel.build(500, e.getMessage());
 		}
+	}
+	
+	@RequestMapping(value="/regist", method=RequestMethod.POST)
+	@ResponseBody
+	public ResultModel regist(SysUserEntity userEntity, HttpServletRequest request, HttpSession session) {
+		String inputCode = request.getParameter("checkCode");
+		String checkCode = (String) session.getAttribute(Constant.SESSION_REGIST_CHECK_CODE);
+		if(StringUtils.isEmpty(inputCode) || !inputCode.equalsIgnoreCase(checkCode)) {
+			return ResultModel.build(400, "验证码错误");
+		}
+		try {
+			sysUserService.saveRegistUser(userEntity);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return ResultModel.build(500, e.getMessage());
+		}
+		return ResultModel.build(200, "success");
+	}
+
+	@RequestMapping("/listVip")
+	@RequiresPermissions("user:vipQuery")
+	public String vipList(HttpServletRequest request, Model model) throws Exception{
+		//获得所有的会员角色
+		List<SysRoleEntity> roleList = sysRoleService.getAllVipRole();
+		model.addAttribute("roleList", roleList);
+		ParameMap params = getParaMap();
+		if(params.get("currentPage") == null || params.get("currentPage").equals("")) {
+			params.put("currentPage", 1);
+		}
+		//如果rows没有指定的话, 自己读取制定的文件
+		if(params.get("rows") == null || params.get("rows").equals("")) {
+			String rows = Tools.getProperties("/config/config.properties", "page.size");
+			params.put("rows", Integer.parseInt(rows));
+		} else {
+			String rows =  (String) params.get("rows");
+			params.put("rows", Integer.parseInt(rows));
+		}
+		Page<SysUserEntity> page = sysUserService.getVipUserPage(params);
+		model.addAttribute("page", page);
+		return "system/appuser/list";
+	}
+	
+	
+	@RequestMapping("/toEditVipUser")
+	@RequiresPermissions("user:vipUpdate")
+	public String toEditVipUser(int userId, Model model) throws Exception{
+		SysUserEntity user = sysUserService.getUserById(userId);
+		model.addAttribute("user", user);
+		model.addAttribute("action", "updateSysUser");
+		//所有会员角色
+		List<SysRoleEntity> roleList = sysRoleService.getListByType(Constant.VIP_ROLE);
+		model.addAttribute("roleList", roleList);
+		return "system/appuser/input";
 	}
 	
 }

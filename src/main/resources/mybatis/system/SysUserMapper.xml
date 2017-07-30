@@ -13,6 +13,8 @@
     <result column="role_id" jdbcType="INTEGER" property="roleId" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="user_type" jdbcType="SMALLINT" property="userType"/>
+    <result column="useable" jdbcType="SMALLINT" property="useable"/>
     <result column="status" jdbcType="SMALLINT" property="status" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="gmt_create" jdbcType="TIMESTAMP" property="gmtCreate" />
@@ -29,7 +31,7 @@
    </resultMap>
    
   <sql id="Base_Column_List">
-    id, username, password, name, login_time, last_ip, skin, sort, role_id, phone, email, 
+    id, username, password, name, login_time, last_ip, skin, sort, role_id, phone, email, user_type,useable,
     status, remark, gmt_create, gmt_modified
   </sql>
   
@@ -55,6 +57,7 @@
 		<if test="roleId != null and roleId != ''">
 			and role_id = #{roleId}
 		</if>
+		 and user_type = #{userType}
   	</where>
  </sql>
     <select id="selectByNameAndPwd" resultMap="hasPhotoResultMap" parameterType="params">
@@ -154,13 +157,13 @@
     insert into sys_user (id, username, password, 
       name, login_time, last_ip, 
       skin, sort, role_id, 
-      phone, email, status, 
+      phone, email, status,user_type, useable,
       remark, gmt_create, gmt_modified
       )
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, #{lastIp,jdbcType=VARCHAR}, 
       #{skin,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 
-      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{userType, jdbcType=SMALLINT},#{useable, jdbcType=SMALLINT},
       #{remark,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -203,6 +206,12 @@
       <if test="status != null">
         status,
       </if>
+      <if test="userType != null">
+      	user_type,
+      </if>
+	  <if test="useable != null">
+	  	useable,
+	  </if>
       <if test="remark != null">
         remark,
       </if>
@@ -249,6 +258,12 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="userType != null">
+      	#{userType, jdbcType=SMALLINT},
+      </if>
+      <if test="useable != null">
+      	#{useable,jdbcType=SMALLINT},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
@@ -297,6 +312,12 @@
       <if test="status != null">
         status = #{status,jdbcType=SMALLINT},
       </if>
+      <if test="userType != null">
+      	user_type = #{userType, jdbcType=SMALLINT},
+      </if>
+      <if test="useable != null">
+      	useable = #{useable},
+      </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
       </if>
@@ -321,6 +342,8 @@
       role_id = #{roleId,jdbcType=INTEGER},
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=SMALLINT},
+      useable  = #{useable, jdbcType=SMALLINT},
       status = #{status,jdbcType=SMALLINT},
       remark = #{remark,jdbcType=VARCHAR},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},

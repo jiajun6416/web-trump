@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.jiajun.dao.base.Dao;
 import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
+import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.pojo.system.SysUserEntity;
 import com.jiajun.pojo.system.SysUserPhotoEntity;
 import com.jiajun.service.SysUserService;
@@ -74,11 +75,12 @@ public class SysUserServiceImpl implements SysUserService{
 
 
 	@Override
-	public Page<SysUserEntity> getPage(ParameMap params) throws Exception{
+	public Page<SysUserEntity> getSysUserPage(ParameMap params) throws Exception{
 		Integer currentPage = (Integer) params.get("currentPage");
 		Integer rows = (Integer) params.get("rows");
 		if(currentPage != null && currentPage > 0 
 				&& rows != null && rows > 0) {
+			params.put("userType", Constant.SYSTEM_ROLE);
 			return dao.getPage(NAME_SPACE+"getList", NAME_SPACE+"getCount", params);
 		} else {
 			return null;
@@ -180,6 +182,34 @@ public class SysUserServiceImpl implements SysUserService{
 					f.delete();
 				}
 			}
+		}
+	}
+
+	@Override
+	public void saveRegistUser(SysUserEntity userEntity) throws Exception {
+		Date now = new Date();
+		userEntity.setGmtCreate(now);
+		userEntity.setGmtModified(now);
+		userEntity.setPassword(ShiroMd5Utils.getMd5AddSalt(userEntity.getPassword(), salt, hashIterations));
+		userEntity.setStatus(Constant.SYS_USER_STATUS_LEAVELINE);
+		userEntity.setUseable(Constant.SYS_USER_STATUS_IS_USEABLE);
+		userEntity.setSort(1);
+		userEntity.setRoleId(Constant.LOGIN_USER_ROLE);
+		userEntity.setPhone("");
+		userEntity.setUserType(Constant.VIP_ROLE);
+		dao.insert(NAME_SPACE+"insert", userEntity);
+	}
+
+	@Override
+	public Page<SysUserEntity> getVipUserPage(ParameMap params) throws Exception {
+		Integer currentPage = (Integer) params.get("currentPage");
+		Integer rows = (Integer) params.get("rows");
+		if(currentPage != null && currentPage > 0 
+				&& rows != null && rows > 0) {
+			params.put("userType", Constant.VIP_ROLE);
+			return dao.getPage(NAME_SPACE+"getList", NAME_SPACE+"getCount", params);
+		} else {
+			return null;
 		}
 	}
 	
