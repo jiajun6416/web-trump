@@ -42,12 +42,13 @@
 				<!-- 姓名和邮箱重复验证 -->
 				/user/hasUsername = anon
 				/user/hasEmail = anon
+				/user/onlineUser = anon
 				<!-- 注册匿名 -->
 				/user/regist = anon
 				<!--shiro拦截到请求,通过session管理清除掉session-->
 				/logout = logout
 				<!-- rememberMe -->
-				/** = authc
+				/** = authc 
 			</value>
 		</property>
 	</bean>
@@ -55,12 +56,11 @@
 	<!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="customRealm" />
-		<!-- 注入session管理器 -->
 		<property name="sessionManager" ref="sessionManager" />
-		<!-- 注入缓存管理器 -->
 		<property name="cacheManager" ref="cacheManager"/>
 	</bean>
-
+	
+	
 	<!-- realm -->
 	<bean id="customRealm" class="com.jiajun.shiro.realm.CustomRealm">
 		<!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
@@ -78,17 +78,31 @@
     	<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache.xml"/>
     </bean>
 
-	<!-- sessionDao -->
-	<bean id="SessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
 
 	<!-- 会话管理器 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <!-- session的失效时长，单位毫秒 -->
-        <property name="globalSessionTimeout" value="600000"/>
+        <property name="globalSessionTimeout" value="60000"/>
         <!-- 删除失效的session -->
         <property name="deleteInvalidSessions" value="true"/>
+        <property name="sessionIdCookie" ref="shiroCookie"/>	
         <property name="SessionDAO" ref="SessionDAO"/>
     </bean>
+    
+	<!-- sessionDao -->
+	<bean id="SessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
+	<!--
+	指定本系统SESSIONID, 默认为: JSESSIONID
+	问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
+	当跳出SHIRO SERVLET时如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失!
+	如果直接跳转错误jsp页面的时候, jsp中会调用 getSession(),会创建一个新的sessionId, 此时sessionID的名称和默认的一致, 会导致默认的sessionID被覆盖
+	解决: 1.设置jsp中禁用session
+		  2.修改shiro默认的sessionId名称
+	-->
+	<bean id="shiroCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+	    <constructor-arg name="name" value="SHIROSESSIONID"/>
+	</bean>
+	
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 --> 
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />

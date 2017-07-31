@@ -1,5 +1,7 @@
 package com.jiajun.controller;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,6 +9,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +29,7 @@ import com.jiajun.service.SysLogService;
 import com.jiajun.service.SysRoleService;
 import com.jiajun.service.SysUserService;
 import com.jiajun.util.Constant;
+import com.jiajun.util.JsonUtils;
 import com.jiajun.util.Tools;
 
 /**
@@ -42,6 +47,8 @@ public class UserController extends BaseController{
 	private SysRoleService sysRoleService;
 	@Autowired
 	private SysLogService sysLogService;
+	@Autowired
+	private SessionDAO sessioDAO;
 	
 	/**
 	 * 修改自己
@@ -289,4 +296,18 @@ public class UserController extends BaseController{
 		return "system/appuser/input";
 	}
 	
+	@RequestMapping("/onlineUser")
+	@ResponseBody
+	public ResultModel onLineUser() {
+		Collection<Session> activeSessions = sessioDAO.getActiveSessions();
+		if(activeSessions != null && ! activeSessions.isEmpty()) {
+			List<SysUserEntity> users = new ArrayList<>();
+			for (Session session : activeSessions) {
+				SysUserEntity user = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
+				users.add(user);
+			}
+			return ResultModel.build(200, "success", JsonUtils.encode(users));
+		}
+		return ResultModel.build(200, "success");
+	}
 }

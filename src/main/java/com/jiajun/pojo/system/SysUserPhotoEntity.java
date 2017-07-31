@@ -3,6 +3,7 @@ package com.jiajun.pojo.system;
 import java.util.Date;
 
 public class SysUserPhotoEntity {
+	
     private Integer id;
 
     private Integer userId;
