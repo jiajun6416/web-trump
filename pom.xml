@@ -186,6 +186,10 @@
 			</dependency>
 			
 			<!-- spring对redis客户端jedis的封装 -->		    
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+			</dependency>		
 			 <dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-redis</artifactId>

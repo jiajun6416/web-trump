@@ -7,7 +7,7 @@ package com.jiajun.util;
  */
 public class Constant {
 	/*session中的当前用户*/
-	public static  final String SESSION_USER = "sessionUser";
+//	public static  final String SESSION_USER = "sessionUser"; //废弃, 使用shiro中认证的用户信息
 	/*session中存放的用户头像位置*/
 	public static final String SESSION_USER_PHOTO = "userPhoto";
 	/*验证码*/

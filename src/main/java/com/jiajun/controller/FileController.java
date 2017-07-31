@@ -42,7 +42,7 @@ public class FileController extends BaseController {
 	@RequestMapping("/photoEditor/upload")
 	@ResponseBody
 	public ResultModel userPhotoUpload(HttpServletRequest request, HttpSession session) {
-		SysUserEntity userEntity = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
+		SysUserEntity userEntity = getLoginUser();
 		try {
 			/* 获得项目的根路径的磁盘位置 */
 			String basePath = request.getServletContext().getRealPath("/");

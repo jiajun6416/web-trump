@@ -79,7 +79,6 @@ public class LoginController extends BaseController{
 			SysUserEntity sysUser  = (SysUserEntity) subject.getPrincipal();
 			sysUserService.updateLoginInfo(sysUser.getId(), this.getIP(request));
 			sysUser.setPassword(null);
-			session.setAttribute(Constant.SESSION_USER, sysUser);
 			session.removeAttribute(Constant.SESSION_LOGION_CHECK_CODE);
 			sysLogService.save(username, this.getIP(request), "登录成功");
 			SysRoleEntity role = sysRoleService.getRoleById(sysUser.getRoleId());

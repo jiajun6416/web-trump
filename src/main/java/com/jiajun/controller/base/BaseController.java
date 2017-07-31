@@ -3,6 +3,9 @@ package com.jiajun.controller.base;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -57,10 +60,14 @@ public class BaseController {
 	 * @return
 	 */
 	public String getLoginUser(HttpSession session) {
-		SysUserEntity user = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
-		if(user == null) {
-			return "";
-		}
+		SimplePrincipalCollection peincipal = (SimplePrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+		SysUserEntity user = (SysUserEntity) peincipal.getPrimaryPrincipal();
 		return user.getUsername();
+	}
+
+	
+	public SysUserEntity getLoginUser() {
+		SysUserEntity user = (SysUserEntity)SecurityUtils.getSubject().getPrincipal();
+		return user;
 	}
 }

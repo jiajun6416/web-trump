@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,7 +59,7 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("toEditMyself")
 	public String toEditMyselfPage(HttpSession session, Model model) throws Exception {
-		SysUserEntity loginUser = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
+		SysUserEntity loginUser = getLoginUser();
 		if(loginUser == null) {
 			throw new SysCustomException("请先登陆");
 		}
@@ -74,16 +77,18 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("/updateSelf")
 	public String updateMyself(SysUserEntity sysUser, Model model, HttpSession session, HttpServletRequest request) {
-		SysUserEntity loginUser = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
+		SysUserEntity loginUser = getLoginUser();
 		String username = loginUser.getUsername();
 		String ip = this.getIP(request);
 		try {
 			sysUserService.updateSysUser(sysUser);
 			sysUser.setRole(null);
 			sysLogService.save(username, ip, "修改个人资料");
-			//清空sesion重新登录
-			session.invalidate();
 			sysLogService.save(username, ip, "退出登录");
+			//清空sesion重新登录
+		//	session.invalidate();
+			//会清空认证信息, 会清除session
+			SecurityUtils.getSubject().logout();
 			//重定向到登录界面
 			return "redirect:/toLogin";
 		} catch (Exception e) {
@@ -303,11 +308,24 @@ public class UserController extends BaseController{
 		if(activeSessions != null && ! activeSessions.isEmpty()) {
 			List<SysUserEntity> users = new ArrayList<>();
 			for (Session session : activeSessions) {
-				SysUserEntity user = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
+			//	SysUserEntity user = (SysUserEntity) session.getAttribute(Constant.SESSION_USER);
+				SimplePrincipalCollection peincipal = (SimplePrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+				SysUserEntity user = (SysUserEntity) peincipal.getPrimaryPrincipal();
 				users.add(user);
 			}
 			return ResultModel.build(200, "success", JsonUtils.encode(users));
 		}
 		return ResultModel.build(200, "success");
+	}
+	
+	@RequestMapping("/getLoginUser")
+	@ResponseBody
+	public ResultModel getLoginUser(HttpServletRequest request) {
+		SimplePrincipalCollection peincipal = (SimplePrincipalCollection) request.getSession().getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
+	//	SysUserEntity user = (SysUserEntity) peincipal.getPrimaryPrincipal();
+		
+		SysUserEntity user  = (SysUserEntity) SecurityUtils.getSubject().getPrincipal();
+		
+		return ResultModel.build(200, "success", user);
 	}
 }

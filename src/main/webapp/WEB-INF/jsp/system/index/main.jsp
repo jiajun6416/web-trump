@@ -3,6 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib uri="http://www.jiajun.trump.com/menu" prefix="menu" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>  
+
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"

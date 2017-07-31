@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- redis连接池 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxTotal" value="${redis.maxTotal}"></property>  
+        <property name="maxIdle" value="${redis.maxIdle}"></property>  
+        <property name="minIdle" value="${redis.minIdle}"></property>  
+        <property name="maxWaitMillis" value="${redis.maxWaitMillis}"></property>  
+        <property name="minEvictableIdleTimeMillis" value="${reids.minEvictableIdleTimeMillis}"></property>  
+        <property name="numTestsPerEvictionRun" value="${redis.numTestsPerEvictionRun}"></property>  
+        <property name="timeBetweenEvictionRunsMillis" value="${redis.timeBetweenEvictionRunsMillis}"></property>  
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"></property>  
+        <property name="testOnReturn" value="${redis.testOnReturn}"></property>  
+        <property name="testWhileIdle" value="${redis.testWhileIdle}"></property>  
+	</bean>
+	<bean id="jedisConnFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+		<property name="poolConfig" ref="jedisPoolConfig" />  
+		<property name="usePool" value="true" />
+		<property name="hostName" value="${redis.host}" />
+		<property name="port" value="${redis.port}" />
+		<property name="password" value="${redis.password}"></property>
+	</bean>
+	
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jedisConnFactory" />
+		<property name="keySerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+		<property name="hashKeySerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+		</property>
+		<property name="valueSerializer">
+			<bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />
+		</property>
+		<property name="hashValueSerializer">  
+            <bean  class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />  
+        </property> 
+	</bean>
+	
+	<!-- 
+	key和value的序列化方式:
+	StringRedisSerializer : 直接以字符串存储, 一般key设置为这个序列化方式
+	Jackson2JsonRedisSerializer : 序列化成json格式
+	JdkSerializationRedisSerializer: 使用java的序列化方式,base64编码存储
+	GenericToStringSerializer: 类似string序列化方式
+	OxmSerializer：使用SpringO/X映射的编排器和解排器实现序列化，用于XML序列化。
+	so
+	key/hashKey采用StringRedisSerializer
+	value如果是string, 也可以使用StringRedisSerialize, 其他看情况使用, 使用JdkSerializationRedisSerializer是通用的 -->
+	
+</beans>
