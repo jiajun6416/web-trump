@@ -91,6 +91,7 @@
     
 	<!-- sessionDao -->
 	<bean id="SessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
+	
 	<!--
 	指定本系统SESSIONID, 默认为: JSESSIONID
 	问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
