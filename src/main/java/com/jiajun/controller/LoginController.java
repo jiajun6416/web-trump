@@ -74,11 +74,11 @@ public class LoginController extends BaseController{
 		token.setRememberMe(rememberMe);
 		try {
 			subject.login(token);
-			
 			//认证成功后的一些操作
-			SysUserEntity sysUser  = (SysUserEntity) subject.getPrincipal();
+			//SysUserEntity sysUser  = (SysUserEntity) subject.getPrincipal();
+			//**************
+			SysUserEntity sysUser = sysUserService.getUserByUsername(username);
 			sysUserService.updateLoginInfo(sysUser.getId(), this.getIP(request));
-			sysUser.setPassword(null);
 			session.removeAttribute(Constant.SESSION_LOGION_CHECK_CODE);
 			sysLogService.save(username, this.getIP(request), "登录成功");
 			SysRoleEntity role = sysRoleService.getRoleById(sysUser.getRoleId());

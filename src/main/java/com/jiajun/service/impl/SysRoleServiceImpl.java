@@ -16,9 +16,9 @@ import org.springframework.stereotype.Service;
 import com.jiajun.dao.base.Dao;
 import com.jiajun.exception.SysCustomException;
 import com.jiajun.pojo.ZtreeNode;
-import com.jiajun.pojo.system.SysMenuPremission;
 import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.service.SysRoleService;
+import com.jiajun.shiro.realm.CustomRealm;
 import com.jiajun.util.Constant;
 import com.jiajun.util.Tools;
 
@@ -29,6 +29,12 @@ public class SysRoleServiceImpl implements SysRoleService {
 	@Autowired
 	@Qualifier("daoImpl")
 	private Dao dao;
+	
+	/**
+	 * 注入realm清除缓存
+	 */
+	@Autowired
+	private CustomRealm realm;
 	
 	private static Logger logger = LoggerFactory.getLogger(SysRoleServiceImpl.class);
 	
@@ -177,7 +183,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 				//删除该角色类型下所有角色对应的菜单权限
 				dao.delete(MENU_PREMISSION_NAME_SPACE+"deleteAllByRoleType", roleType);
 			}
-			
+			//清除缓存
+			realm.clearCached();
 		} else {
 			logger.error("角色类型授予菜单, 传入参数类型错误: {}", roleType);
 			throw new SysCustomException("参数类型错误");
@@ -254,6 +261,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 		params.put("roleId", roleId);
 		params.put("idsList", idsList);
 		dao.delete(MENU_NAME_SPACE+"deleteRoleListByListIds", params);
+		//清除缓存
+		realm.clearCached();
 	}
 
 
@@ -317,6 +326,8 @@ public class SysRoleServiceImpl implements SysRoleService {
 				}
 			}
 		}
+		//清空权限信息
+		realm.clearCached();
 	}
 
 	@Override
@@ -347,6 +358,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 		role.setOperationIds(newOperaStr);
 		dao.update(ROLE_NAME_SPACE+"updateByPrimaryKey", role);
+		
+		//清空缓存信息
+		realm.clearCached();
 	}
 
 

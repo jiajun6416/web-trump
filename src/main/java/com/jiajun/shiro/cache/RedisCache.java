@@ -7,32 +7,49 @@ import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @Desc 获得Cache的代理者
+ * 
+ * 使用Redis存储认证信息, key使用Object, spting-data-redis会使用序列化成string
+ * 
+ *
+ * @author JIAJUN
  * @Date 2017/08/01 16:32:48
  * @version 1.0.0
  */
-public class RedisCache<K, V> implements Cache<K, V> {
+public class RedisCache implements Cache<Object, Object> {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 		
-	@Autowired
-	private RedisCacheHandler<Object, V> redisHander;
-	
-	/**
-	 * redis key前缀
-	 */
-	private String keyPrefix = "shiro_redis_session:";
-	
-	private Long expire = 60*60*1000L;
+	private RedisCacheHandler redisHandler;
 
+	/**
+	 * redis中key的前缀
+	 */
+	private String keyPrefix;
+	
+	private int timeToIdleSeconds;
+
+	public RedisCache() {
+		super();
+	}
+
+	public RedisCache(String keyPrefix,int timeToIdleSeconds, RedisCacheHandler redisHandler) {
+		super();
+		this.keyPrefix = keyPrefix;
+		this.timeToIdleSeconds=timeToIdleSeconds;
+		this.redisHandler = redisHandler;
+	}
+
+	private Object getKey(Object key) {
+		return keyPrefix+key;
+	}
+	
 	@Override
-	public V get(K key) throws CacheException {
+	public Object get(Object key) throws CacheException {
 		try {
 			logger.debug("get value from redis by key: {}",this.getKey(key));
-			return redisHander.get(this.getKey(key));
+			return redisHandler.get(this.getKey(key));
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 		}
@@ -41,10 +58,10 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
 
 	@Override
-	public V put(K key, V value) throws CacheException {
+	public Object put(Object key, Object value) throws CacheException {
 		try {
 			logger.debug("put key:{} value:{} to redis",this.getKey(key), value);
-			redisHander.put(this.getKey(key), value, expire);
+			redisHandler.put(this.getKey(key), value, timeToIdleSeconds);
 			return value;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
@@ -54,10 +71,10 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
 
 	@Override
-	public V remove(K key) throws CacheException {
+	public Object remove(Object key) throws CacheException {
 	try {
 			logger.debug("remove key{} from redis", this.getKey(key));
-			redisHander.remove(this.getKey(key));
+			redisHandler.remove(this.getKey(key));
 			return null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,29 +85,49 @@ public class RedisCache<K, V> implements Cache<K, V> {
 
 	@Override
 	public void clear() throws CacheException {
-		
+		try {
+			redisHandler.clear(this.keyPrefix);
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+		}
 	}
 
 
 	@Override
 	public int size() {
+		Set<Object> keys;
+		try {
+			keys = redisHandler.getKeys(this.keyPrefix);
+			if(keys != null) {
+				return keys.size();
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+		}
 		return 0;
 	}
 
 
 	@Override
-	public Set<K> keys() {
+	public Set<Object> keys() {
+		try {
+			logger.debug("get all cache keys");
+			Set<Object> keySet = redisHandler.getKeys(this.keyPrefix+"*");
+			return  keySet;
+		} catch (Exception e) {
+			logger.error(e.getMessage(),e);
+		}
 		return null;
 	}
-
 
 	@Override
-	public Collection<V> values() {
+	public Collection<Object> values() {
+		try {
+			logger.debug("get all shiro cache values from redis!");
+			return redisHandler.values(this.keyPrefix);
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
 		return null;
-	}
-
-	
-	private Object getKey(K key) {
-		return keyPrefix+""+key;
 	}
 }

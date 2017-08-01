@@ -80,7 +80,7 @@
 						<img class="nav-user-photo" src="${sessionScope.userPhoto.photo1}" alt="photo" id="userPhoto" />
 						<span class="user-info" id="user_info">
 						<small>Welcome,</small>
-							<shiro:principal property="username"/>  
+							<shiro:principal/>  
 						</span>
 						<i class="ace-icon fa fa-caret-down"></i>
 					</a>

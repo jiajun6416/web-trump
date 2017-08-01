@@ -2,6 +2,7 @@ package com.jiajun.shiro.realm;
 
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -51,7 +52,7 @@ public class CustomRealm extends AuthorizingRealm{
 			throw new UnknownAccountException();
 		}
 		//将activeUser设置simpleAuthenticationInfo
-		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user, //user是主体
+		SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), //username
 				user.getPassword(),
 				ByteSource.Util.bytes(salt.getBytes()),
 				this.getName()
@@ -65,8 +66,11 @@ public class CustomRealm extends AuthorizingRealm{
 	 */
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		//之前放入的主体是user, 则取出的也是user
-		SysUserEntity user = (SysUserEntity) principals.getPrimaryPrincipal();
+		//SysUserEntity user = (SysUserEntity) principals.getPrimaryPrincipal();
+		//放入的是username, 使用redis存储的key就是认证信息.也短一点
+		String username = (String) principals.getPrimaryPrincipal();
 		try {
+			SysUserEntity user = userService.getUserByUsername(username);
 			List<String> premissionList;
 			if(user.getRoleId().equals(Constant.SYSTEM_ROLE)) {
 				//admin查询所有的资源
@@ -87,4 +91,14 @@ public class CustomRealm extends AuthorizingRealm{
 		}
 		return null;
 	}
+	
+	/**
+	 * 每次修改权限之后都清空缓存,底层调用的还是redisCache中的clear
+	 */
+	public void clearCached() {
+		PrincipalCollection principals = SecurityUtils.getSubject().getPrincipals();
+		super.clearCache(principals);
+	}
+
+	
 }

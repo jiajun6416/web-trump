@@ -41,7 +41,8 @@ public class RoleController extends BaseController{
 	private SysLogService sysLogService;
 	@Autowired
 	private SysOperationService sysOperaService;
-
+	
+	
 	@RequestMapping("/list")
 	@RequiresPermissions("role:query")
 	public String roRole(Model model, HttpServletRequest request) throws Exception {

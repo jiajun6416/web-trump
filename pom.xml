@@ -8,198 +8,198 @@
   <artifactId>trump</artifactId>
   <packaging>war</packaging>
   
-  <dependencies>
-				<!-- Spring -->
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-context</artifactId>
-			</dependency>
-			<dependency>
-		         <groupId>org.springframework</groupId>
-		         <artifactId>spring-context-support</artifactId>
-		    </dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-beans</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
-			</dependency>
-			<dependency>  
-	            <groupId>org.springframework</groupId>  
-	            <artifactId>spring-test</artifactId>  
-	            <scope>test</scope>  
-	        </dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-jdbc</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-aspects</artifactId>
-			</dependency>
+	 <dependencies>
+			<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+	         <groupId>org.springframework</groupId>
+	         <artifactId>spring-context-support</artifactId>
+	    </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-test</artifactId>  
+            <scope>test</scope>  
+        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
 
-			<!-- Mybatis -->
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis-spring</artifactId>
-			</dependency>
-			<dependency>
-				<groupId>com.github.miemiedev</groupId>
-				<artifactId>mybatis-paginator</artifactId>
-			</dependency>
-			
-						<!-- JSP相关 -->
-			<dependency>
-				<groupId>jstl</groupId>
-				<artifactId>jstl</artifactId>
-			</dependency>
-			<dependency>
-			    <groupId>javax.servlet</groupId>
-			    <artifactId>javax.servlet-api</artifactId>
-			    <scope>provided</scope>
-			</dependency>
-			<dependency> 
-			   <groupId>javax.servlet.jsp</groupId> 
-			   <artifactId>jsp-api</artifactId> 
-			   <scope>provided</scope>
-			</dependency>
-				
-			<!-- MySql -->
-			<dependency>
-				<groupId>mysql</groupId>
-				<artifactId>mysql-connector-java</artifactId>
-			</dependency>
-			
-						<!-- 连接池 -->
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-			</dependency>
-			
-			
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-lang3</artifactId>
-			</dependency>
-			
-			<dependency>
-				<groupId>org.apache.commons</groupId>
-				<artifactId>commons-io</artifactId>
-			</dependency>
-			
-			<dependency>
-				<groupId>commons-net</groupId>
-				<artifactId>commons-net</artifactId>
-			</dependency>
-
-			<!-- 日志处理 -->
-			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-log4j12</artifactId>
-			</dependency>
-
-			<!-- 文件上传组件 -->
-			<dependency>
-				<groupId>commons-fileupload</groupId>
-				<artifactId>commons-fileupload</artifactId>
-			</dependency>
-			
-			<!-- Jackson Json处理工具包 -->
-			<dependency>
-				<groupId>com.fasterxml.jackson.core</groupId>
-				<artifactId>jackson-databind</artifactId>
-			</dependency>
-			
-			<!-- 单元测试 -->
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-			</dependency>
-			
-			<!-- httpclient -->
-			<dependency>
-				<groupId>org.apache.httpcomponents</groupId>
-				<artifactId>httpclient</artifactId>
-			</dependency>
+		<!-- Mybatis -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.miemiedev</groupId>
+			<artifactId>mybatis-paginator</artifactId>
+		</dependency>
 		
-			<!-- apache poi组件 -->
-			<dependency>
-			    <groupId>org.apache.poi</groupId>
-			    <artifactId>poi-ooxml</artifactId>
-			</dependency>
-		
-			<!-- 发送邮件组件 -->
-			<dependency>  
-			    <groupId>javax.mail</groupId>  
-			    <artifactId>mail</artifactId>  
-			</dependency> 
+					<!-- JSP相关 -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+		<dependency> 
+		   <groupId>javax.servlet.jsp</groupId> 
+		   <artifactId>jsp-api</artifactId> 
+		   <scope>provided</scope>
+		</dependency>
 			
-						
-			<!-- quartz定时器 -->
-			<dependency>
-			    <groupId>org.quartz-scheduler</groupId>
-			    <artifactId>quartz</artifactId>
-			</dependency>
+		<!-- MySql -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		
+					<!-- 连接池 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+		</dependency>
+		
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-net</groupId>
+			<artifactId>commons-net</artifactId>
+		</dependency>
+
+		<!-- 日志处理 -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+
+		<!-- 文件上传组件 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+		
+		<!-- Jackson Json处理工具包 -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		
+		<!-- 单元测试 -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		
+		<!-- httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+		</dependency>
 	
-			 <!-- ehcache -->
-		  <dependency>  
-			  <groupId>org.ehcache</groupId>
-			  <artifactId>ehcache</artifactId>
-		  </dependency>   
-			
-	        <!-- shiro -->  
-	        <dependency>  
-	            <groupId>org.apache.shiro</groupId>  
-	            <artifactId>shiro-core</artifactId>  
-	        </dependency>  
-	        <dependency>  
-	            <groupId>org.apache.shiro</groupId>  
-	            <artifactId>shiro-web</artifactId>  
-	        </dependency>  
-	        <dependency>  
-	            <groupId>org.apache.shiro</groupId>  
-	            <artifactId>shiro-spring</artifactId>  
-		   </dependency> 
-	          <dependency>
-			  <groupId>org.apache.shiro</groupId>
-			  <artifactId>shiro-aspectj</artifactId>
-			</dependency>
-	     	<dependency>
-			  <groupId>org.apache.shiro</groupId>
-			  <artifactId>shiro-ehcache</artifactId>
-			</dependency>
-		     <dependency>
-			  <groupId>org.apache.shiro</groupId>
-			  <artifactId>shiro-spring</artifactId>
-			</dependency> 
-			
-		 	<!-- 注解 ws-->
-			<dependency>
-			    <groupId>javax.websocket</groupId>
-			    <artifactId>javax.websocket-api</artifactId>
-			</dependency>
-			
-			<!-- spring对redis客户端jedis的封装 -->		    
-			<dependency>
-				<groupId>redis.clients</groupId>
-				<artifactId>jedis</artifactId>
-			</dependency>		
-			 <dependency>
-				<groupId>org.springframework.data</groupId>
-				<artifactId>spring-data-redis</artifactId>
-			</dependency>
-			<!-- shiro+redis缓存插件/使用redis做权限资源的缓存和sessionDAO,参考自己实现 -->
-			<!-- <dependency>
-			    <groupId>org.crazycake</groupId>
-			    <artifactId>shiro-redis</artifactId>
-			    <version>2.4.2.1-RELEASE</version>
-			</dependency>	 -->
+		<!-- apache poi组件 -->
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		</dependency>
+	
+		<!-- 发送邮件组件 -->
+		<dependency>  
+		    <groupId>javax.mail</groupId>  
+		    <artifactId>mail</artifactId>  
+		</dependency> 
+		
+					
+		<!-- quartz定时器 -->
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz</artifactId>
+		</dependency>
+
+		 <!-- ehcache -->
+	  <dependency>  
+		  <groupId>org.ehcache</groupId>
+		  <artifactId>ehcache</artifactId>
+	  </dependency>   
+		
+        <!-- shiro -->  
+        <dependency>  
+            <groupId>org.apache.shiro</groupId>  
+            <artifactId>shiro-core</artifactId>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.apache.shiro</groupId>  
+            <artifactId>shiro-web</artifactId>  
+        </dependency>  
+        <dependency>  
+            <groupId>org.apache.shiro</groupId>  
+            <artifactId>shiro-spring</artifactId>  
+	   </dependency> 
+          <dependency>
+		  <groupId>org.apache.shiro</groupId>
+		  <artifactId>shiro-aspectj</artifactId>
+		</dependency>
+     	<dependency>
+		  <groupId>org.apache.shiro</groupId>
+		  <artifactId>shiro-ehcache</artifactId>
+		</dependency>
+	     <dependency>
+		  <groupId>org.apache.shiro</groupId>
+		  <artifactId>shiro-spring</artifactId>
+		</dependency> 
+		
+	 	<!-- 注解 ws-->
+		<dependency>
+		    <groupId>javax.websocket</groupId>
+		    <artifactId>javax.websocket-api</artifactId>
+		</dependency>
+		
+		<!-- spring对redis客户端jedis的封装 -->		    
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>		
+		 <dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+		</dependency>
+		<!-- shiro+redis缓存插件/使用redis做权限资源的缓存和sessionDAO,参考自己实现 -->
+		<!-- <dependency>
+		    <groupId>org.crazycake</groupId>
+		    <artifactId>shiro-redis</artifactId>
+		    <version>2.4.2.1-RELEASE</version>
+		</dependency> -->	
  	 </dependencies>
   
     
@@ -212,7 +212,7 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 		        <configuration>
 					<!-- 远端tomcat的后台管理入口 -->
-	                <url>http://192.168.1.202:8080/manager/text</url>
+	                <url>http://192.168.1.201:8080/manager/text</url>
 	  		        <!-- 部署项目包名, 如果不写的话则是 / 代表root.war, 需要把自带的删除能部署 -->
 	                <path>/trump</path>
 	                <!-- 也可以选择在maven.setting中设置登录用户名和密码 -->

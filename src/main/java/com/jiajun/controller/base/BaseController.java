@@ -61,8 +61,10 @@ public class BaseController {
 	 */
 	public String getLoginUser(HttpSession session) {
 		SimplePrincipalCollection peincipal = (SimplePrincipalCollection) session.getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-		SysUserEntity user = (SysUserEntity) peincipal.getPrimaryPrincipal();
-		return user.getUsername();
+	//	SysUserEntity user = (SysUserEntity) peincipal.getPrimaryPrincipal();
+	//	return user.getUsername();
+		String username = (String) peincipal.getPrimaryPrincipal();
+		return username;
 	}
 
 	
