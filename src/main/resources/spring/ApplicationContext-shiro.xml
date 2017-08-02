@@ -88,14 +88,15 @@
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <!-- session的失效时长，单位毫秒 -->
         <property name="globalSessionTimeout" value="1800000"/>
-        <!-- 删除失效的session -->
+        <!-- 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话   -->
         <property name="deleteInvalidSessions" value="true"/>
         <property name="sessionIdCookie" ref="shiroCookie"/>	
-        <property name="SessionDAO" ref="SessionDAO"/>
+        <property name="SessionDAO" ref="redisSessionDAO"/>
     </bean>
     
-	<!-- sessionDao -->
-	<bean id="SessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
+	<!-- 默认内存sessionDAO -->
+	<!-- <bean id="SessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/> -->
+	
 	
 	<!--
 		指定本系统SESSIONID, 默认为: JSESSIONID

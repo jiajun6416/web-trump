@@ -59,7 +59,9 @@ public class RedisCache implements Cache<Serializable, Serializable>{
 	public Serializable get(Serializable key) throws CacheException {
 		try {
 			logger.debug("get value from redis by key: {}",this.getKey(key));
-			return redisDao.get(this.getKey(key));
+		//	return redisDao.get(this.getKey(key)); //只查找, 不影响失效时间
+			//查找后重置失效时间
+			return redisDao.getAndReSetExpireTime(this.getKey(key), timeToIdleSeconds);
 		} catch (Exception e) {
 			logger.error(e.getMessage(),e);
 		}

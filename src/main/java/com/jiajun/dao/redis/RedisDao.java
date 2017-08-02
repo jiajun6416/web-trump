@@ -31,7 +31,7 @@ public interface RedisDao {
 	 * 	
 	 * @param key
 	 * @param value
-	 * @param expire 过期时间
+	 * @param expire 过期时间, 单位秒
 	 * @throws Exception
 	 */
 	void put(Serializable key, Serializable value, int expire) throws Exception;
@@ -65,5 +65,5 @@ public interface RedisDao {
 	 * @return
 	 * @throws Exception
 	 */
-	Collection<Serializable> values(Serializable pattern) throws Exception;
+	Collection values(Serializable pattern) throws Exception;
 }
