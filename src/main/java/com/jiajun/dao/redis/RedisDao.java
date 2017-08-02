@@ -1,19 +1,69 @@
 package com.jiajun.dao.redis;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
-public interface RedisDao<K, V> {
+public interface RedisDao {
 	
-	V get(K key) throws Exception;
+	/**
+	 * get 
+	 * 
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	Serializable get(Serializable key) throws Exception;
 	
-	void put(K key, Object value, Long expire) throws Exception;
+	/**
+	 * get and 重置失效时间
+	 * @param key
+	 * @param expire
+	 * @return
+	 * @throws Exception
+	 */
+	Serializable getAndReSetExpireTime(Serializable key, int expire) throws Exception;
 	
-	void remove(K key) throws Exception;
+	/**
+	 * put
+	 * 
+	 * 过期时间<=0的话,则永久不过期
+	 * 	
+	 * @param key
+	 * @param value
+	 * @param expire 过期时间
+	 * @throws Exception
+	 */
+	void put(Serializable key, Serializable value, int expire) throws Exception;
 	
-	void clear(String pattern) throws Exception;
+	/**
+	 * delete
+	 * @param key
+	 * @throws Exception
+	 */
+	void remove(Serializable key) throws Exception;
 	
-	Set<K> getKeys(String pattern) throws Exception;
+	/**
+	 * clear by telplate 
+	 * 	example: del a*
+	 * @param pattern
+	 * @throws Exception
+	 */
+	void clear(Serializable pattern) throws Exception;
 	
-	Collection<V> values(String pattern) throws Exception;
+	/**
+	 * key a*
+	 * @param pattern
+	 * @return
+	 * @throws Exception
+	 */
+	Set<Serializable> getKeys(Serializable pattern) throws Exception;
+	
+	/**
+	 * a* value
+	 * @param pattern
+	 * @return
+	 * @throws Exception
+	 */
+	Collection<Serializable> values(Serializable pattern) throws Exception;
 }

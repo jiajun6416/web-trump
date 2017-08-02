@@ -32,10 +32,10 @@ public class CustomRealm extends AuthorizingRealm{
 	@Value("${salt}")
 	private String salt;
 	
-	@Override
 	/**
 	 * 认证, 认证成功返回principals信息
 	 */
+	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		//取出用户名
 		String username = (String) token.getPrincipal();
@@ -60,10 +60,10 @@ public class CustomRealm extends AuthorizingRealm{
 		return simpleAuthenticationInfo;
 	}
 	
-	@Override
 	/**
 	 * 授权
 	 */
+	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		//之前放入的主体是user, 则取出的也是user
 		//SysUserEntity user = (SysUserEntity) principals.getPrimaryPrincipal();
