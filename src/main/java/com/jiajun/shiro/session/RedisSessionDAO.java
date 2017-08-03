@@ -3,6 +3,8 @@ package com.jiajun.shiro.session;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.ValidatingSession;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.jiajun.dao.redis.RedisDao;
+import com.jiajun.util.HttpUtils;
 
 /**
  * @Desc session DAO, 
@@ -44,6 +47,14 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 	
 	@Override
 	protected Serializable doCreate(Session session) {
+		
+		//如果是静态资源,则不操作session
+		HttpServletRequest request = HttpUtils.getRequest();
+		String url = request.getServletPath();
+		if(HttpUtils.isStaticRequest(url)) {
+			return null;
+		}
+		
 		//创建sessionId,建立绑定关系
 		Serializable sessionId = generateSessionId(session);
 		assignSessionId(session, sessionId);
@@ -60,6 +71,14 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 	
 	@Override
 	protected Session doReadSession(Serializable sessionId) {
+		
+		//如果是静态资源,则不操作session
+		HttpServletRequest request = HttpUtils.getRequest();
+		String url = request.getServletPath();
+		if(HttpUtils.isStaticRequest(url)) {
+			return null;
+		}
+		
         if (sessionId == null) {
             throw new NullPointerException("id argument cannot be null.");
         }
@@ -76,6 +95,14 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 
 	@Override
 	public void update(Session session) throws UnknownSessionException {
+		
+		//如果是静态资源,则不操作session
+		HttpServletRequest request = HttpUtils.getRequest();
+		String url = request.getServletPath();
+		if(HttpUtils.isStaticRequest(url)) {
+			return;
+		}
+		
         if (session == null) {
             throw new NullPointerException("session argument cannot be null.");
         }
@@ -117,6 +144,4 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 		}
 		return null;
 	}
-
-
 }

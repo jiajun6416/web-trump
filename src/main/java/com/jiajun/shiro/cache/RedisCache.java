@@ -142,5 +142,4 @@ public class RedisCache implements Cache<Serializable, Serializable>{
 		}
 		return null;
 	}
-
 }

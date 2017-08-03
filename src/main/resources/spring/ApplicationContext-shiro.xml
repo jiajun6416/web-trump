@@ -86,6 +86,8 @@
 
 	<!-- 会话管理器，web容器的session废弃 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+    	<!-- 避免subject不存在时候会自动在url上加上sessionId如果禁用了cookike,设置为true -->
+ 	    <property name="sessionIdUrlRewritingEnabled" value="false" />
         <!-- session的失效时长，单位毫秒 -->
         <property name="globalSessionTimeout" value="1800000"/>
         <!-- 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话   -->

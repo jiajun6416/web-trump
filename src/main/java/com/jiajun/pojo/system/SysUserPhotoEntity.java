@@ -2,9 +2,11 @@ package com.jiajun.pojo.system;
 
 import java.util.Date;
 
-public class SysUserPhotoEntity {
+public class SysUserPhotoEntity implements java.io.Serializable{
 	
-    private Integer id;
+	private static final long serialVersionUID = -1031031958053222512L;
+
+	private Integer id;
 
     private Integer userId;
 
