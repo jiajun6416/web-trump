@@ -33,7 +33,7 @@ import com.jiajun.service.SysRoleService;
 import com.jiajun.service.SysUserService;
 import com.jiajun.util.Constant;
 import com.jiajun.util.JsonUtils;
-import com.jiajun.util.Tools;
+import com.jiajun.util.PropertiesLoader;
 
 /**
  * @描述：用户信息
@@ -218,7 +218,7 @@ public class UserController extends BaseController{
 			model.addAttribute("roleList", roleList);
 			//如果rows没有指定的话, 自己读取制定的文件
 			if(params.get("rows") == null || params.get("rows").equals("")) {
-				String rows = Tools.getProperties("/config/config.properties", "page.size");
+				String rows = Constant.getConfig("page.size");
 				params.put("rows", Integer.parseInt(rows));
 			} else {
 				String rows =  (String) params.get("rows");
@@ -277,7 +277,7 @@ public class UserController extends BaseController{
 		}
 		//如果rows没有指定的话, 自己读取制定的文件
 		if(params.get("rows") == null || params.get("rows").equals("")) {
-			String rows = Tools.getProperties("/config/config.properties", "page.size");
+			String rows = Constant.getConfig("page.size");
 			params.put("rows", Integer.parseInt(rows));
 		} else {
 			String rows =  (String) params.get("rows");

@@ -18,7 +18,7 @@ import com.jiajun.pojo.system.SysMenuEntity;
 import com.jiajun.pojo.system.SysMenuPremission;
 import com.jiajun.service.SysMenuService;
 import com.jiajun.util.Constant;
-import com.jiajun.util.Tools;
+import com.jiajun.util.RegularUtils;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -167,7 +167,7 @@ public class SysMenuServiceImpl implements SysMenuService{
 			menuEntitys = (List<SysMenuEntity>) dao.selectList(NAME_SPACE+"selectAllMenu", null);
 		} else {
 			String hasMenuId = (String) dao.selectObject(SYS_ROLE_NAME_SPACE+"selectMenuIdsById", roleId);
-			if(!StringUtils.isEmpty(hasMenuId) && Tools.regular(hasMenuId)) {
+			if(!StringUtils.isEmpty(hasMenuId) && RegularUtils.regular(hasMenuId)) {
 				String[] hasMenuIds = hasMenuId.split(",");
 				List<Integer> menuIds = new ArrayList<>();
 				for (String menuId : hasMenuIds) {

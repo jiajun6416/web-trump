@@ -15,7 +15,7 @@ import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.system.SysLogEntity;
 import com.jiajun.service.SysLogService;
-import com.jiajun.util.Tools;
+import com.jiajun.util.Constant;
 
 @Controller
 @RequestMapping("/log")
@@ -36,7 +36,7 @@ public class LogController  extends BaseController {
 
 		String rows = (String) params.get("rows");
 		if(rows == null) {
-			rows = Tools.getProperties("/config/config.properties", "page.size");
+			rows = Constant.getConfig("page.size");
 		}
 		params.put("rows", Integer.valueOf(rows));
 		

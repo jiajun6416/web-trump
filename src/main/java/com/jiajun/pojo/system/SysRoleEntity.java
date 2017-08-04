@@ -7,7 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
 import com.jiajun.util.JsonUtils;
-import com.jiajun.util.Tools;
+import com.jiajun.util.RegularUtils;
 
 public class SysRoleEntity implements Serializable{
 
@@ -87,7 +87,7 @@ public class SysRoleEntity implements Serializable{
 
     public void setOperationIds(String operationIds) {
         this.operationIds = operationIds;
-        if(StringUtils.isNotEmpty(operationIds) && Tools.regular(operationIds)) {
+        if(StringUtils.isNotEmpty(operationIds) && RegularUtils.regular(operationIds)) {
         	String[] idsStr = operationIds.split(",");
         	operaIds = new ArrayList<>(idsStr.length);
         	for (String id : idsStr) {

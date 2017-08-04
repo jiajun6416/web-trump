@@ -17,10 +17,9 @@ import com.jiajun.pojo.system.SysMenuEntity;
 import com.jiajun.pojo.system.SysMenuPremission;
 
 /**
- * @描述：json转换工具类
- * @author jiajun
- * @date 2017年6月4日上午9:14:22
+ * jaskson转换json工具类
  */
+@SuppressWarnings("unchecked")
 public class JsonUtils {
 	
     /**
@@ -75,7 +74,7 @@ public class JsonUtils {
      * @param jsonTypeReference
      * @return
      */
-    public static <T> T decode(String json, TypeReference<T> jsonTypeReference) {
+	public static <T> T decode(String json, TypeReference<T> jsonTypeReference) {
         try {
             return (T) objectMapper.readValue(json, jsonTypeReference);
         } catch (JsonParseException e) {
@@ -105,22 +104,5 @@ public class JsonUtils {
             logger.error("decode(String, JsonTypeReference<T>)", e);
         }
         return null;
-    }
-    
-    
-    public static void main(String[] args) {
-		SysMenuEntity menu = new SysMenuEntity();
-		menu.setAccessUrl("123");
-		menu.setId(2);
-		List<SysMenuPremission> premissionList = new ArrayList<>();
-		SysMenuPremission premssion = new SysMenuPremission();
-		for(int i=0; i<5; i++) {
-			premssion.setId(i);
-			premssion.setPremissionCode("abc");
-			premissionList.add(premssion);
-		}
-		menu.setPremissionList(premissionList );
-		
-		System.out.println(JsonUtils.encode(menu));
     }
 }

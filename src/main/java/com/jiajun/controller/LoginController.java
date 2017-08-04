@@ -30,7 +30,6 @@ import com.jiajun.service.SysMenuService;
 import com.jiajun.service.SysRoleService;
 import com.jiajun.service.SysUserService;
 import com.jiajun.util.Constant;
-import com.jiajun.util.Tools;
 
 /**
  * @描述：登录控制
@@ -53,8 +52,7 @@ public class LoginController extends BaseController{
 	@RequestMapping("/toLogin") 
 	public String toLoginPage(Model model, HttpSession session, HttpServletRequest request) {
 		//设置登陆页面的信息
-	//	model.addAttribute("title", Tools.getProperties("/config/config.properties", "title"));
-		model.addAttribute("music", Tools.getProperties("/config/config.properties", "music"));
+		model.addAttribute("music",Constant.getConfig("music"));
 		return "system/index/login";
 	}
 	

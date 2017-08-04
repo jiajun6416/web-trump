@@ -1,11 +1,35 @@
 package com.jiajun.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @描述：包含项目中的常量
  * @author jiajun
  * @date 2017年6月11日下午9:23:03
  */
 public class Constant {
+	
+	/**
+	 * 全局属性集合
+	 */
+	private static final Map<String, String> global = new HashMap<>();
+	/**
+	 * 属性文件加载对象
+	 */
+	private static PropertiesLoader loader = new PropertiesLoader("config/config.properties");
+	
+	public static String getConfig(String key) {
+		String value = global.get(key);
+		if (value == null){
+			value = loader.getProperty(key);
+			global.put(key, value != null ? value : StringUtils.EMPTY);
+		}
+		return value;
+	}
+	
 	/*session中的当前用户*/
 //	public static  final String SESSION_USER = "sessionUser"; //废弃, 使用shiro中认证的用户信息
 	/*session中存放的用户头像位置*/

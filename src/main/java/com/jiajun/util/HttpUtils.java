@@ -21,8 +21,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
  */
 public class HttpUtils {
 	
-	/*静态请求后缀,后期卸载配置文件中*/
-	private static String staticRequest = "web.staticFile=.css,.js,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.htm,.html,.crx,.xpi,.exe,.ipa,.apk,.html";
+	/*静态请求后缀*/
+	private static String staticRequest = ".css,.js,.png,.jpg,.gif,.jpeg,.bmp,.ico,.swf,.psd,.htc,.htm,.html,.crx,.xpi,.exe,.ipa,.apk,.html";
 	
 	/**
 	 * 判断是否是ajax请求
@@ -169,7 +169,7 @@ public class HttpUtils {
 	}
 	
 	/**
-	 * 获取当前请求对象
+	 * 获取当前请求对象, 前提是开启RequestContextListener监听器
 	 * @return
 	 */
 	public static HttpServletRequest getRequest(){

@@ -11,7 +11,7 @@ import com.jiajun.dao.base.Dao;
 import com.jiajun.exception.SysCustomException;
 import com.jiajun.pojo.system.SysOpeartionEntity;
 import com.jiajun.service.SysOperationService;
-import com.jiajun.util.Tools;
+import com.jiajun.util.RegularUtils;
 
 @Service
 public class SysOperationServiceImpl implements SysOperationService{
@@ -44,7 +44,7 @@ public class SysOperationServiceImpl implements SysOperationService{
 
 	@Override
 	public void batchDelete(String operaids)  throws Exception{
-		if(!Tools.regular(operaids)) {
+		if(!RegularUtils.regular(operaids)) {
 			throw new SysCustomException("参数错误!");
 		}
 		String[] oIds = operaids.split(",");

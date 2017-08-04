@@ -20,7 +20,7 @@ import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.service.SysRoleService;
 import com.jiajun.shiro.realm.CustomRealm;
 import com.jiajun.util.Constant;
-import com.jiajun.util.Tools;
+import com.jiajun.util.RegularUtils;
 
 @Service
 @SuppressWarnings("unchecked")
@@ -131,7 +131,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	public void saveRoleTypeMneu(int roleType, String menuIdsStr) throws Exception {
 		if(roleType != 0) {
 			if(StringUtils.isNotEmpty(menuIdsStr)) {
-				if(!Tools.regular(menuIdsStr)) {
+				if(!RegularUtils.regular(menuIdsStr)) {
 					logger.error("角色类型授予菜单, 传入参数类型错误: {}", menuIdsStr);
 					throw new SysCustomException("参数类型错误");
 				}
@@ -228,7 +228,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		if(StringUtils.isEmpty(menuIds)) {
 			role.setMenuIds("");
 		} else {
-			if(!Tools.regular(menuIds)) {
+			if(!RegularUtils.regular(menuIds)) {
 				throw new SysCustomException("参数格式不正确!");
 			}
 			//获得角色组的menuIds
@@ -306,7 +306,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 		}
 
 		if(StringUtils.isNotEmpty(menuIds)) {
-			if( !Tools.regular(menuIds)) {
+			if( !RegularUtils.regular(menuIds)) {
 				throw new SysCustomException("权限数格式不匹配");
 			}
 			String[] idsStr = menuIds.split(",");
