@@ -13,7 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.jiajun.dao.redis.RedisDao;
+import com.jiajun.redis.dao.RedisDao;
+
 
 /**
  * 

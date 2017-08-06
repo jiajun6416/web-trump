@@ -21,7 +21,8 @@
 			classpath:spring/ApplicationContext-main.xml,
 			classpath:spring/ApplicationContext-dataSource.xml,
 			classpath:spring/ApplicationContext-shiro.xml,
-			classpath:spring/ApplicationContext-redis.xml
+			classpath:spring/ApplicationContext-redis.xml,
+			classpath:spring/ApplicationContext-websocket.xml
 		</param-value>
   </context-param>
   <context-param>
@@ -80,9 +81,9 @@
   </servlet-mapping>
   
   <!-- 获取全局request对象 -->
-  <listener>
+ <!--  <listener>
   	<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-  </listener>
+  </listener> -->
   <listener>
     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener>

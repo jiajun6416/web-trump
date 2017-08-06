@@ -8,11 +8,13 @@ import org.springframework.context.ApplicationContextAware;
 /**
  * @Desc spring applicationContex utils ,只要实现ApplicationContextAware
  *      会自动注入spring容器， 前提是这个类需要被spring管理
+ *      
+ *      或者继承这个类
  * 
  * @Date 2017/08/02 13:22:23
  * @version 1.0.0
  */
-public class SpringContextAwareUtils implements ApplicationContextAware{
+public class SpringContextAware implements ApplicationContextAware{
 	
 	
 	private static ApplicationContext applicationContext; 

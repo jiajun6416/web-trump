@@ -51,9 +51,14 @@ public class LoginController extends BaseController{
 	//跳转登录
 	@RequestMapping("/toLogin") 
 	public String toLoginPage(Model model, HttpSession session, HttpServletRequest request) {
-		//设置登陆页面的信息
-		model.addAttribute("music",Constant.getConfig("music"));
-		return "system/index/login";
+		if(SecurityUtils.getSubject().isAuthenticated()) {
+			//如果之前已经是登陆状态, 跳转主页
+			return "redirect:/main/index";
+		} else {
+			//设置登陆页面的信息
+			model.addAttribute("music",Constant.getConfig("music"));
+			return "system/index/login";
+		}
 	}
 	
 	

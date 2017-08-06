@@ -59,4 +59,26 @@
 	key/hashKey采用StringRedisSerializer
 	value如果是string, 也可以使用StringRedisSerialize, 其他看情况使用, 使用JdkSerializationRedisSerializer是通用的 -->
 	
+	
+	<!-- 消息订阅 -->
+	<bean class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
+		<property name="connectionFactory" ref="jedisConnFactory"/>
+		<!-- 订阅的频道集合 -->
+		<property name="messageListeners">
+			<map>
+				<entry key-ref="sessionListener" value-ref="sessionTopic"/>
+				<entry key-ref="onlineListener" value-ref="onlineTopic"/>
+			</map>
+		</property>
+	</bean>
+	<!-- channel: shirosession同步消息 -->
+	<bean id="sessionListener" class="com.jiajun.redis.listener.ShiroSessionMessageListener"/>
+	<bean id="sessionTopic" class="org.springframework.data.redis.listener.ChannelTopic">
+		<constructor-arg value="${redis.channel.shirosession}"/>
+	</bean>
+	<!-- channel: 上线用户同步 -->
+	<bean id="onlineListener" class="com.jiajun.redis.listener.UserOnlineListener"/>
+	<bean id="onlineTopic" class="org.springframework.data.redis.listener.ChannelTopic">
+		<constructor-arg value="${redis.channel.online_user}"/>
+	</bean>	
 </beans>

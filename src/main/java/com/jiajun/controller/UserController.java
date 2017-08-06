@@ -59,10 +59,8 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("toEditMyself")
 	public String toEditMyselfPage(HttpSession session, Model model) throws Exception {
-		SysUserEntity loginUser = getLoginUser();
-		if(loginUser == null) {
-			throw new SysCustomException("请先登陆");
-		}
+		String username = getLoginUser();
+		SysUserEntity loginUser = sysUserService.getUserByUsername(username);
 		SysRoleEntity role = sysRoleService.getRoleById(loginUser.getRoleId());
 		loginUser.setRole(role);
 		model.addAttribute("edit_other", false);
@@ -77,8 +75,7 @@ public class UserController extends BaseController{
 	 */
 	@RequestMapping("/updateSelf")
 	public String updateMyself(SysUserEntity sysUser, Model model, HttpSession session, HttpServletRequest request) {
-		SysUserEntity loginUser = getLoginUser();
-		String username = loginUser.getUsername();
+		String username = this.getLoginUser();
 		String ip = this.getIP(request);
 		try {
 			sysUserService.updateSysUser(sysUser);

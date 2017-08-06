@@ -3,7 +3,6 @@ package com.jiajun.shiro.session;
 import java.io.Serializable;
 import java.util.Collection;
 
-
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.ValidatingSession;
@@ -11,9 +10,9 @@ import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import com.jiajun.dao.redis.RedisDao;
+import com.jiajun.redis.dao.RedisDao;
+
 
 /**
  * @Desc session DAO, 
@@ -22,7 +21,6 @@ import com.jiajun.dao.redis.RedisDao;
  * @Date 2017/08/02 11:09:18
  * @version 1.0.0
  */
-@Component
 @SuppressWarnings("unchecked")
 public class RedisSessionDAO extends AbstractSessionDAO{
 	
@@ -106,7 +104,6 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 		}
 	}
 	
-	@Override
 	public Collection<Session> getActiveSessions() {
 		try {
 			logger.debug("get all shiro session");

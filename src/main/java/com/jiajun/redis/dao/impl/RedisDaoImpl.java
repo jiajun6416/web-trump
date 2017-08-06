@@ -1,4 +1,4 @@
-package com.jiajun.dao.redis.impl;
+package com.jiajun.redis.dao.impl;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -10,7 +10,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
-import com.jiajun.dao.redis.RedisDao;
+import com.jiajun.redis.dao.RedisDao;
 
 @Repository
 public class RedisDaoImpl implements RedisDao {
@@ -66,4 +66,8 @@ public class RedisDaoImpl implements RedisDao {
 		return redisTemplate.opsForValue().multiGet(keys);
 	}
 
+	@Override
+	public void publish(String channel, Serializable message) {
+		redisTemplate.convertAndSend(channel, message);
+	}
 }

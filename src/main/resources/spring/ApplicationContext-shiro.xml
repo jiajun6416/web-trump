@@ -16,7 +16,7 @@
 	<!-- web.xml中shiro的filter对应的bean -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<!-- 未认证走的loginUrl -->
+		<!-- 未认证走的loginUrl, 下次使用shiro时候,改成 /login自动校验的 -->
 		<property name="loginUrl" value="/toLogin" />
 		<!-- 通过unauthorizedUrl指定没有权限操作时跳转页面-->
 		<property name="unauthorizedUrl" value="/refuse" />
@@ -55,18 +55,16 @@
 	<!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="customRealm" />
+		<property name="cacheManager" ref="shiroEhcacheManager"/>
 		<property name="sessionManager" ref="sessionManager" />
-		<property name="cacheManager" ref="redisCacheManager"/>
 	</bean>
-	
-	
+
 	<!-- realm -->
 	<bean id="customRealm" class="com.jiajun.shiro.realm.CustomRealm">
 		<!-- 将凭证匹配器设置到realm中，realm按照凭证匹配器的要求进行散列 -->
 		<property name="credentialsMatcher" ref="credentialsMatcher"/>
 		<!-- 使用缓存 -->
 	    <property name="cachingEnabled" value="true"/> 
-	    <!-- 默认会关闭认证信息缓存,不然导入登陆的时候出现类型转换异常 --> 
 	    <!-- 启用授权缓存 -->
 	    <property name="authorizationCachingEnabled" value="true"/>  
 	    <!-- 授权缓存名称, 默认是Principal, 推荐存储用户名(String), 后面好处多, redis缓存key再下一次登陆还是可用的 -->
@@ -79,10 +77,10 @@
 		<property name="hashIterations" value="${hashIterations}" />
 	</bean>
 
-	<!-- encache缓存管理 -->
-	<!-- <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+	<!-- 用户授权信息Cache, 采用EhCache，本地缓存最长时间应比redis短 -->
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
     	<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache.xml"/>
-    </bean> -->
+    </bean>
 
 	<!-- 会话管理器，web容器的session废弃 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
@@ -90,29 +88,27 @@
  	    <property name="sessionIdUrlRewritingEnabled" value="false" />
         <!-- session的失效时长，单位毫秒 -->
         <property name="globalSessionTimeout" value="1800000"/>
-        <!-- 定时清理失效会话, 清理用户直接关闭浏览器造成的孤立会话   -->
-        <property name="deleteInvalidSessions" value="true"/>
+        <!-- 是否在会话过期后会调用SessionDAO的delete方法删除会话 默认true,因为都是使用其他插件维护过期时间,所以不需要-->
+        <property name="deleteInvalidSessions" value="false"/>
+        <!-- 是否开启会话验证器任务 默认true -->
+        <property name="sessionValidationSchedulerEnabled" value="false"/>
+         <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="SessionDAO" ref="ShiroCacheSessionDAO"/>
         <property name="sessionIdCookie" ref="shiroCookie"/>	
-        <property name="SessionDAO" ref="redisSessionDAO"/>
     </bean>
-    
-	<!-- 默认内存sessionDAO -->
-	<!-- <bean id="SessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/> -->
+
+	<!-- 自定义工厂, 返回shiroSessionDAO -->
+	<bean id="sessionFactory" class="com.jiajun.shiro.session.ShiroSessionFactory"/>
 	
+	<bean id="ShiroCacheSessionDAO" class="com.jiajun.shiro.session.ShiroCacheSessionDAO">
+		<property name="prefix" value="shiro_session_key:"/>
+		<!-- 比本地ehcache时间长 -->
+		<property name="timeOutSeconds" value="1800"/>
+	</bean>
 	
-	<!--
-		指定本系统SESSIONID, 默认为: JSESSIONID
-		问题: 与SERVLET容器名冲突, 如JETTY, TOMCAT 等默认JSESSIONID,
-		当跳出SHIRO SERVLET时如ERROR-PAGE容器会为JSESSIONID重新分配值导致登录会话丢失!
-		如果直接跳转错误jsp页面的时候, jsp中会调用 getSession(),会创建一个新的sessionId, 此时sessionID的名称和默认的一致, 会导致默认的sessionID被覆盖
-		解决: 1.设置jsp中禁用session
-			  2.修改shiro默认的sessionId名称
-			  3.其他使用默认值即可
-	-->
+	<!-- 默认JSESSIONID，同tomcat/jetty在cookie中缓存标识相同，修改用于防止访问404页面时，容器生成的标识把shiro的覆盖掉 --> 
 	<bean id="shiroCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
 	    <property name="name" value="SHIROSESSIONID"/>
-	    <!-- 单位秒， 7天 -->
-	    <property name="maxAge" value="604800"/>
 	</bean>
 	
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 --> 

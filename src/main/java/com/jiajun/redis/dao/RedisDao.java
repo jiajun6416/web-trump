@@ -1,8 +1,10 @@
-package com.jiajun.dao.redis;
+package com.jiajun.redis.dao;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
+
+import org.apache.shiro.session.Session;
 
 public interface RedisDao {
 	
@@ -66,4 +68,12 @@ public interface RedisDao {
 	 * @throws Exception
 	 */
 	Collection values(Serializable pattern) throws Exception;
+	
+	/**
+	 * 发布消息
+	 * @param channel, 频道
+	 * @param Message
+	 */
+	void publish(String channel, Serializable message);
+	
 }

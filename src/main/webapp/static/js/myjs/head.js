@@ -1,6 +1,15 @@
-var locat = (window.location+'').split('/'); 
+var locat = (window.location+'').split('/');
+var wsPath;
 //获得项目的根路径
-$(function(){if('main'== locat[3]){locat =  locat[0]+'//'+locat[2];}else{locat =  locat[0]+'//'+locat[2]+'/'+locat[3];};});
+$(function(){
+	if('main'== locat[3]){
+		wsPath = "ws://" + locat[2];
+		locat =  locat[0]+'//'+locat[2];
+	}else{
+		wsPath = "ws://"+locat[2]+'/'+locat[3];
+		locat =  locat[0]+'//'+locat[2]+'/'+locat[3];
+	};
+});
 
 var fmid = "fhindex";	//菜单点中状态
 var mid = "fhindex";	//菜单点中状态
@@ -10,7 +19,7 @@ var user = "FH";		//用于即时通讯（ 当前登录用户）
 var TFHsmsSound = '1';	//站内信提示音效
 var websocket;			//websocket对象
 var wimadress="";		//即时聊天服务器IP和端口
-var oladress="";		//在线管理和站内信服务器IP和端口
+var onlineWsUrl="/ws/online";		//在线管理和站内信服务器IP和端口
 
 //菜单切换
 function siMenu(id,fid,MENU_NAME,MENU_URL){
@@ -35,7 +44,9 @@ function siMenu(id,fid,MENU_NAME,MENU_URL){
 }
 
 $(function(){
-	getHeadMsg();	//初始页面最顶部信息
+//	getHeadMsg();	//初始页面最顶部信息
+	
+	 online();	//用户上线, 连接websocket
 });
 
 //初始页面信息
@@ -85,10 +96,10 @@ function getFhsmsCount(){
 //加入在线列表
 function online(){
 	if (window.WebSocket) {
-		websocket = new WebSocket(encodeURI('ws://'+oladress)); //oladress在main.jsp页面定义
+		websocket = new WebSocket(encodeURI(wsPath+onlineWsUrl)); //onlineWsUrl在main.jsp页面定义
 		websocket.onopen = function() {
 			//连接成功
-			websocket.send('[join]'+user);
+			//websocket.send('[join]'+user);
 		};
 		websocket.onerror = function() {
 			//连接失败
@@ -98,7 +109,8 @@ function online(){
 		};
 		//消息接收
 		websocket.onmessage = function(message) {
-			var message = JSON.parse(message.data);
+			alert(message);
+/*			var message = JSON.parse(message.data);
 			if(message.type == 'goOut'){
 				$("body").html("");
 				goOut("1");
@@ -115,7 +127,7 @@ function online(){
 		            bg:'#AE81FF',
 		            time:30
 		        });
-			}
+			}*/
 		};
 	}
 }

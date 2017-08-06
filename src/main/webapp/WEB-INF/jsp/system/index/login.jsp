@@ -133,7 +133,7 @@
 						<div style="float: left;">
 							<i><img style="height:22px;" id="codeImg" alt="点击更换" title="点击更换" src="" /></i>
 						</div>
-						<span class="pull-right" style="padding-right:3%;"><a href="javascript:changepage(1);" class="btn btn-success">注册</a></span>
+						<span class="pull-right" ><a href="javascript:changepage(1);" class="btn btn-success">注册</a></span>
 						<span class="pull-right"><a onclick="severCheck();" class="flip-link btn btn-info" id="to-recover">登录</a></span>
 					</div>
 				</div>
@@ -214,7 +214,7 @@
 						<div style="float: left;">
 							<i><img style="height:22px;" id="zcodeImg" alt="点击更换" title="点击更换" src="" /></i>
 						</div>
-						<span class="pull-right" style="padding-right:3%;"><a href="javascript:changepage(2);" class="btn btn-success">取消</a></span>
+						<span class="pull-right" ><a href="javascript:changepage(2);" class="btn btn-success">取消</a></span>
 						<span class="pull-right"><a onclick="register();" class="flip-link btn btn-info" id="to-recover">提交</a></span>
 					</div>
 				</div>

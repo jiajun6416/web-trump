@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,9 +68,9 @@ public class BaseController {
 		return username;
 	}
 
-	
-	public SysUserEntity getLoginUser() {
-		SysUserEntity user = (SysUserEntity)SecurityUtils.getSubject().getPrincipal();
-		return user;
+	 
+	public String getLoginUser() {
+		Subject subject = SecurityUtils.getSubject();
+		return (String) subject.getPrincipal();
 	}
 }

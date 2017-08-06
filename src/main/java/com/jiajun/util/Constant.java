@@ -94,6 +94,12 @@ public class Constant {
 	public static final short SYS_USER_STATUS_IS_USEABLE = 1;
 	/*用户被禁用*/
 	public static final short SYS_USER_STATUS_NOT_USEABLE = 0;
+	
+	/*用户被挤下线消息*/
+	public static final String USER_BE_REPLACED = "user_be_replaced";
+	/*用户被T下线*/
+	public static final String USER_FORCE_DOWNLINE = "user_force_downline";
+	
 }
 
 

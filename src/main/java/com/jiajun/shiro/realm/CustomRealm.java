@@ -24,7 +24,7 @@ import com.jiajun.util.Constant;
 
 public class CustomRealm extends AuthorizingRealm{
 
-	private static Logger log = LoggerFactory.getLogger(CustomRealm.class);
+	private static Logger logger = LoggerFactory.getLogger(CustomRealm.class);
 	
 	@Autowired
 	private SysUserService userService;
@@ -44,7 +44,7 @@ public class CustomRealm extends AuthorizingRealm{
 		try {
 			user = userService.getUserByUsername(username);
 		} catch (Exception e) {
-			log.error(e.getMessage(),e);
+			logger.error(e.getMessage(),e);
 			//没有找到账号
 			throw new UnknownAccountException();
 		}
@@ -72,6 +72,7 @@ public class CustomRealm extends AuthorizingRealm{
 		try {
 			SysUserEntity user = userService.getUserByUsername(username);
 			List<String> premissionList;
+			logger.info("query username {}  premission from db", username);
 			if(user.getRoleId().equals(Constant.SYSTEM_ROLE)) {
 				//admin查询所有的资源
 				premissionList = userService.getAdminPermissionList();
@@ -87,7 +88,7 @@ public class CustomRealm extends AuthorizingRealm{
 			return simpleAuthorizationInfo;
 		} catch (Exception e) {
 			e.printStackTrace();
-			log.error(e.getMessage(),e);
+			logger.error(e.getMessage(),e);
 		}
 		return null;
 	}
