@@ -1,8 +1,9 @@
 package com.jiajun.websocket.online;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Set;
 
 import org.ehcache.impl.internal.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.jiajun.util.Constant;
 
 /**
@@ -44,6 +46,7 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	 * @value: websocket session
 	 */
 	private Map<String, WebSocketSession> onlinePool = new ConcurrentHashMap<>();
+	
 	
 	/**
 	 * onopen
@@ -92,6 +95,17 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
 		logger.info("online websocket accept mssage :{}", message.getPayload());
+		if("onlineusers".equals(message.getPayload())) {
+			Set<String> users = this.getAllOnlineUser();
+			if(session!=null && session.isOpen() ) {
+				Map<String, Object> onlineMsg = new HashMap<>();
+				onlineMsg.put("type", Constant.MESSAGE_TYPE_USER_ONLIE_LIST);
+				onlineMsg.put("count", users.size());
+				onlineMsg.put("userSet", users);
+				TextMessage usersMsg = new TextMessage(JSONUtils.toJSONString(onlineMsg));
+				session.sendMessage(usersMsg);
+			}
+		}
 	}
 	
 	/**
@@ -122,7 +136,16 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
 		// logger.error("online websocket error", exception);
 	}
-
+	
+	
+	/**
+	 * 获得所有的在线用户, 查询redis
+	 * @return
+	 */
+	private Set<String> getAllOnlineUser() {
+		return redisTemplate.opsForSet().members(online_key);
+	}
+	
 	public Map<String, WebSocketSession> getOnlinePool() {
 		return onlinePool;
 	}

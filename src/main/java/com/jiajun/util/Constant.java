@@ -97,10 +97,12 @@ public class Constant {
 	
 	/*用户被挤下线消息*/
 	public static final int MESSAGE_TYPE_USER_BE_REPLACED = 1;
-	/*用户被T下线*/
-	public static final int MESSAGE_TYPE_USER_FORCE_DOWNLINE = 2;
-	/*用户上限消息*/
+	/*所有用户信息*/
+	public static final int MESSAGE_TYPE_USER_ONLIE_LIST = 2;
+	/*用户上线消息*/
 	public static final int MESSAGE_TYPE_USER_ONLINE = 3;
+	/*用户被T下线*/
+	public static final int MESSAGE_TYPE_USER_FORCE_DOWNLINE = 4;
 	
 }
 

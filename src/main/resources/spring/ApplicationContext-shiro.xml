@@ -88,10 +88,11 @@
  	    <property name="sessionIdUrlRewritingEnabled" value="false" />
         <!-- session的失效时长，单位毫秒 -->
         <property name="globalSessionTimeout" value="1800000"/>
-        <!-- 是否在会话过期后会调用SessionDAO的delete方法删除会话 默认true-->
+        <!-- 是否在会话过期后会调用SessionDAO的delete方法删除会话(此时可以删除redis中的缓存) 默认true,-->
         <property name="deleteInvalidSessions" value="true"/>
         <!-- 是否开启会话验证器任务 默认true -->
         <property name="sessionValidationSchedulerEnabled" value="false"/>
+        
          <property name="sessionFactory" ref="sessionFactory"/>
         <property name="SessionDAO" ref="ShiroCacheSessionDAO"/>
         <property name="sessionIdCookie" ref="shiroCookie"/>	

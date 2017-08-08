@@ -3,6 +3,7 @@ package com.jiajun.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,6 +35,7 @@ import com.jiajun.service.SysUserService;
 import com.jiajun.util.Constant;
 import com.jiajun.util.JsonUtils;
 import com.jiajun.util.PropertiesLoader;
+import com.jiajun.websocket.online.OnlineWebSocketHandler;
 
 /**
  * @描述：用户信息
@@ -324,5 +326,12 @@ public class UserController extends BaseController{
 		SysUserEntity user  = (SysUserEntity) SecurityUtils.getSubject().getPrincipal();
 		
 		return ResultModel.build(200, "success", user);
+	}
+	
+	
+	@RequestMapping("/online")
+	@RequiresPermissions("online:query")
+	public String getLoginUser(Model model) {
+		return "system/online/list";
 	}
 }

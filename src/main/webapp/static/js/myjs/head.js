@@ -17,9 +17,7 @@ var fhsmsCount = 0;		//站内信总数
 var USER_ID;			//用户ID
 var user = "FH";		//用于即时通讯（ 当前登录用户）
 var TFHsmsSound = '1';	//站内信提示音效
-var websocket;			//websocket对象
 var wimadress="";		//即时聊天服务器IP和端口
-var onlineWsUrl="/ws/online";		//在线管理和站内信服务器IP和端口
 
 //菜单切换
 function siMenu(id,fid,MENU_NAME,MENU_URL){
@@ -92,28 +90,31 @@ function getFhsmsCount(){
 	});
 }
 
+
+var onlineWebsocket;			//websocket对象
+var onlineWsUrl="/ws/online";		//在线管理和站内信服务器IP和端口
+
 window.onbeforeunload = function(){
-	if(websocket != null) {
-		websocket.close();
-		websocket = null;
+	if(onlineWebsocket != null) {
+		onlineWebsocket.close();
+		onlineWebsocket = null;
 	}
 }
-
 //加入在线列表
-function online(){
+ function online(){
 	if (window.WebSocket) {
-		websocket = new WebSocket(encodeURI(wsPath+onlineWsUrl)); //onlineWsUrl在main.jsp页面定义
-		websocket.onopen = function() {
+		onlineWebsocket = new WebSocket(encodeURI(wsPath+onlineWsUrl)); //onlineWsUrl在main.jsp页面定义
+		onlineWebsocket.onopen = function() {
 		};
-		websocket.onerror = function() {
+		onlineWebsocket.onerror = function() {
 			//连接失败
 			alert("online websocket error!");
 		};
-		websocket.onclose = function() {
+		onlineWebsocket.onclose = function() {
 			//连接断开
 		};
 		//消息接收
-		websocket.onmessage = function(message) {
+		onlineWebsocket.onmessage = function(message) {
 			var msg = JSON.parse(message.data);
 			if(msg.type == 1) {
 				alert("已在其他地方登录");
