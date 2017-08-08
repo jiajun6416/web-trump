@@ -14,7 +14,7 @@ import org.springframework.web.socket.server.support.HttpSessionHandshakeInterce
  * Created by jiajun on 2017/08/07 00:17
  */
 @Component
-public class UserNameterceptor extends HttpSessionHandshakeInterceptor {
+public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 	
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,

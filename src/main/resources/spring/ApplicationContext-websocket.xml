@@ -34,7 +34,7 @@
 		<websocket:mapping path="/ws/online"
 			handler="onlineWebSocketHandler" />
 		<websocket:handshake-interceptors>
-			<ref bean="userNameterceptor"/>
+			<ref bean="handshakeInterceptor"/>
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
 	

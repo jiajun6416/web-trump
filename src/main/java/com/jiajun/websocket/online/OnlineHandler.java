@@ -21,7 +21,7 @@ import com.jiajun.util.Constant;
  * @author JIAJUN
  * @date 2017年7月30日下午4:32:30
  */
-@Component
+@Deprecated
 public class OnlineHandler {
 	
 	private static Logger logger = LoggerFactory.getLogger(OnlineHandler.class);
@@ -84,13 +84,6 @@ public class OnlineHandler {
 	}
 	
 	public void sendReplaceMsg(Session session) {
-		if(session.isOpen()) {
-			try {
-				session.getBasicRemote().sendText(Constant.USER_BE_REPLACED);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	public Map<String, Session> getOnlinePool() {

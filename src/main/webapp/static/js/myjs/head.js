@@ -45,9 +45,9 @@ function siMenu(id,fid,MENU_NAME,MENU_URL){
 
 $(function(){
 //	getHeadMsg();	//初始页面最顶部信息
-	
 	 online();	//用户上线, 连接websocket
 });
+
 
 //初始页面信息
 function getHeadMsg(){
@@ -77,7 +77,6 @@ function getHeadMsg(){
 		}
 	});
 }
-
 //获取站内信未读总数(在站内信删除未读新信件时调用此函数更新未读数)
 function getFhsmsCount(){
 	$.ajax({
@@ -93,24 +92,34 @@ function getFhsmsCount(){
 	});
 }
 
+window.onbeforeunload = function(){
+	if(websocket != null) {
+		websocket.close();
+		websocket = null;
+	}
+}
+
 //加入在线列表
 function online(){
 	if (window.WebSocket) {
 		websocket = new WebSocket(encodeURI(wsPath+onlineWsUrl)); //onlineWsUrl在main.jsp页面定义
 		websocket.onopen = function() {
-			//连接成功
-			//websocket.send('[join]'+user);
 		};
 		websocket.onerror = function() {
 			//连接失败
+			alert("online websocket error!");
 		};
 		websocket.onclose = function() {
 			//连接断开
 		};
 		//消息接收
 		websocket.onmessage = function(message) {
-			alert(message);
-/*			var message = JSON.parse(message.data);
+			var msg = JSON.parse(message.data);
+			if(msg.type == 1) {
+				alert("已在其他地方登录");
+				goOut();
+			}
+			/*			var message = JSON.parse(message.data);
 			if(message.type == 'goOut'){
 				$("body").html("");
 				goOut("1");
@@ -133,7 +142,7 @@ function online(){
 }
 
 //下线
-function goOut(msg){
+function goOut(){
 	window.location.href=locat+"/logout";
 }
 

@@ -173,7 +173,7 @@
 		<!-- the following scripts are used in demo only for onpage help and you don't need them -->
 		<link rel="stylesheet" href="static/ace/css/ace.onpage-help.css" />
 
-		<script type="text/javascript"> ace.vars['base'] = '..'; var path = ${pageContext.request.contextPath};</script>
+		<script type="text/javascript"> ace.vars['base'] = '..'; var path = '${pageContext.request.contextPath}';</script>
 		<script src="static/ace/js/ace/elements.onpage-help.js"></script>
 		<script src="static/ace/js/ace/ace.onpage-help.js"></script>
 	

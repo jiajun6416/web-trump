@@ -22,6 +22,7 @@ import com.jiajun.util.SpringContextAware;
  * @date 2017年7月30日下午3:25:06
  */
 //@ServerEndpoint(value="/ws/online", configurator=Configurator.class)
+@Deprecated
 public class OnLineWebsocket extends SpringContextAware{
 	
 	private static Logger logger = LoggerFactory.getLogger(OnLineWebsocket.class);

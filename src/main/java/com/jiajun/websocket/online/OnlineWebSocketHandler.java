@@ -1,5 +1,6 @@
 package com.jiajun.websocket.online;
 
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -59,9 +60,8 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 		logger.info("online_user: add user , name is {}", username);
 
 		//重复登陆, 发送下线消息
-		if(currentSession != null) {
-			TextMessage message = new TextMessage(Constant.USER_BE_REPLACED);
-			currentSession.sendMessage(message);
+		if(currentSession != null && currentSession.isOpen()) {
+			this.sendReplaceMessage(currentSession, username);
 		} else {
 			//添加到redis中
 			SetOperations<String, String> set = redisTemplate.opsForSet();
@@ -73,6 +73,16 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 				logger.info("onLine_user: send replace user {} , to channel {}", username+"_"+session.getId(), channel);
 				redisTemplate.convertAndSend(channel, message);
 			}
+		}
+	}
+	
+	
+	public void sendReplaceMessage(WebSocketSession session, String username) {
+		TextMessage message = new TextMessage("{\"type\":"+Constant.MESSAGE_TYPE_USER_BE_REPLACED+", \"username\":\""+username+"\"}");
+		try {
+			session.sendMessage(message);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -99,6 +109,9 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 			logger.info("user {} leave, sys redis", username);
 			SetOperations<String, String> set = redisTemplate.opsForSet();
 			set.remove(online_key, username);
+			
+			//从容器中移除
+			onlinePool.remove(username);
 		}
 	}
 	
@@ -107,7 +120,7 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	 */
 	@Override
 	public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-		logger.error("online websocket error", exception);
+		// logger.error("online websocket error", exception);
 	}
 
 	public Map<String, WebSocketSession> getOnlinePool() {
