@@ -40,11 +40,11 @@ public class UserOnlineListener implements MessageListener{
 			String mesg = (String) eventMsg.getContent();
 			int index = mesg.lastIndexOf("_");
 			String username = mesg.substring(0, index);
-			String sessionId = mesg.substring(index);
+			String sessionId = mesg.substring(index+1);
 			//使用username+sessionId来删除的不是当前的
 			WebSocketSession session = onLineHandler.getOnlinePool().get(username);
 			if(session != null && !session.getId().equals(sessionId)) {
-				onLineHandler.sendReplaceMessage(session);
+				onLineHandler.sendReplaceMessage(username, session);
 			}
 		} else if(Constant.MESSAGE_TYPE_USER_ONLINE.equals(eventMsg.getType()) || Constant.MESSAGE_TYPE_USER_LOGOUT.equals(eventMsg.getType())) {
 			//用户上线,或者下线

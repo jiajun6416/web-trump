@@ -52,8 +52,6 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	/**
 	 * 正在在线管理的用户
 	 */
-//	private Map<String, WebSocketSession> onlineManager = new ConcurrentHashMap<>();
-	
 	private Set<WebSocketSession> onlineManager = Collections.synchronizedSet(new HashSet<>());
 	
 	/**
@@ -72,7 +70,7 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 
 		//重复登陆, 发送下线消息
 		if(currentSession != null && currentSession.isOpen()) {
-			this.sendReplaceMessage(currentSession);
+			this.sendReplaceMessage(username, currentSession);
 		} else {
 			//添加到redis中
 			SetOperations<String, String> set = redisTemplate.opsForSet();
@@ -131,12 +129,12 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	/**
 	 * onClose
 	 * 
-	 *  用户离开, 只需要移除本地缓存(如果有的话)和redis中的
+	 *  用户离开, 需要移除本地缓存(如果有的话)和redis中的
 	 */
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		//将容器中的session与close的session对比,如果不一致则说明是被挤下去的用户
-		Object username = session.getAttributes().get("username");
+		String username = (String) session.getAttributes().get("username");
 		WebSocketSession currentSession = onlinePool.get(username);
 		if(currentSession != null && currentSession.equals(session)) {
 			//用户正常离开
@@ -166,10 +164,15 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	 * @param session
 	 * @param username
 	 */
-	public void sendReplaceMessage(WebSocketSession session) {
+	public void sendReplaceMessage(String username, WebSocketSession session) {
+		//移出容器中的此session, 集群环境下一定判断
+		if(onlinePool.get(username) != null && onlinePool.get(username).equals(session)) {
+			onlinePool.remove(username);
+		}
 		EventMessage message = new EventMessage();
 		message.setType(Constant.MESSAGE_TYPE_USER_BE_REPLACED);
 		TextMessage textMsg = new TextMessage(message.toString());
+		
 		try {
 			if(session != null && session.isOpen()) {
 				session.sendMessage(textMsg);
@@ -207,8 +210,6 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 			//转船出一个副本, 防止遍历时候其他线程修改
 			WebSocketSession[] sessions = new WebSocketSession[onlineManager.size()];  //注意: collection转数组必须先定义好长度,不能object[]类型不能强转
 			onlineManager.toArray(sessions);
-			
-			onlineManager.toArray();
 			for (WebSocketSession session : sessions) {
 				try {
 					if(session != null && session.isOpen()) {

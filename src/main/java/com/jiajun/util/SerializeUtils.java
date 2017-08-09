@@ -26,13 +26,10 @@ public class SerializeUtils {
 	 * @return
 	 */
 	public static Object deserialize(byte[] bytes) {
-		
 		Object result = null;
-		
 		if (isEmpty(bytes)) {
 			return null;
 		}
-
 		try {
 			ByteArrayInputStream byteStream = new ByteArrayInputStream(bytes);
 			try {
