@@ -11,6 +11,9 @@ import com.jiajun.shiro.session.ShiroCacheSessionDAO;
 import com.jiajun.util.SerializeUtils;
 
 /**
+ * 
+ * session在集群环境下等待session共享解决
+ * 
  * 订阅 shiro session同步频道
  * @author jiajun
  * @date 2017/08/05 20时

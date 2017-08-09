@@ -99,15 +99,17 @@
 		
 		//初始化
 		$(function(){
+			
 		//	online();
-			top.onlineWebsocket.send("onlineusers");
+			top.onlineWebsocket.send("user_online_list");
 			
 			top.onlineWebsocket.onmessage = function(message) {
 				var msg = JSON.parse(message.data);
-				console.log(msg);
-				if(msg.type == 2) {
+				var count = 0;
+				//接收在线用户列表
+				if('user_online_list' == msg.type) {
 					$("#userlist").html('');
-					 $.each(msg.userSet, function(i, user){
+					 $.each(msg.content, function(i, user){
 						 $("#userlist").append(
 							'<tr>'+	 
 								 '<td class="center">'+
@@ -120,11 +122,14 @@
 								'</td>'+
 							'</tr>'
 						 );
+						 count=count+1;
 					 });
-					 $("#onlineCount").html(msg.count);
+					 $("#onlineCount").html(count);
+				} else if(msg.type == 'user_go_out') {
+					alert("用户被T出");
+					top.goOut();
 				}
 			}
-			
 			//复选框全选控制
 			var active_class = 'active';
 			$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
@@ -137,72 +142,16 @@
 			});
 		});
 		
-		var websocketonline;//websocke对象
-		var userCount = 0;	//在线总数
-		
-		function online(){
-			if (window.WebSocket) {
-				websocketonline = new WebSocket(encodeURI('ws://'+top.oladress)); //oladress在main.jsp页面定义
-				websocketonline.onopen = function() {
-					websocketonline.send('[Q]fhadmin');//连接成功
-				};
-				websocketonline.onerror = function() {
-					//连接失败
-				};
-				websocketonline.onclose = function() {
-					//连接断开
-				};
-				//消息接收
-				websocketonline.onmessage = function(message) {
-					var message = JSON.parse(message.data);
-					if (message.type == 'count') {
-						userCount = message.msg;
-					}else if(message.type == 'userlist'){
-						$("#userlist").html('');
-						 $.each(message.list, function(i, user){
-							 $("#userlist").append(
-								'<tr>'+	 
-									 '<td class="center">'+
-										'<label><input type="checkbox" name="ids" value="'+user+'" class="ace" /><span class="lbl"></span></label>'+
-									'</td>'+
-									'<td class="center">'+(i+1)+'</td>'+
-									'<td><a onclick="editUser(\''+user+'\')" style="cursor:pointer;">'+user+'</a></td>'+
-									'<td class="center">'+
-										'<button class="btn btn-mini btn-danger" onclick="goOutTUser(\''+user+'\')">强制下线</button>'+
-									'</td>'+
-								'</tr>'
-							 );
-							 userCount = i+1;
-						 });
-						 $("#onlineCount").html(userCount);
-					}else if(message.type == 'addUser'){
-						 $("#userlist").append(
-							'<tr>'+	 
-								 '<td class="center">'+
-									'<label><input type="checkbox" name="ids" value="'+message.user+'" class="ace" /><span class="lbl"></span></label>'+
-								'</td>'+
-								'<td class="center">'+(userCount+1)+'</td>'+
-								'<td><a onclick="editUser(\''+message.user+'\')" style="cursor:pointer;">'+message.user+'</a></td>'+
-								'<td class="center">'+
-									'<button class="btn btn-mini btn-danger" onclick="goOutTUser(\''+message.user+'\')">强制下线</button>'+
-								'</td>'+
-							'</tr>'
-						);
-						 userCount = userCount+1;
-						 $("#onlineCount").html(userCount);
-					}
-				};
+		//页面切换的时候,发送切换信息
+		window.onbeforeunload = function(){
+			if(top.onlineWebsocket != null) {
+				top.onlineWebsocket.send("onlineManagerLeave");
 			}
 		}
 		
 		//强制某用户下线
-		function goOutUser(theuser){
-			websocketonline.send('[goOut]'+theuser);
-		}
-		
-		//强制某用户下线
-		function goOutTUser(theuser){
-			if('admin' == theuser){
+		function goOutTUser(user){
+			if('admin' == user){
 				bootbox.dialog({
 					message: "<span class='bigger-110'>不能强制下线admin用户!</span>",
 					buttons: 			
@@ -210,9 +159,9 @@
 				});
 				return;
 			}
-			bootbox.confirm("确定要强制["+theuser+"]下线吗?", function(result) {
+			bootbox.confirm("确定要强制["+user+"]下线吗?", function(result) {
 				if(result) {
-					goOutUser(theuser);
+					top.onlineWebsocket.send("user_go_out:"+user);
 				}
 			});
 		}

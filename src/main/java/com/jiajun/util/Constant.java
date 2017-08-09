@@ -96,13 +96,15 @@ public class Constant {
 	public static final short SYS_USER_STATUS_NOT_USEABLE = 0;
 	
 	/*用户被挤下线消息*/
-	public static final int MESSAGE_TYPE_USER_BE_REPLACED = 1;
+	public static final String MESSAGE_TYPE_USER_BE_REPLACED = "user_replaced";
 	/*所有用户信息*/
-	public static final int MESSAGE_TYPE_USER_ONLIE_LIST = 2;
+	public static final String MESSAGE_TYPE_USER_ONLIE_LIST = "user_online_list";
 	/*用户上线消息*/
-	public static final int MESSAGE_TYPE_USER_ONLINE = 3;
+	public static final String MESSAGE_TYPE_USER_ONLINE = "user_online";
+	/*用户下线消息*/
+	public static final String MESSAGE_TYPE_USER_LOGOUT = "user_logout";
 	/*用户被T下线*/
-	public static final int MESSAGE_TYPE_USER_FORCE_DOWNLINE = 4;
+	public static final String MESSAGE_TYPE_USER_GO_OUT = "user_go_out";
 	
 }
 

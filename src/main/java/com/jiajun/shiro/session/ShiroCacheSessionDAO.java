@@ -78,7 +78,8 @@ public class ShiroCacheSessionDAO extends CachingSessionDAO {
 		if (session == null ) {	
 			session = doReadSession(sessionId);
 			if (session == null) {
-				throw new UnknownSessionException("can not found session by sessionId: mybe session is expired" + sessionId);
+				logger.info("can not found session by sessionId {}: mybe session is expired" , sessionId);
+				return null;
 			} else {
 				cache(session, sessionId);
 			}

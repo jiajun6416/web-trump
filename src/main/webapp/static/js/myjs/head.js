@@ -116,8 +116,11 @@ window.onbeforeunload = function(){
 		//消息接收
 		onlineWebsocket.onmessage = function(message) {
 			var msg = JSON.parse(message.data);
-			if(msg.type == 1) {
+			if(msg.type == 'user_replaced') {
 				alert("已在其他地方登录");
+				goOut();
+			} else if(msg.type == 'user_go_out') {
+				alert("用户被T出");
 				goOut();
 			}
 			/*			var message = JSON.parse(message.data);

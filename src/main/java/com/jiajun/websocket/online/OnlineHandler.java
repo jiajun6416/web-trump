@@ -1,6 +1,5 @@
 package com.jiajun.websocket.online;
 
-import java.io.IOException;
 import java.util.Map;
 
 import javax.websocket.Session;
@@ -12,9 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
-import org.springframework.stereotype.Component;
 
-import com.jiajun.util.Constant;
 
 /**
  * @desc  在线管理websocket容器

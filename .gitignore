@@ -5,3 +5,5 @@ target
 .gitgnore
 /src/main/resources/config/dbConfig.properties
 /src/main/resources/mybatis/sqlMapGenrator.xml
+db.properties
+redis.properties
