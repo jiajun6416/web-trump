@@ -15,9 +15,8 @@ var fmid = "fhindex";	//菜单点中状态
 var mid = "fhindex";	//菜单点中状态
 var fhsmsCount = 0;		//站内信总数
 var USER_ID;			//用户ID
-var user = "FH";		//用于即时通讯（ 当前登录用户）
 var TFHsmsSound = '1';	//站内信提示音效
-var wimadress="";		//即时聊天服务器IP和端口
+var imUrl = wsPath+'/ws/im'; //即时聊天服务器IP和端口
 
 //菜单切换
 function siMenu(id,fid,MENU_NAME,MENU_URL){

@@ -215,7 +215,7 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 		        <configuration>
 					<!-- 远端tomcat的后台管理入口 -->
-	                <url>http://192.168.1.201:8080/manager/text</url>
+	                <url>http://192.168.1.202:8080/manager/text</url>
 	  		        <!-- 部署项目包名, 如果不写的话则是 / 代表root.war, 需要把自带的删除能部署 -->
 	                <path>/trump</path>
 	                <!-- 也可以选择在maven.setting中设置登录用户名和密码 -->

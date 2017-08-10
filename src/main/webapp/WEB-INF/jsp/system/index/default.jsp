@@ -70,7 +70,8 @@
 	<!-- inline scripts related to this page -->
 	<script type="text/javascript">
 		/* 找到top.hangge()返回后的元素 */
-		$(top.hangge());
+		//$(top.hangge());
+		top.hangge()
 	</script>
 <script type="text/javascript" src="static/ace/js/jquery.js"></script>
 </body>

@@ -34,10 +34,10 @@
 </style>
 
 <!-- 即时通讯 -->
-<link rel="stylesheet" type="text/css" href="plugins/websocketInstantMsg/ext4/resources/css/ext-all.css">
-<link rel="stylesheet" type="text/css" href="plugins/websocketInstantMsg/css/websocket.css" />
-<script type="text/javascript" src="plugins/websocketInstantMsg/ext4/ext-all-debug.js"></script>
-<script type="text/javascript" src="plugins/websocketInstantMsg/websocket.js"></script>
+<link rel="stylesheet" type="text/css" href="plugins/imWebsocket/ext4/resources/css/ext-all.css">
+<link rel="stylesheet" type="text/css" href="plugins/imWebsocket/css/websocket.css" />
+<script type="text/javascript" src="plugins/imWebsocket/ext4/ext-all-debug.js"></script>
+<script type="text/javascript" src="plugins/imWebsocket/websocket.js"></script>
 <!-- 即时通讯 -->
 	
 </head>
@@ -177,8 +177,12 @@
 		<script src="static/ace/js/ace/elements.onpage-help.js"></script>
 		<script src="static/ace/js/ace/ace.onpage-help.js"></script>
 	
+		<script type="text/javascript">
+			var user = '<shiro:principal/>' ;
+		</script>
 		<!--引入属于此页面的js -->
 		<script type="text/javascript" src="static/js/myjs/head.js"></script>
+		
 		<!--引入属于此页面的js -->
 		<script type="text/javascript" src="static/js/myjs/index.js"></script>
 		
