@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
@@ -69,5 +70,22 @@ public class RedisDaoImpl implements RedisDao {
 	@Override
 	public void publish(String channel, Serializable message) {
 		redisTemplate.convertAndSend(channel, message);
+	}
+
+	@Override
+	public Long sAdd(Serializable key, Serializable... values) throws Exception {
+		SetOperations<Serializable, Serializable> setOpear = redisTemplate.opsForSet();
+		return setOpear.add(key, values);
+	}
+
+	@Override
+	public Long sRemove(Serializable key, Object... values) throws Exception {
+		SetOperations<Serializable, Serializable> setOpear = redisTemplate.opsForSet();
+		return setOpear.remove(key, values);
+	}
+
+	@Override
+	public Set<?> sMembers(Serializable key) throws Exception {
+		return redisTemplate.opsForSet().members(key);
 	}
 }

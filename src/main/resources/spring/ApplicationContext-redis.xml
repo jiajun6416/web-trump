@@ -68,17 +68,23 @@
 			<map>
 				<entry key-ref="sessionListener" value-ref="sessionTopic"/>
 				<entry key-ref="onlineListener" value-ref="onlineTopic"/>
+				<entry key-ref="imMessageListener" value-ref="imTopic"/>
 			</map>
 		</property>
 	</bean>
-	<!-- channel: shirosession同步消息 -->
+	<!-- channel: shiro session同步 -->
 	<bean id="sessionListener" class="com.jiajun.redis.listener.ShiroSessionMessageListener"/>
 	<bean id="sessionTopic" class="org.springframework.data.redis.listener.ChannelTopic">
 		<constructor-arg value="${redis.channel.shirosession}"/>
 	</bean>
-	<!-- channel: 上线用户同步 -->
+	<!-- channel: 在线用户同步 -->
 	<bean id="onlineListener" class="com.jiajun.redis.listener.UserOnlineListener"/>
 	<bean id="onlineTopic" class="org.springframework.data.redis.listener.ChannelTopic">
 		<constructor-arg value="${redis.channel.online_user}"/>
-	</bean>	
+	</bean>
+	<!-- channel: im消息同步 -->
+	<bean id="imMessageListener" class="com.jiajun.redis.listener.ImMessageListener"/>
+	<bean id="imTopic" class="org.springframework.data.redis.listener.ChannelTopic">
+		<constructor-arg value="${redis.channel.im}"/>
+	</bean>
 </beans>

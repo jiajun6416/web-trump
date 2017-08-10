@@ -12,8 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -21,6 +19,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.jiajun.redis.dao.RedisDao;
 import com.jiajun.util.Constant;
 import com.jiajun.websocket.EventMessage;
 
@@ -34,7 +33,7 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	private static Logger logger = LoggerFactory.getLogger(OnlineWebSocketHandler.class);
 	
 	@Autowired
-	private RedisTemplate<String, String> redisTemplate;
+	private RedisDao redisDao;
 	
 	@Value("${redis.online.key}")
 	private String online_key;
@@ -47,12 +46,12 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	 * @key: username 
 	 * @value: websocket session
 	 */
-	private Map<String, WebSocketSession> onlinePool = new ConcurrentHashMap<>();
+	private Map<String, WebSocketSession> onlineMap = new ConcurrentHashMap<>();
 	
 	/**
 	 * 正在在线管理的用户
 	 */
-	private Set<WebSocketSession> onlineManager = Collections.synchronizedSet(new HashSet<>());
+	private Set<WebSocketSession> onlineManagerMap = Collections.synchronizedSet(new HashSet<>());
 	
 	/**
 	 * onopen
@@ -64,8 +63,8 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		String username = (String) session.getAttributes().get("username");
 		logger.info("user {} online", username);
-		WebSocketSession currentSession = onlinePool.get(username);
-		onlinePool.put(username, session);
+		WebSocketSession currentSession = onlineMap.get(username);
+		onlineMap.put(username, session);
 		logger.info("online_user: add user , name is {}", username);
 
 		//重复登陆, 发送下线消息
@@ -73,8 +72,7 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 			this.sendReplaceMessage(username, currentSession);
 		} else {
 			//添加到redis中
-			SetOperations<String, String> set = redisTemplate.opsForSet();
-			Long affect = set.add(online_key, username);
+			Long affect = redisDao.sAdd(online_key, username);
 			EventMessage message = new EventMessage();
 			if(affect.intValue() == 0) {
 				//向订阅频道用户被挤掉消息
@@ -88,7 +86,8 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 				message.setContent(username);
 				logger.info("user_online: send new user {}, to channel {}", username, channel);
 			}
-			redisTemplate.convertAndSend(channel, message);
+			
+			redisDao.publish(channel, message);
 		}
 	}
 	
@@ -104,15 +103,15 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 		logger.info("online websocket accept mssage :{}", msgContent);
 		if(Constant.MESSAGE_TYPE_USER_ONLIE_LIST.equals(msgContent)) {
 			//用户在线管理
-			onlineManager.add(session);
+			onlineManagerMap.add(session);
 			Set<String> users = this.getAllOnlineUser();
 			if(session!=null && session.isOpen() ) {
 				session.sendMessage(new TextMessage(new EventMessage(Constant.MESSAGE_TYPE_USER_ONLIE_LIST, users).toString()));
 			}
 		} else if("onlineManagerLeave".equals(msgContent)) {
 			// 切出用户在线管理页面
-			if(onlineManager.contains(session)) {
-				onlineManager.remove(session);
+			if(onlineManagerMap.contains(session)) {
+				onlineManagerMap.remove(session);
 			}
 		} else if(msgContent.startsWith(Constant.MESSAGE_TYPE_USER_GO_OUT)) {
 			//用户被T出
@@ -121,7 +120,7 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 				return;
 			} else {
 				//向channel发送用户被T出信息
-				redisTemplate.convertAndSend(channel, new EventMessage(Constant.MESSAGE_TYPE_USER_GO_OUT, username));
+				redisDao.publish(channel, new EventMessage(Constant.MESSAGE_TYPE_USER_GO_OUT, username));
 			}
 		}
 	}
@@ -135,19 +134,18 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		//将容器中的session与close的session对比,如果不一致则说明是被挤下去的用户
 		String username = (String) session.getAttributes().get("username");
-		WebSocketSession currentSession = onlinePool.get(username);
+		WebSocketSession currentSession = onlineMap.get(username);
 		if(currentSession != null && currentSession.equals(session)) {
 			//用户正常离开
 			logger.info("user {} leave, sys redis", username);
-			SetOperations<String, String> set = redisTemplate.opsForSet();
-			set.remove(online_key, username);
+			redisDao.sRemove(online_key, username);
 			//从容器中移除
-			onlinePool.remove(username);
-			if(onlineManager.contains(session)) {
-				onlineManager.remove(session);
+			onlineMap.remove(username);
+			if(onlineManagerMap.contains(session)) {
+				onlineManagerMap.remove(session);
 			}
 			//向频道中发送用户下线消息
-			redisTemplate.convertAndSend(channel, new EventMessage(Constant.MESSAGE_TYPE_USER_LOGOUT, username));
+			redisDao.publish(channel, new EventMessage(Constant.MESSAGE_TYPE_USER_LOGOUT, username));
 		}
 	}
 	
@@ -166,8 +164,8 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	 */
 	public void sendReplaceMessage(String username, WebSocketSession session) {
 		//移出容器中的此session, 集群环境下一定判断
-		if(onlinePool.get(username) != null && onlinePool.get(username).equals(session)) {
-			onlinePool.remove(username);
+		if(onlineMap.get(username) != null && onlineMap.get(username).equals(session)) {
+			onlineMap.remove(username);
 		}
 		EventMessage message = new EventMessage();
 		message.setType(Constant.MESSAGE_TYPE_USER_BE_REPLACED);
@@ -206,10 +204,10 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	 * @param username
 	 */
 	public void sendOnlineUsers() {
-		if(onlineManager != null && onlineManager.size() > 0) {
+		if(onlineManagerMap != null && onlineManagerMap.size() > 0) {
 			//转船出一个副本, 防止遍历时候其他线程修改
-			WebSocketSession[] sessions = new WebSocketSession[onlineManager.size()];  //注意: collection转数组必须先定义好长度,不能object[]类型不能强转
-			onlineManager.toArray(sessions);
+			WebSocketSession[] sessions = new WebSocketSession[onlineManagerMap.size()];  //注意: collection转数组必须先定义好长度,不能object[]类型不能强转
+			onlineManagerMap.toArray(sessions);
 			for (WebSocketSession session : sessions) {
 				try {
 					if(session != null && session.isOpen()) {
@@ -225,11 +223,17 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	 * 查询redis获得所有的在线用户
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private Set<String> getAllOnlineUser() {
-		return redisTemplate.opsForSet().members(online_key);
+		try {
+			return (Set<String>) redisDao.sMembers(online_key);
+		} catch (Exception e) {
+			logger.error("get all online users error", e);
+		}
+		return null;
 	}
 	
-	public Map<String, WebSocketSession> getOnlinePool() {
-		return onlinePool;
+	public Map<String, WebSocketSession> getOnlineMap() {
+		return onlineMap;
 	}
 }

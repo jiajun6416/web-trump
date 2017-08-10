@@ -137,7 +137,7 @@ public class RedisCache implements Cache<Serializable, Serializable>{
 	public Collection<Serializable> values() {
 		try {
 			logger.debug("get all shiro cache values from redis!");
-			return redisDao.values(this.keyPrefix+"*");
+			return (Collection<Serializable>) redisDao.values(this.keyPrefix+"*");
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}

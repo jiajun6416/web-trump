@@ -14,16 +14,32 @@ public class EventMessage implements java.io.Serializable{
 	
 	private String type;
 	
+	private String sender;
+	
 	private Object content;
 	
-	public EventMessage() {
-		super();
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
-
+	
 	public EventMessage(String type, Object content) {
 		super();
 		this.type = type;
 		this.content = content;
+	}
+	public EventMessage(String type, String sender, Object content) {
+		super();
+		this.type = type;
+		this.sender = sender;
+		this.content = content;
+	}
+
+	public EventMessage() {
+		super();
+	}
+	
+	public String getSender() {
+		return sender;
 	}
 
 	public String getType() {

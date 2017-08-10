@@ -42,7 +42,7 @@ public class UserOnlineListener implements MessageListener{
 			String username = mesg.substring(0, index);
 			String sessionId = mesg.substring(index+1);
 			//使用username+sessionId来删除的不是当前的
-			WebSocketSession session = onLineHandler.getOnlinePool().get(username);
+			WebSocketSession session = onLineHandler.getOnlineMap().get(username);
 			if(session != null && !session.getId().equals(sessionId)) {
 				onLineHandler.sendReplaceMessage(username, session);
 			}
@@ -51,7 +51,7 @@ public class UserOnlineListener implements MessageListener{
 			onLineHandler.sendOnlineUsers();
 		} else if(Constant.MESSAGE_TYPE_USER_GO_OUT.equals(eventMsg.getType())) {
 			//用户被T出
-			WebSocketSession session = onLineHandler.getOnlinePool().get(eventMsg.getContent());
+			WebSocketSession session = onLineHandler.getOnlineMap().get(eventMsg.getContent());
 			if(session != null ) {
 				onLineHandler.sendGoOutMessage(session);
 			}

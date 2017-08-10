@@ -107,7 +107,7 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 	public Collection<Session> getActiveSessions() {
 		try {
 			logger.debug("get all shiro session");
-			Collection<Session> values =  redisDao.values(this.getPattern());
+			Collection<Session> values =  (Collection<Session>) redisDao.values(this.getPattern());
 			return values;
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -11,6 +11,7 @@ import com.jiajun.pojo.ParameMap;
  * @author jiajun
  * @date 2017年7月1日下午3:58:47
  */
+@SuppressWarnings("rawtypes")
 public interface Dao {
 	
 	/**

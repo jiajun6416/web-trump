@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
-import org.apache.shiro.session.Session;
-
 public interface RedisDao {
 	
 	/**
@@ -67,7 +65,7 @@ public interface RedisDao {
 	 * @return
 	 * @throws Exception
 	 */
-	Collection values(Serializable pattern) throws Exception;
+	Collection<?> values(Serializable pattern) throws Exception;
 	
 	/**
 	 * 发布消息
@@ -75,5 +73,32 @@ public interface RedisDao {
 	 * @param Message
 	 */
 	void publish(String channel, Serializable message);
+	
+	
+	/**
+	 * set数据接口插入数据
+	 * @param key
+	 * @param value
+	 * @return
+	 * @throws Exception
+	 */
+	Long sAdd(Serializable key, Serializable... value) throws Exception;
+	
+	/**
+	 * set 数据结构移除数据
+	 * @param key
+	 * @param value
+	 * @return
+	 * @throws Exception
+	 */
+	Long sRemove(Serializable key, Object... value) throws Exception;
+	
+	/**
+	 * set key 集合
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	Set<?> sMembers(Serializable key) throws Exception;
 	
 }

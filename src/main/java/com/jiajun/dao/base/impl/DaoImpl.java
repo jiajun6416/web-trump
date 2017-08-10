@@ -3,8 +3,6 @@ package com.jiajun.dao.base.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.ExecutorType;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.system.SysUserEntity;
 
 @Repository
+@SuppressWarnings({"rawtypes","unchecked"})
 public class DaoImpl extends  SqlSessionDaoSupport implements Dao {
 	
 	/**
@@ -91,6 +90,7 @@ public class DaoImpl extends  SqlSessionDaoSupport implements Dao {
 		}
 	}
 
+	
 	@Override
 	public Page getPage(String listMethod, String countMethod, ParameMap params) throws Exception {
 		Integer currentPage = (Integer) params.get("currentPage");

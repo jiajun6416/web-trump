@@ -95,6 +95,10 @@ public class Constant {
 	/*用户被禁用*/
 	public static final short SYS_USER_STATUS_NOT_USEABLE = 0;
 	
+	/*******************************
+	  					online manager model
+	 * **************************************************/
+	
 	/*用户被挤下线消息*/
 	public static final String MESSAGE_TYPE_USER_BE_REPLACED = "user_replaced";
 	/*所有用户信息*/
@@ -105,6 +109,15 @@ public class Constant {
 	public static final String MESSAGE_TYPE_USER_LOGOUT = "user_logout";
 	/*用户被T下线*/
 	public static final String MESSAGE_TYPE_USER_GO_OUT = "user_go_out";
+	
+	/*******************************
+						im model
+	 * **************************************************/	
+	
+	public static final String IM_TYPE_USER_LIST = "userList";
+	public static final String IM_TYPE_USER_JOIN = "userJoin";
+	public static final String IM_TYPE_USER_LEAVE = "userLeave";
+	public static final String IM_TYPE_USER_TALK = "userTalk";
 	
 }
 

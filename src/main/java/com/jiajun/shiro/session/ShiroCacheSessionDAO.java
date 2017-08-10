@@ -156,7 +156,7 @@ public class ShiroCacheSessionDAO extends CachingSessionDAO {
 	public Collection<Session> getRedisActiveSessions() {
 		try {
 			logger.info("get all shiro session");
-			Collection<Session> values =  redisDao.values(this.getPattern());
+			Collection<Session> values =  (Collection<Session>) redisDao.values(this.getPattern());
 			return values;
 		} catch (Exception e) {
 			e.printStackTrace();

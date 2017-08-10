@@ -31,8 +31,14 @@
 
 
 	<websocket:handlers allowed-origins="*">
-		<websocket:mapping path="/ws/online"
-			handler="onlineWebSocketHandler" />
+		<websocket:mapping path="/ws/online" handler="onlineWebSocketHandler" />
+		<websocket:handshake-interceptors>
+			<ref bean="handshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
+	
+	<websocket:handlers allowed-origins="*">
+		<websocket:mapping path="/ws/im" handler="imWebSocketHandler" />
 		<websocket:handshake-interceptors>
 			<ref bean="handshakeInterceptor"/>
 		</websocket:handshake-interceptors>
