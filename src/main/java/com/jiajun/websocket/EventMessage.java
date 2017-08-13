@@ -16,7 +16,10 @@ public class EventMessage implements java.io.Serializable{
 	
 	private String from;
 	
+	private String to;
+
 	private Object content;
+	
 	
 	public EventMessage(String type, Object content) {
 		super();
@@ -30,6 +33,12 @@ public class EventMessage implements java.io.Serializable{
 		this.content = content;
 	}
 
+	public String getTo() {
+		return to;
+	}
+	public void setTo(String to) {
+		this.to = to;
+	}
 	public EventMessage() {
 		super();
 	}

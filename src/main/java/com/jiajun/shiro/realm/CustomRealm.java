@@ -73,7 +73,7 @@ public class CustomRealm extends AuthorizingRealm{
 			SysUserEntity user = userService.getUserByUsername(username);
 			List<String> premissionList;
 			logger.info("query username {}  premission from db", username);
-			if(user.getRoleId().equals(Constant.SYSTEM_ROLE)) {
+			if(user.getRoleId().intValue()==Constant.SYSTEM_ROLE) {
 				//admin查询所有的资源
 				premissionList = userService.getAdminPermissionList();
 			} else {

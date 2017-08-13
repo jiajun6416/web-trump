@@ -25,6 +25,7 @@ import com.jiajun.pojo.system.SysMenuEntity;
 import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.pojo.system.SysUserEntity;
 import com.jiajun.pojo.system.SysUserPhotoEntity;
+import com.jiajun.service.SiteMsgService;
 import com.jiajun.service.SysLogService;
 import com.jiajun.service.SysMenuService;
 import com.jiajun.service.SysRoleService;
@@ -47,6 +48,8 @@ public class LoginController extends BaseController{
 	private SysRoleService sysRoleService;
 	@Autowired
 	private SysMenuService sysMenuService;
+	@Autowired
+	private SiteMsgService siteMsgService;
 	
 	//跳转登录
 	@RequestMapping("/toLogin") 
@@ -89,7 +92,7 @@ public class LoginController extends BaseController{
 			SysUserPhotoEntity photo = sysUserService.getUserPhoto(sysUser.getId());
 			session.setAttribute(Constant.SESSION_USER_PHOTO, photo);
 			session.setAttribute("menuList", menuList);
-
+			
 		} catch (Exception e) {
 			if(e instanceof UnknownAccountException) {
 				logger.info("用户名不存在");
@@ -163,9 +166,17 @@ public class LoginController extends BaseController{
 	 * 主菜单切换
 	 * @param menu
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping("/main/{menu}")
-	public String changeMainMenu(@PathVariable("menu")String menu) {
+	public String changeMainMenu(@PathVariable("menu")String menu, Model model) throws Exception {
+		if("index".equals(menu)) {
+			//查询未读消息
+			int unReadMsg = siteMsgService.getUnReadMsg(this.getLoginUser());
+			if(unReadMsg>0) {
+				model.addAttribute("unReadMsg", unReadMsg);
+			}
+		}
 		return "system/index/main";
 	}
 	

@@ -128,6 +128,8 @@
 				} else if(msg.type == 'user_go_out') {
 					alert("用户被T出");
 					top.goOut();
+				} else if (msg.type == "new_site_msg") {
+					top.newMessage();
 				}
 			}
 			//复选框全选控制

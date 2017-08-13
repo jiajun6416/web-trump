@@ -122,9 +122,13 @@ public class SysUserServiceImpl implements SysUserService{
 
 	@Override
 	public void save(SysUserEntity userEntity) throws Exception {
-		userEntity.setGmtCreate(new Date());
+		Date now = new Date();
+		userEntity.setGmtCreate(now);
 		userEntity.setStatus((short)0);
+		userEntity.setUseable(Constant.SYS_USER_STATUS_IS_USEABLE);
 		userEntity.setPassword(encrypt(userEntity.getPassword()));
+		userEntity.setUserType(Constant.SYSTEM_ROLE);
+		userEntity.setGmtModified(now);
 		dao.insert(NAME_SPACE+"insert", userEntity);
 	}
 

@@ -178,7 +178,8 @@
 		<script src="static/ace/js/ace/ace.onpage-help.js"></script>
 	
 		<script type="text/javascript">
-			var user = '<shiro:principal/>' ;
+			var user = '<shiro:principal/>' ;   //shiro认证用户
+			var fhsmsCount = ${unReadMsg};		//站内信总数
 		</script>
 		<!--引入属于此页面的js -->
 		<script type="text/javascript" src="static/js/myjs/head.js"></script>

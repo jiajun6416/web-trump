@@ -13,10 +13,11 @@ $(function(){
 
 var fmid = "fhindex";	//菜单点中状态
 var mid = "fhindex";	//菜单点中状态
-var fhsmsCount = 0;		//站内信总数
 var USER_ID;			//用户ID
 var TFHsmsSound = '1';	//站内信提示音效
 var imUrl = wsPath+'/ws/im'; //即时聊天服务器IP和端口
+
+$("#fhsmsCount").html(Number(fhsmsCount)); //初始化未读消息
 
 //菜单切换
 function siMenu(id,fid,MENU_NAME,MENU_URL){
@@ -121,6 +122,8 @@ window.onbeforeunload = function(){
 			} else if(msg.type == 'user_go_out') {
 				alert("用户被T出");
 				goOut();
+			} else if(msg.type == 'new_site_msg') {
+				newMessage();
 			}
 			/*			var message = JSON.parse(message.data);
 			if(message.type == 'goOut'){
@@ -144,6 +147,18 @@ window.onbeforeunload = function(){
 	}
 }
 
+ function newMessage() {
+		fhsmsCount = Number(fhsmsCount)+1;
+		$("#fhsmsCount").html(Number(fhsmsCount));
+		$("#fhsmsobj").html('<audio style="display: none;" id="fhsmstsy" src="static/sound/'+TFHsmsSound+'.mp3" autoplay controls></audio>');
+		$("#fhsmstss").tips({
+			side:3,
+            msg:'有新消息',
+            bg:'#AE81FF',
+            time:30
+        });		 
+ }
+ 
 //下线
 function goOut(){
 	window.location.href=locat+"/logout";
@@ -216,7 +231,7 @@ function fhsms(){
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
 	 diag.Title ="站内信";
-	 diag.URL = locat+'/fhsms/list.do?STATUS=2';
+	 diag.URL = locat+'/siteMsg/list.do';
 	 diag.Width = 800;
 	 diag.Height = 500;
 	 diag.CancelEvent = function(){ //关闭事件

@@ -20,11 +20,13 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.jiajun.redis.dao.RedisDao;
+import com.jiajun.service.SiteMsgService;
 import com.jiajun.util.Constant;
 import com.jiajun.websocket.EventMessage;
 
 /**
  * 使用spring4 实现websocket
+ * 
  * Created by jiajun on 2017/08/07 00:07
  */
 @Component
@@ -34,6 +36,9 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 	
 	@Autowired
 	private RedisDao redisDao;
+	
+	@Autowired
+	private SiteMsgService siteMsgService;
 	
 	@Value("${redis.online.key}")
 	private String online_key;
@@ -177,6 +182,27 @@ public class OnlineWebSocketHandler extends TextWebSocketHandler {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void sendSiteMsg(String username, EventMessage eventMessage) {
+		WebSocketSession session = onlineMap.get(username);
+		if(session != null && session.isOpen()) {
+			eventMessage.setType(Constant.MESSAGE_TYPE_NEW_Site_MSG);
+			//修改消息状态为发送成功
+			Integer msgId = (Integer) eventMessage.getContent();
+			try {
+				siteMsgService.updateTOSendSuccess(msgId);
+			} catch (Exception e1) {
+				logger.error("update site message (id: {}) status to success fail", msgId);
+			}
+			try {
+				//发送站内信息消息
+				session.sendMessage(new TextMessage(eventMessage.toString()));
+				logger.info("send siteMsg to user {}", username);
+			} catch (IOException e) {
+				logger.error("send message to user {} has error", username, e);
+			}
 		}
 	}
 	

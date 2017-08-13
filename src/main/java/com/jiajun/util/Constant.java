@@ -69,7 +69,7 @@ public class Constant {
 	public static final int ADMIN_ROLE_ID = 1;
 	
 	/*系统角色*/
-	public static final int SYSTEM_ROLE =1;
+	public static final short SYSTEM_ROLE =1;
 	/*会员角色*/
 	public  static final short VIP_ROLE = 2;
 	public static final int LOGIN_USER_ROLE = 8;//普通会员
@@ -109,15 +109,26 @@ public class Constant {
 	public static final String MESSAGE_TYPE_USER_LOGOUT = "user_logout";
 	/*用户被T下线*/
 	public static final String MESSAGE_TYPE_USER_GO_OUT = "user_go_out";
+	/*收到站内信*/
+	public static final String MESSAGE_TYPE_NEW_Site_MSG = "new_site_msg";
 	
 	/*******************************
 						im model
-	 * **************************************************/	
+	 ***************************************************/	
 	
 	public static final String IM_TYPE_USER_LIST = "userList";
 	public static final String IM_TYPE_USER_JOIN = "userJoin";
 	public static final String IM_TYPE_USER_LEAVE = "userLeave";
 	public static final String IM_TYPE_USER_TALK = "userTalk";
+
+	/*******************************
+						site msg
+	 ***************************************************/		
+	public static final short SITE_MSG_DELETE = 0;
+	public static final short SITE_MSG_SENDING = 1;
+	public static final short SITE_MSG_SEND_SUCCESS = 2;
+	public static final short SITE_MSG_READED = 3;
+	
 	
 }
 

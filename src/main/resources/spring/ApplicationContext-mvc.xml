@@ -34,8 +34,7 @@
 	</bean>
 	
 	<!-- 转换器 -->
-	<bean id="myConversionService"
-		class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+	<bean id="myConversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
 				<bean class="com.jiajun.converter.StringTrimConverter"/>

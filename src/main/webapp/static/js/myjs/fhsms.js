@@ -1,10 +1,6 @@
-var locat = (window.location+'').split('/'); 
-$(function(){if('fhsms'== locat[3]){locat =  locat[0]+'//'+locat[2];}else{locat =  locat[0]+'//'+locat[2]+'/'+locat[3];};});
-
 $(top.hangge());
 //发送
 function sendFhsms(){
-	
 	if($("#TYPE").val()=="1"){
 		$("#CONTENT").val(getContentTxt());
 	}else{
@@ -35,13 +31,30 @@ function sendFhsms(){
 	var CONTENT = $("#CONTENT").val();
 	$.ajax({
 		type: "POST",
-		url: locat+'/fhsms/save.do?tm='+new Date().getTime(),
-    	data: {USERNAME:USERNAME,CONTENT:CONTENT},
+		url: basePath+'siteMsg/send.do?tm='+new Date().getTime(),
+    	data: {"usernames":USERNAME,"content":CONTENT},
 		dataType:'json',
 		//beforeSend: validateData,
 		cache: false,
 		success: function(data){
-			 $.each(data.list, function(i, list){
+			if(data.msg == 'success') {
+				 $("#msg").tips({
+					side:3,
+		            msg:'成功发出',
+		            bg:'#68B500',
+		            time:3
+				  });
+			} else {
+				 $("#msg").tips({
+						side:3,
+			            msg:'发送失败,请联系管理员!',
+			            bg:'#FF0000',
+			            time:6
+				 });
+			}
+			 setTimeout("close()",3000);
+			 timer(2);
+/*			 $.each(data.list, function(i, list){
 				 if(list.msg == 'ok'){
 					 var count = list.count;
 					 var ecount = list.ecount;
@@ -62,7 +75,10 @@ function sendFhsms(){
 				 }
 				 setTimeout("close()",3000);
 				 timer(2);
-			 });
+			 });*/
+		},
+		error: function() {
+			alert("系统异常");
 		}
 	});
 	

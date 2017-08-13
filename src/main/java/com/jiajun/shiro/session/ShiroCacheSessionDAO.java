@@ -29,6 +29,7 @@ public class ShiroCacheSessionDAO extends CachingSessionDAO {
 
 	@Autowired
 	private RedisDao redisDao;
+	
 	@Value("${redis.channel.shirosession}")
 	private String channel;
 	

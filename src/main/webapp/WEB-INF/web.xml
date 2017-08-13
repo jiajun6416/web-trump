@@ -23,6 +23,7 @@
 			classpath:spring/ApplicationContext-shiro.xml,
 			classpath:spring/ApplicationContext-redis.xml,
 			classpath:spring/ApplicationContext-websocket.xml
+			classpath:spring/ApplicationContext-activemq.xml
 		</param-value>
   </context-param>
   <context-param>

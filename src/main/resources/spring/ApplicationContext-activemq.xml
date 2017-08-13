@@ -1,0 +1,79 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:jms="http://www.springframework.org/schema/jms"
+	xmlns:amq="http://activemq.apache.org/schema/core" xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/websocket
+				http://www.springframework.org/schema/websocket/spring-websocket.xsd
+					http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+							http://www.springframework.org/schema/context
+								http://www.springframework.org/schema/context/spring-context.xsd
+									http://www.springframework.org/schema/data/mongo       
+										http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd   
+											http://www.springframework.org/schema/tx
+											http://www.springframework.org/schema/tx/spring-tx.xsd
+										http://www.springframework.org/schema/aop
+									http://www.springframework.org/schema/aop/spring-aop.xsd
+								http://www.springframework.org/schema/cache
+							http://www.springframework.org/schema/cache/spring-cache.xsd
+						http://activemq.apache.org/schema/core 
+					http://activemq.apache.org/schema/core/activemq-core.xsd
+				http://www.springframework.org/schema/jms 
+			http://www.springframework.org/schema/jms/spring-jms.xsd
+		http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- jms厂商提供的factory -->
+	<bean id="targetConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="${activemq.brokerURL}" />
+		<!-- <property name="userName" value="${activemq.username}"/>
+		<property name="password" value="${activemq.password}"/> -->
+		<!-- 如果传输的对象是Obeject 这里必须加上这句  否则会导致对象序列化失败 出现classnotfound异常 -->
+		<property name="trustAllPackages" value="true"/>
+	</bean>
+
+	<!-- 连接池 -->
+	<bean id="pooledConnectionFactory" class="org.apache.activemq.pool.PooledConnectionFactory">
+		<property name="connectionFactory" ref="targetConnectionFactory" />
+		<property name="maxConnections" value="${activemq.pool.maxConnections}" />
+	</bean>
+
+	<!-- Spring管理connection -->
+	<bean id="connectionFactory"
+		class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="pooledConnectionFactory" />
+	</bean>
+	
+	<!-- ptp模式template -->
+	<bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="pubSubDomain" value="false"/>
+	</bean>
+	
+	<!-- pub/sub模式template -->
+	<bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+        <property name="pubSubDomain" value="true"/> 
+	</bean>
+	
+	<!-- siteMsg topic desination -->
+	<bean id="siteMsgTopic" class="org.apache.activemq.command.ActiveMQTopic">  
+        <constructor-arg value="${activemq.msgTopic}"/> 
+    </bean>
+
+	<!-- 消息监听容器 -->
+	<bean id="listenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="destination" ref="siteMsgTopic" />
+		<property name="messageListener" ref="siteMsgTopicListener" />
+	</bean>
+	
+</beans>

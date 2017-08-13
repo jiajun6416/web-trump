@@ -104,12 +104,6 @@
 											<td class="center"  style="vertical-align:middle;">${user.lastIp}</td>
 											<td class="center"  style="vertical-align:middle;">
 												<div class="hidden-sm hidden-xs btn-group">
-													<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${user.username}');">
-														<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>
-													</a>
-													<a class="btn btn-xs btn-warning" title='发送短信' onclick="sendSms('${user.phone}');">
-														<i class="ace-icon fa fa-envelope-o bigger-120" title="发送短信"></i>
-													</a>
 													<a class="btn btn-xs btn-success" title="编辑" onclick="editSysUser('${user.id}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
@@ -141,6 +135,7 @@
 								<!-- <a title="批量删除" class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a> -->
 							</td>
 							<td style="vertical-align:top;">
+							
 								<div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">
 								<!-- 分页 -->
 									<ul class="pagination pull-right no-margin">
@@ -167,6 +162,7 @@
 										</li>
 									</ul>
 								</div>
+							
 							</td>
 						</tr>
 					</table>
@@ -315,7 +311,6 @@ function makeAll(msg){
 		            bg:'#AE81FF',
 		            time:8
 		        });
-				
 				return;
 			}else{
 				if(msg == '确定要删除选中的数据吗?'){
@@ -361,12 +356,12 @@ function sendSms(phone){
 }
 
 //去发送电子邮件页面
-function sendEmail(EMAIL){
+function sendEmail(emails){
 	 top.jzts();
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
 	 diag.Title ="发送电子邮件";
-	 diag.URL = '<%=basePath%>head/goSendEmail.do?EMAIL='+EMAIL;
+	 diag.URL = '<%=basePath%>head/goSendEmail.do?emails='+emails;
 	 diag.Width = 660;
 	 diag.Height = 486;
 	 diag.CancelEvent = function(){ //关闭事件
@@ -376,12 +371,12 @@ function sendEmail(EMAIL){
 }
 
 //发站内信
-function sendFhsms(username){
+function sendFhsms(usernames){
 	 top.jzts();
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
 	 diag.Title ="站内信";
-	 diag.URL = '<%=basePath%>fhsms/goAdd.do?username='+username;
+	 diag.URL = '<%=basePath%>siteMsg/toSend.do?usernames='+usernames;
 	 diag.Width = 660;
 	 diag.Height = 444;
 	 diag.CancelEvent = function(){ //关闭事件
