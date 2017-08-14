@@ -44,5 +44,14 @@ public interface SiteMsgService {
 	 */
 	int getUnReadMsg(String receive) throws Exception;
 	
+	/**
+	 * 查询信息详情, 如若是未读邮件状态转变为已读
+	 * 只能查询发送人或者接收人是当前登录用户的
+	 * 
+	 * @param msgId
+	 * @return
+	 * @throws Exception
+	 */
+	SiteMsgEntity getMsgDetail(Integer msgId, String username) throws Exception;
 	
 }

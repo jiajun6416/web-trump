@@ -64,6 +64,15 @@
   	select count(*) from site_msg where (status=1 or status=2) and receive=#{receive} 
   </select>
   
+  <select id="selectByIdAndName" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from site_msg
+    where (sender = #{username} or receive= #{username}) and id = #{id,jdbcType=INTEGER}
+  </select>
+  
   <!-- =============================================================================================== -->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 

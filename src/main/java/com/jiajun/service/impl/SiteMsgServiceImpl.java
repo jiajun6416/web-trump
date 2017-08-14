@@ -68,6 +68,7 @@ public class SiteMsgServiceImpl implements SiteMsgService {
 		logger.info("update msg (id: {}) status to send success", mesgId);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Page<SiteMsgEntity> getMsgPage(ParameMap params) throws Exception {
 		String currentPage = (String) params.get("currentPage");
@@ -96,6 +97,24 @@ public class SiteMsgServiceImpl implements SiteMsgService {
 		int nums = (int) dao.selectObject(SITE_MSG_MAME_SPACE+"selectUnReadNums", receive);
 		return nums;
 	}
-	
+
+	@Override
+	public SiteMsgEntity getMsgDetail(Integer msgId, String username) throws Exception {
+		Map<String, Object> params = new HashMap<>();
+		params.put("id", msgId);
+		params.put("username", username);
+		SiteMsgEntity msg = (SiteMsgEntity) dao.selectObject(SITE_MSG_MAME_SPACE+"selectByIdAndName", params);
+		if(msg != null) {
+			if(msg.getStatus() == Constant.SITE_MSG_SEND_SUCCESS || msg.getStatus() == Constant.SITE_MSG_SENDING) {
+				//设置为已读消息
+				msg.setStatus(Constant.SITE_MSG_READED);
+				msg.setUpdateTime(new Date());
+				dao.update(SITE_MSG_MAME_SPACE+"updateByPrimaryKeyWithBLOBs", msg);
+			}
+			return msg;
+		}
+		return null;
+	}
+
 
 }

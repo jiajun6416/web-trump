@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,7 @@ public class SiteMsgController extends BaseController{
 	private SysLogService logService;
 	
 	@RequestMapping("toSend")
+	@RequiresPermissions("opera:sendSiteMsg")
 	public String toSendMsg(Model model, @RequestParam(required=true) String usernames) throws Exception{
 		model.addAttribute("usernames", usernames);
 		return "system/msg/edit";
@@ -40,6 +42,7 @@ public class SiteMsgController extends BaseController{
 	
 	@RequestMapping("send")
 	@ResponseBody
+	@RequiresPermissions("opera:sendSiteMsg")
 	public ResultModel sendMsg(@RequestParam(required=true)String usernames, @RequestParam(required=true)String content,
 			HttpServletRequest request, HttpSession session) {
 		String[] receives = usernames.split(";");
@@ -78,5 +81,14 @@ public class SiteMsgController extends BaseController{
 		model.addAttribute("page", page);
 
 		return "system/msg/list";
+	}
+	
+	
+	@RequestMapping("detail")
+	public String readMsgDetail(int msgId, Model model) throws Exception{
+		String username = this.getLoginUser();
+		SiteMsgEntity msgEntity = siteMsgService.getMsgDetail(msgId, username);
+		model.addAttribute("msg", msgEntity);
+		return "system/msg/view";
 	}
 }

@@ -317,17 +317,6 @@ public class UserController extends BaseController{
 		return ResultModel.build(200, "success");
 	}
 	
-	@RequestMapping("/getLoginUser")
-	@ResponseBody
-	public ResultModel getLoginUser(HttpServletRequest request) {
-		SimplePrincipalCollection peincipal = (SimplePrincipalCollection) request.getSession().getAttribute(DefaultSubjectContext.PRINCIPALS_SESSION_KEY);
-	//	SysUserEntity user = (SysUserEntity) peincipal.getPrimaryPrincipal();
-		
-		SysUserEntity user  = (SysUserEntity) SecurityUtils.getSubject().getPrincipal();
-		
-		return ResultModel.build(200, "success", user);
-	}
-	
 	
 	@RequestMapping("/online")
 	@RequiresPermissions("online:query")
