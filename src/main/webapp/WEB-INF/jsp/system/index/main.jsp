@@ -33,12 +33,9 @@
 	z-index:99999;}
 </style>
 
-<!-- 即时通讯 -->
+<!-- 即时通讯  css-->
 <link rel="stylesheet" type="text/css" href="plugins/imWebsocket/ext4/resources/css/ext-all.css">
 <link rel="stylesheet" type="text/css" href="plugins/imWebsocket/css/websocket.css" />
-<script type="text/javascript" src="plugins/imWebsocket/ext4/ext-all-debug.js"></script>
-<script type="text/javascript" src="plugins/imWebsocket/websocket.js"></script>
-<!-- 即时通讯 -->
 	
 </head>
 	<body class="no-skin">
@@ -181,10 +178,12 @@
 			var user = '<shiro:principal/>' ;   //shiro认证用户
 			var fhsmsCount = ${unReadMsg};		//站内信总数
 		</script>
+		<!-- 即时通讯 -->
+		<script type="text/javascript" src="plugins/imWebsocket/ext4/ext-all-debug.js"></script>
+		<script type="text/javascript" src="plugins/imWebsocket/websocket.js"></script>
+
 		<!--引入属于此页面的js -->
 		<script type="text/javascript" src="static/js/myjs/head.js"></script>
-		
-		<!--引入属于此页面的js -->
 		<script type="text/javascript" src="static/js/myjs/index.js"></script>
 		
 		<!--引入弹窗组件1start-->

@@ -82,8 +82,7 @@
   		limit #{begin}, #{rows}
    </select>
    
-   <select id="selectPermissionListById" parameterType="int" resultType="string">
-	  	(
+   <select id="selectMenuPremissionById" parameterType="int" resultType="string">
 		SELECT
 			mp.premission_code
 		FROM
@@ -94,22 +93,20 @@
 			u.role_id = rp.role_id
 		AND rp.prem_id = mp.id
 		AND u.id = #{userId}
-	)
-	UNION ALL
-		(
-			SELECT
-				o.privileges_code
-			FROM
-				sys_user u,
-				sys_role_prem rp,
-				sys_opeartion o
-			WHERE
-				u.role_id = rp.role_id
-			AND rp.prem_id = o.id
-			AND u.id = #{userId}
-		)
   </select>
-   
+ 
+  <select id="selectOpearsById" parameterType="int" resultType="string">
+  	SELECT
+		r.operation_ids
+	FROM
+		sys_user u,
+		sys_role r
+	WHERE
+		u.role_id = r.id
+	AND u.id = #{id}
+  </select>
+	
+	   
    <select id="getAdminPermissionList" resultType="string">
 	  SELECT
 			mp.premission_code

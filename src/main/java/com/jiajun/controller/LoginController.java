@@ -173,9 +173,7 @@ public class LoginController extends BaseController{
 		if("index".equals(menu)) {
 			//查询未读消息
 			int unReadMsg = siteMsgService.getUnReadMsg(this.getLoginUser());
-			if(unReadMsg>0) {
-				model.addAttribute("unReadMsg", unReadMsg);
-			}
+			model.addAttribute("unReadMsg", unReadMsg);
 		}
 		return "system/index/main";
 	}

@@ -105,7 +105,8 @@ public class SiteMsgServiceImpl implements SiteMsgService {
 		params.put("username", username);
 		SiteMsgEntity msg = (SiteMsgEntity) dao.selectObject(SITE_MSG_MAME_SPACE+"selectByIdAndName", params);
 		if(msg != null) {
-			if(msg.getStatus() == Constant.SITE_MSG_SEND_SUCCESS || msg.getStatus() == Constant.SITE_MSG_SENDING) {
+			//msg未读, 且收件人是当前用户
+			if((msg.getStatus() == Constant.SITE_MSG_SEND_SUCCESS || msg.getStatus() == Constant.SITE_MSG_SENDING) && msg.getReceive().equals(username)) {
 				//设置为已读消息
 				msg.setStatus(Constant.SITE_MSG_READED);
 				msg.setUpdateTime(new Date());

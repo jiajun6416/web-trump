@@ -17,6 +17,10 @@
     from sys_opeartion
   </select>
   
+  <select id="selectOpearPremByIds" parameterType="string" resultType="string">
+	select  privileges_code from sys_opeartion where id in (${_parameter})
+  </select>
+  
   
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

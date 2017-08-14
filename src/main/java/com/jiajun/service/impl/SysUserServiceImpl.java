@@ -14,17 +14,19 @@ import org.springframework.stereotype.Service;
 import com.jiajun.dao.base.Dao;
 import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
-import com.jiajun.pojo.system.SysRoleEntity;
 import com.jiajun.pojo.system.SysUserEntity;
 import com.jiajun.pojo.system.SysUserPhotoEntity;
 import com.jiajun.service.SysUserService;
 import com.jiajun.util.Constant;
 import com.jiajun.util.ShiroMd5Utils;
 
+@SuppressWarnings("unchecked")
 @Service
 public class SysUserServiceImpl implements SysUserService{
 	
 	private final static String NAME_SPACE = "SysUserMapper.";
+	
+	private final static String OPEAR_NAME_SPACE = "SysOpeartion.";
 	
 	private final static String USER_PHOTO_NAME_SPACE = "SysUserPhotoEntityMapper.";
 	
@@ -142,7 +144,13 @@ public class SysUserServiceImpl implements SysUserService{
 
 	@Override
 	public List<String> getPermissionListById(Integer id) throws Exception{
-		return dao.selectList(NAME_SPACE+"selectPermissionListById", id);
+		List<String> menuPrems = dao.selectList(NAME_SPACE+"selectMenuPremissionById", id);
+		String ids = (String) dao.selectObject(NAME_SPACE+"selectOpearsById", id);
+		if(StringUtils.isNotEmpty(ids)) {
+			List<String> opearPrems = dao.selectList(OPEAR_NAME_SPACE+"selectOpearPremByIds", ids);
+			menuPrems.addAll(opearPrems);
+		}
+		return menuPrems;
 	}
 
 	@Override

@@ -48,7 +48,7 @@
 								<td style="padding-left:2px;"><input class="span10 date-picker" name="beginTime" id="LoginStart"  value="${beginTime}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
 								<td style="padding-left:2px;"><input class="span10 date-picker" name="endTime" name="lastLoginEnd"  value="${beginTime}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
 								<td style="vertical-align:top;padding-left:2px;">
-								 	<select class="chosen-select form-control"  value="${params.status}" name="status" id="id" data-placeholder="状态" style="vertical-align:top;width: 68px;" >
+								 	<select class="chosen-select form-control"  value="${params.status}" name="status" data-placeholder="状态" style="vertical-align:top;width: 68px;" >
 										<option value="">全部</option>
 										<c:choose>
 											<c:when test="${params.status == 2}">
@@ -123,22 +123,22 @@
 											</td>
 											<td class='center' style="width: 30px;">${vs.count}</td>
 											
-											<td class='center'><a onclick="viewUser('${msg.sender}')" style="cursor:pointer;">${msg.sender}</a></td>
-											<td class='center'><a onclick="viewUser('${msg.receive}')" style="cursor:pointer;">${msg.receive}</a></td>
+											<td class='center'><a style="cursor:pointer;">${msg.sender}</a></td>
+											<td class='center'><a style="cursor:pointer;">${msg.receive}</a></td>
 											<td class='center'><fmt:formatDate value="${msg.createTime}" pattern="yyyy/MM/dd HH:mm:ss"/> </td>
-											<td class='center' id="STATUS${vs.count}">
-												<c:if test="${var.STATUS != '3' }"><span class="label label-important arrowed-in">未读</span></c:if>
-												<c:if test="${var.STATUS == '3' }"><span class="label label-success arrowed">已读</span></c:if></td>
+											<td class='center' id="status${msg.id}">
+											<c:choose>
+												<c:when test="${msg.status == 3}">
+													<span class="label label-success arrowed">已读</span>
+												</c:when>
+												<c:otherwise>
+													<span class="label label-important arrowed-in">未读</span>
+												</c:otherwise>
+											</c:choose>
 											<td class="center">
 												<div class="hidden-sm hidden-xs btn-group">
 													<a class="btn btn-xs btn-success" title="查看">
 														<i class="ace-icon fa fa-search nav-search-icon"></i>
-													</a>
-													<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('');">
-														<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>
-													</a>
-													<a class="btn btn-xs btn-danger">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 												</div>
 												<div class="hidden-md hidden-lg">
@@ -149,25 +149,29 @@
 			
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 															<li>
-																<a style="cursor:pointer;" onclick="" class="tooltip-success" data-rel="tooltip" title="查看">
+																<a style="cursor:pointer;" onclick="readMsg(${msg.id}, ${msg.status},'${params.role}')" class="tooltip-success" data-rel="tooltip" title="查看">
 																	<span class="green">
 																		<i class="ace-icon fa fa-search nav-search-icon"></i>
 																	</span>
 																</a>
 															</li>
 															<li>
-																<a style="cursor:pointer;" onclick="sendFhsms('');" class="tooltip-info" data-rel="tooltip" title="发送站内信">
-																	<span class="blue">
-																		<i class="ace-icon fa fa-envelope bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-															<li>
-																<a style="cursor:pointer;" onclick="del('');" class="tooltip-error" data-rel="tooltip" title="删除">
-																	<span class="red">
-																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																	</span>
-																</a>
+															<c:choose>
+																<c:when test="${params.role == 'receive' }">
+																	<a style="cursor:pointer;" onclick="sendMsg('${msg.sender}');" class="tooltip-info" data-rel="tooltip" title="回复">
+																		<span class="blue">
+																			<i class="ace-icon fa fa-envelope bigger-120"></i>
+																		</span>
+																	</a>
+																</c:when>
+																<c:otherwise>
+																	<a style="cursor:pointer;" onclick="sendMsg('${msg.receive}');" class="tooltip-info" data-rel="tooltip" title="发送">
+																		<span class="blue">
+																			<i class="ace-icon fa fa-envelope bigger-120"></i>
+																		</span>
+																	</a>
+																</c:otherwise>
+															</c:choose>
 															</li>
 														</ul>
 													</div>
@@ -188,10 +192,10 @@
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
+		<!-- 						<td style="vertical-align:top;">
 									<a title="批量发送站内信" class="btn btn-mini btn-info" onclick="makeAll('确定要给选中的用户发送站内信吗?');"><i class="ace-icon fa fa-envelope-o bigger-120"></i></a>
 									<a class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-								</td>
+								</td> -->
 								<td style="vertical-align:top;">
 							<div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">
 								<!-- 分页 -->
@@ -320,54 +324,40 @@
 				});
 			});
 		});
-		
-		//发站内信
-		function sendFhsms(username){
-			 top.jzts();
-			 var diag = new top.Dialog();
-			 diag.Drag=true;
-			 diag.Title ="站内信";
-			 diag.URL = '<%=basePath%>fhsms/goAdd.do?username='+username;
-			 diag.Width = 660;
-			 diag.Height = 444;
-			 diag.CancelEvent = function(){ //关闭事件
-				 top.jzts();
-				 setTimeout("self.location=self.location",100);
-				diag.close();
-			 };
-			 diag.show();
-		}
-		
-		//删除
-		function del(ztid,STATUS,type,Id,SANME_ID){
-			bootbox.confirm("确定要删除吗?", function(result) {
-				if(type == "1" && STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">未读</span>'){
-					top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
-				}
-				if(result) {
-					top.jzts();
-					var url = "<%=basePath%>fhsms/delete.do?FHSMS_ID="+Id+"&tm="+new Date().getTime();
-					$.get(url,function(data){
-						nextPage(${page.currentPage});
-					});
-				}
-			});
-		}
-		
+
 		//查看信件
-		function viewx(role, status, ztid,STATUS,type,Id,SANME_ID){
-			if(role == "receive" && STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">未读</span>'){
-				$("#"+ztid).html('<span class="label label-success arrowed">已读</span>');
-				top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
+		function readMsg(msgId, status, role) {
+			if((status == '2' || status == '1') && role == 'receive') {
+				//消息状态改变为已读
+				$("#status"+msgId).html('<span class="label label-success arrowed">已读</span>');
+				//未读消息数量减一
+				top.readMsg();
 			}
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="站内信";
-			 diag.URL = '<%=basePath%>fhsms/goView.do?FHSMS_ID='+Id+'&TYPE='+type+'&SANME_ID='+SANME_ID+'&STATUS='+STATUS;
+			 diag.URL = '<%=basePath%>siteMsg/detail.do?msgId='+msgId+'&timestamp='+new Date().getTime();
 			 diag.Width = 600;
-			 diag.Height = 460;
+			 diag.Height = 520;
 			 diag.CancelEvent = function(){ //关闭事件
+				diag.close();
+			 };
+			 diag.show();
+		}
+		
+		//发送邮件
+		function sendMsg(receive) {
+			 top.jzts();
+			 var diag = new top.Dialog();
+			 diag.Drag=true;
+			 diag.Title ="站内信";
+			 diag.URL = '<%=basePath%>siteMsg/toSend.do?usernames='+receive;
+			 diag.Width = 660;
+			 diag.Height = 444;
+			 diag.CancelEvent = function(){ //关闭事件
+				 top.jzts();
+				 setTimeout("self.location=self.location",100);
 				diag.close();
 			 };
 			 diag.show();

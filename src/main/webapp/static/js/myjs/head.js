@@ -17,7 +17,9 @@ var USER_ID;			//用户ID
 var TFHsmsSound = '1';	//站内信提示音效
 var imUrl = wsPath+'/ws/im'; //即时聊天服务器IP和端口
 
-$("#fhsmsCount").html(Number(fhsmsCount)); //初始化未读消息
+if(Number(fhsmsCount) > 0 ){
+	$("#fhsmsCount").html(Number(fhsmsCount)); //初始化未读消息
+}
 
 //菜单切换
 function siMenu(id,fid,MENU_NAME,MENU_URL){
@@ -155,7 +157,7 @@ window.onbeforeunload = function(){
 			side:3,
             msg:'有新消息',
             bg:'#AE81FF',
-            time:30
+            time:3
         });		 
  }
  
@@ -173,9 +175,9 @@ function fhsmsmsg(USERNAME){
 }
 
 //读取站内信时减少未读总数
-function readFhsms(){
+function readMsg(){
 	fhsmsCount = Number(fhsmsCount)-1;
-	$("#fhsmsCount").html(Number(fhsmsCount) <= 0 ?'0':fhsmsCount);
+	$("#fhsmsCount").html(Number(fhsmsCount) <= 0 ?'':fhsmsCount);
 }
 
 //修改头像

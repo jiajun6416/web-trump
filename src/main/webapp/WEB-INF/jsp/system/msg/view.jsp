@@ -31,18 +31,12 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
 								<td style="padding-top: 13px;">
-								<c:if test="${pd.TYPE != '2' }">
-								发信人：${pd.TO_USERNAME}&nbsp;&nbsp;
-								收信人：${pd.FROM_USERNAME}&nbsp;&nbsp;
-								</c:if>
-								<c:if test="${pd.TYPE == '2' }">
-								发信人：${pd.FROM_USERNAME}&nbsp;&nbsp;
-								收信人：${pd.TO_USERNAME}&nbsp;&nbsp;
-								</c:if>
-								发信时间：${pd.SEND_TIME}
+								发信人：${msg.sender}&nbsp;&nbsp;
+								收信人：${msg.receive}&nbsp;&nbsp;
+								发信时间：<fmt:formatDate value="${msg.createTime}" pattern="yyyy/MM/dd HH/mm/ss"/>
 							</tr>
 							<tr>
-								<td>${pd.CONTENT}</td>
+								<td>${msg.content}</td>
 							</tr>
 						</table>
 						</div>
