@@ -16,7 +16,7 @@
 	<context:component-scan base-package="com.jiajun.controller"/>		
 	
 	<!-- 使用默认的handler映射器和handler适配器 , 注意: 自定义转换器不能取名conversionService, mvc自带了-->
-	<mvc:annotation-driven conversion-service="myConversionService"  />
+	<mvc:annotation-driven conversion-service="myConversionService"   />
 	
 	<!--静态资源的映射-->     
 	<mvc:resources mapping="/admin/**" location="/admin/" />
@@ -41,7 +41,15 @@
 			</list>
 		</property>
 	</bean>
-		
+	
+	<!-- 拦截器 -->
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.jiajun.interceptor.ParamsInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+	
 	<!--编码设置 -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
 	    <property name="messageConverters">

@@ -3,16 +3,26 @@ package com.jiajun.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-public class ParamsInterceptor implements HandlerInterceptor{
+import com.jiajun.pojo.system.SysUserEntity;
+import com.jiajun.service.SysUserService;
 
+public class ParamsInterceptor implements HandlerInterceptor{
+	
+	@Autowired
+	private SysUserService userService;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		SysUserEntity user = userService.getUserById(2);
+		System.out.println(user);
+		System.out.println("invoke interceptor");
 		
-		return false;
+		return true;
 	}
 
 	@Override
