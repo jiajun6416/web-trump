@@ -54,7 +54,8 @@
 		<div class="main-content">
 			<div class="main-content-inner">
 					<!-- 检索  -->
-					<form action="picture" method="post" name="Form" id="Form">
+					<form action="picture/list" method="post" name="Form" id="Form">
+					<input type="hidden" name="currentPage" value="${page.currentPage}"> 
 					<table style="margin-top:5px;">
 						<tr>
 							<td>
@@ -167,12 +168,12 @@
 			 diag.Width = 800;
 			 diag.Height = 490;
 			 diag.CancelEvent = function(){ //关闭事件
-				 if('${page.currentPage}' == '0'){
-					 top.jzts();
-					 setTimeout("self.location=self.location",100);
+				 top.jzts();
+				 setTimeout("self.location=self.location",100);
+				/*  if('${page.currentPage}' == '0'){
 				 }else{
 					 nextPage(${page.currentPage});
-				 }
+				 } */
 				diag.close();
 			 };
 			 diag.show();

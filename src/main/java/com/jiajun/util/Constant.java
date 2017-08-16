@@ -52,7 +52,7 @@ public class Constant {
 	public static final String WEBSOCKET = "";
 	
 	/*图片上传路径*/
-	public static final String FILEPATHIMG = "uploadFiles/uploadImgs/";
+	public static final String PICTUREFILEPATH = "uploadFiles/uploadImgs/";
 	/*用户头像保存位置*/
 	public static final String FILEPATHUSERPHOTO = "uploadFiles/uploadUserPhoto/";
 	/*文件上传路径*/
@@ -129,7 +129,11 @@ public class Constant {
 	public static final short SITE_MSG_SEND_SUCCESS = 2;
 	public static final short SITE_MSG_READED = 3;
 	
-	
+	/*******************************
+						picture type
+	 ***************************************************/		
+	public static final short PICTURE_TYPE_MANUAL = 1;
+	public static final short PICTURE_TYPE_AUTO =  2;
 }
 
 

@@ -1,5 +1,7 @@
 package com.jiajun.service.impl;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,10 +17,10 @@ import com.jiajun.util.Constant;
 @Service
 public class PictureServiceImpl implements PictureService{
 
-	private static final String PictureMapper = "PictureMapper.";
+	private static final String PICTURE_NAME_SPACE = "PictureMapper.";
 	
 	@Autowired
-	@Qualifier("baseDao")
+	@Qualifier("daoImpl")
 	private Dao dao;
 	
 	@Override
@@ -32,9 +34,23 @@ public class PictureServiceImpl implements PictureService{
 			rows = Constant.getConfig("page.size");
 		}
 		params.put("currentPage", Integer.valueOf(currentPage));
-		params.put("rows", rows);
-		Page<PictureEntity> page = dao.getPage(PictureMapper+"selectPageList", PictureMapper+"selectPageCount", params);
+		params.put("rows", Integer.valueOf(rows));
+		Page<PictureEntity> page = dao.getPage(PICTURE_NAME_SPACE+"selectPageList", PICTURE_NAME_SPACE+"selectPageCount", params);
 		return page;
+	}
+
+	@Override
+	public void savePicture(String filePath) throws Exception {
+		if(StringUtils.isNotEmpty(filePath)) {
+			PictureEntity picture = new PictureEntity();
+			Date now = new Date();
+			picture.setCreateTime(now);
+			picture.setUpdateTime(now);
+			picture.setDesc("");
+			picture.setPath(filePath);
+			picture.setType(Constant.PICTURE_TYPE_MANUAL);
+			dao.insert(PICTURE_NAME_SPACE+"insertSelective", picture);
+		}
 	}
 
 }

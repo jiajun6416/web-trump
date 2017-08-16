@@ -17,13 +17,13 @@
   <sql id="selectPageCondition">
   	<where>
   		<if test="keyword">
-  			desc like concat('%',#{keyword},'%')
+  			p.desc like concat('%',#{keyword},'%')
   		</if>
   	</where>
   </sql>
   
   <select id="selectPageCount" parameterType="map" resultType="int">
-	select count(*) from picture 
+	select count(*) from picture p
 	<include refid="selectPageCondition"/>
   </select>
   
@@ -44,9 +44,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jiajun.pojo.information.PictureEntity">
-    insert into picture (id, path, type, 
-      desc, create_time, update_time, 
-      delete_time)
+    insert into picture (id, path, type, desc, create_time, update_time, delete_time)
     values (#{id,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{type,jdbcType=SMALLINT}, 
       #{desc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{deleteTime,jdbcType=TIMESTAMP})

@@ -3,6 +3,7 @@ package com.jiajun.pojo.information;
 import java.util.Date;
 
 public class PictureEntity {
+	
     private Integer id;
 
     private String path;
