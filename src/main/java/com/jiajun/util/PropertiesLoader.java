@@ -18,7 +18,8 @@ import org.springframework.core.io.ResourceLoader;
 public class PropertiesLoader {
 
 	private static Logger logger = LoggerFactory.getLogger(PropertiesLoader.class);
-
+	
+	/*底层还是使用Thread.currentThread().getContextClassLoader()*/
 	private static ResourceLoader resourceLoader = new DefaultResourceLoader();
 
 	private final Properties properties;

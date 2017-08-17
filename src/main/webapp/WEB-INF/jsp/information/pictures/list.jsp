@@ -94,11 +94,11 @@
 										</td>
 										<td class='center' style="width: 30px;">${vs.count}</td>
 										<td class="center">
-										<a href="<%=basePath%>uploadFiles/uploadImgs/${picture.path}" title="" class="bwGal"><img src="<%=basePath%>uploadFiles/uploadImgs/${var.PATH}" alt="${var.TITLE}" width="100"></a>
+										<a href="<%=basePath%>${picture.path}" title="" class="bwGal"><img src="<%=basePath%>${picture.path}" " width="100"></a>
 										</td>
-										<td class="center">${picture.desc}</td>
+										<td class="center">${picture.pictureDesc}</td>
 										<td class="center">${picture.typeView}</td>
-										<td class="center">${picture.createTime}</td>
+										<td class="center"><fmt:formatDate value="${picture.createTime}" pattern="yyyy/MM/dd HH:mm:ss"/> </td>
 										<td class="center" style="width:130px;">
 											<a style="cursor:pointer;" class="green" onclick="edit('${picture.id}');" title="编辑">
 												<i class="ace-icon fa fa-pencil bigger-130"></i>
@@ -180,13 +180,14 @@
 		}
 		
 		//删除
-		function del(Id,PATH){
-			
+		function del(id){
 			if(confirm("确定要删除?")){ 
 				top.jzts();
-				var url = "<%=basePath%>pictures/delete.do?PICTURES_ID="+Id+"&PATH="+PATH+"&tm="+new Date().getTime();
+				var url = "<%=basePath%>picture/delete.do?pictureId="+Id+"&tm="+new Date().getTime();
 				$.get(url,function(data){
-					nextPage(${page.currentPage});
+					 top.jzts();
+					 setTimeout("self.location=self.location",100);
+				//	nextPage(${page.currentPage});
 				});
 			}
 		}
@@ -202,8 +203,10 @@
 			 diag.Height = 465;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 nextPage(${page.currentPage});
-				}
+					// nextPage(${page.currentPage});
+					 top.jzts();
+					 setTimeout("self.location=self.location",100);
+				 }
 				diag.close();
 			 };
 			 diag.show();

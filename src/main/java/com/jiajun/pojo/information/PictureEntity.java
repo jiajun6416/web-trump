@@ -1,8 +1,18 @@
 package com.jiajun.pojo.information;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.jiajun.util.Constant;
 
 public class PictureEntity {
+	
+	private static final Map<Short, String> TYPE_VIEW_MAP = new HashMap<>();
+	static {
+		TYPE_VIEW_MAP.put(Constant.PICTURE_TYPE_MANUAL, "上传");
+		 TYPE_VIEW_MAP.put(Constant.PICTURE_TYPE_AUTO, "爬取");
+	}
 	
     private Integer id;
 
@@ -10,14 +20,16 @@ public class PictureEntity {
 
     private Short type;
 
-    private String desc;
-
+    private String pictureDesc;
+    
     private Date createTime;
 
     private Date updateTime;
 
     private Date deleteTime;
 
+    private String typeView;
+    
     public Integer getId() {
         return id;
     }
@@ -40,17 +52,21 @@ public class PictureEntity {
 
     public void setType(Short type) {
         this.type = type;
+        this.typeView = TYPE_VIEW_MAP.get(type);
     }
+	public String getTypeView() {
+		return typeView;
+	}
 
-    public String getDesc() {
-        return desc;
-    }
+	public String getPictureDesc() {
+		return pictureDesc;
+	}
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
+	public void setPictureDesc(String pictureDesc) {
+		this.pictureDesc = pictureDesc;
+	}
 
-    public Date getCreateTime() {
+	public Date getCreateTime() {
         return createTime;
     }
 

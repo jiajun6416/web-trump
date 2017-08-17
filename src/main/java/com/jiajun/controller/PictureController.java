@@ -1,10 +1,10 @@
 package com.jiajun.controller;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,15 +31,14 @@ import com.jiajun.util.FileUtils;
 @Controller
 public class PictureController extends BaseController{
 	
-	private static final File File = null;
 	@Autowired
-	private PictureService prictureService;
+	private PictureService pictureService;
 	
 	@RequestMapping("list")
 	@RequiresPermissions("picture:query")
 	public String list(HttpServletRequest request, Model model) throws Exception {
 		ParameMap params = this.getParaMap(request);
-		Page<PictureEntity> page = prictureService.getPage(params );
+		Page<PictureEntity> page = pictureService.getPage(params );
 		model.addAttribute("page", page);
 		model.addAttribute("params", params);
 		return "information/pictures/list";
@@ -62,15 +61,42 @@ public class PictureController extends BaseController{
 	@ResponseBody
 	public ResultModel pictureUpload(@RequestParam("file")MultipartFile file, HttpServletRequest request) {
 		try {
+			String originalName = file.getOriginalFilename();
+			String suffix = originalName.substring(originalName.lastIndexOf(".")+1);
 			String basePath = request.getServletContext().getRealPath("/");
-			String filePath = Constant.PICTUREFILEPATH+FileUtils.createFileName();
-			File f = FileUtils.createDestFile(basePath+filePath);
+			String filePath = Constant.PICTUREFILEPATH+FileUtils.createFileName()+"."+suffix;
+			File f = FileUtils.createDestFile(basePath+"/"+filePath);
 			file.transferTo(f);
-			prictureService.savePicture(filePath);
+			pictureService.savePicture(filePath);
 			return ResultModel.build(200, "success");
 		} catch (Exception e) {
 			logger.error("upload picture has error", e);
 			return ResultModel.build(500, e.getMessage());
+		}
+	}
+	
+	@RequestMapping("delete")
+	@RequiresPermissions("picture:delete")
+	@ResponseBody
+	public ResultModel delete(@RequestParam(required=true)int pictureId, HttpServletRequest request ){
+		try {
+			PictureEntity picture = pictureService.getById(pictureId);
+			if(picture!=null && StringUtils.isNotEmpty(picture.getPath())) {
+				pictureService.delete(pictureId);
+				String filePath = request.getServletContext().getRealPath("/")+"/"+picture.getPath();
+				File f = new File(filePath);
+				if(f.exists()) {
+					f.delete();
+				}
+				logger.info("delete picture {} success", filePath);
+				return ResultModel.build(200, "success");
+			} else {
+				logger.info("the picture {} is null ", pictureId);
+				return ResultModel.build(403, "error");
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			return ResultModel.build(403, "error");
 		}
 	}
 	

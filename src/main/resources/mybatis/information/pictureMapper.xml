@@ -5,13 +5,13 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="path" jdbcType="VARCHAR" property="path" />
     <result column="type" jdbcType="SMALLINT" property="type" />
-    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="picture_desc" jdbcType="VARCHAR" property="pictureDesc" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="delete_time" jdbcType="TIMESTAMP" property="deleteTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, path, type, desc, create_time, update_time, delete_time
+    id, path, type, picture_desc, create_time, update_time, delete_time
   </sql>
   
   <sql id="selectPageCondition">
@@ -44,9 +44,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.jiajun.pojo.information.PictureEntity">
-    insert into picture (id, path, type, desc, create_time, update_time, delete_time)
+    insert into picture (id, path, type, picture_desc, create_time, update_time, delete_time)
     values (#{id,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{type,jdbcType=SMALLINT}, 
-      #{desc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{pictureDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
       #{deleteTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jiajun.pojo.information.PictureEntity">
@@ -61,8 +61,8 @@
       <if test="type != null">
         type,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="pictureDesc != null">
+        picture_desc,
       </if>
       <if test="createTime != null">
         create_time,
@@ -84,8 +84,8 @@
       <if test="type != null">
         #{type,jdbcType=SMALLINT},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="pictureDesc != null">
+        #{pictureDesc,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -107,8 +107,8 @@
       <if test="type != null">
         type = #{type,jdbcType=SMALLINT},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="pictureDesc != null">
+        picture_desc = #{pictureDesc,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -126,7 +126,7 @@
     update picture
     set path = #{path,jdbcType=VARCHAR},
       type = #{type,jdbcType=SMALLINT},
-      desc = #{desc,jdbcType=VARCHAR},
+      picture_desc = #{pictureDesc,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       delete_time = #{deleteTime,jdbcType=TIMESTAMP}

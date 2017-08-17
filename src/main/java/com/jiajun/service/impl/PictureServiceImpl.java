@@ -46,11 +46,21 @@ public class PictureServiceImpl implements PictureService{
 			Date now = new Date();
 			picture.setCreateTime(now);
 			picture.setUpdateTime(now);
-			picture.setDesc("");
+			picture.setPictureDesc("");
 			picture.setPath(filePath);
 			picture.setType(Constant.PICTURE_TYPE_MANUAL);
 			dao.insert(PICTURE_NAME_SPACE+"insertSelective", picture);
 		}
+	}
+
+	@Override
+	public void delete(Integer pictureId) throws Exception {
+		dao.delete(PICTURE_NAME_SPACE+"deleteByPrimaryKey", pictureId);
+	}
+
+	@Override
+	public PictureEntity getById(Integer pictureId) throws Exception {
+		return (PictureEntity) dao.selectObject(PICTURE_NAME_SPACE+"selectByPrimaryKey", pictureId);
 	}
 
 }

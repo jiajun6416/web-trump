@@ -9,4 +9,8 @@ public interface PictureService {
 	Page<PictureEntity> getPage(ParameMap params) throws Exception;
 	
 	void savePicture(String filePath) throws Exception;
+	
+	PictureEntity getById(Integer pictureId) throws Exception;
+	
+	void delete(Integer pictureId) throws Exception;
 }
