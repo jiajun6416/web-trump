@@ -17,15 +17,24 @@
   <sql id="selectPageCondition">
   	<where>
   		<if test="keyword">
-  			p.desc like concat('%',#{keyword},'%')
+  			picture_desc like concat('%',#{keyword},'%')
   		</if>
   	</where>
   </sql>
   
+ 
+  <select id="selectByIds" parameterType="list" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from picture where id in
+ 	<foreach collection="list" open="(" close=")" separator="," item="pId">
+ 		#{pId}
+ 	</foreach>
+  </select>
+  
   <select id="selectPageCount" parameterType="map" resultType="int">
-	select count(*) from picture p
+	select count(*) from picture 
 	<include refid="selectPageCondition"/>
   </select>
+
   
   <select id="selectPageList" parameterType="map" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/> from picture
@@ -33,12 +42,15 @@
 	limit #{begin}, #{rows}
   </select>
   
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from picture
     where id = #{id,jdbcType=INTEGER}
   </select>
+  
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from picture
     where id = #{id,jdbcType=INTEGER}

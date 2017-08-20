@@ -3,6 +3,9 @@ package com.jiajun.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +19,7 @@ import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.system.SysLogEntity;
 import com.jiajun.service.SysLogService;
 import com.jiajun.util.Constant;
+import com.jiajun.util.PoiExcelExport;
 
 @Controller
 @RequestMapping("/log")
@@ -61,6 +65,34 @@ public class LogController  extends BaseController {
 		return result;
 	}
 	
+	
+	@RequestMapping("excel")
+	@RequiresPermissions("opera:outExcel")
+	public void toExcel(HttpServletRequest requet, HttpServletResponse response) {
+		ParameMap params = getParaMap();
+		String currentPage = (String) params.get("currentPage");
+		if(currentPage == null ) {
+			currentPage = "1";
+		}
+		params.put("currentPage", Integer.valueOf(currentPage));
+		String rows = (String) params.get("rows");
+		if(rows == null) {
+			rows = Constant.getConfig("page.size");
+		}
+		params.put("rows", Integer.valueOf(rows));
+		
+		try {
+			Page<SysLogEntity> page = sysLogService.listLog(params);
+			String[] titleCols = {"用户名","IP","事件","操作时间"};
+			String[] fields = {"opearUser","ip","event","opearTime"};
+			PoiExcelExport excelExport = new PoiExcelExport(titleCols, fields, page.getList())
+					.withNumber("编号")
+					.withSubject("系统日志记录");
+			excelExport.exportExcel(response, "系统日志");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@RequestMapping("/batchDelete")
 	@ResponseBody

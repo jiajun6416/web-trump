@@ -9,6 +9,7 @@ public class SysUserEntity  implements Serializable{
 	
 	private static final long serialVersionUID = -7522668131578278017L;
 
+	
 	private Integer id;
 
     private String username;
@@ -45,10 +46,18 @@ public class SysUserEntity  implements Serializable{
     
     private SysRoleEntity role;
     
+    
     private SysUserPhotoEntity userPhoto;
     
 	public Short getUserType() {
 		return userType;
+	}
+	
+	public String getRoleName() {
+		if(role != null) {
+			return role.getRoleName();
+		} 
+		return "";
 	}
 
 	public void setUserType(Short userType) {

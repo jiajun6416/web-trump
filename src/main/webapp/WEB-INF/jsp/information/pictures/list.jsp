@@ -55,7 +55,7 @@
 			<div class="main-content-inner">
 					<!-- 检索  -->
 					<form action="picture/list" method="post" name="Form" id="Form">
-					<input type="hidden" name="currentPage" value="${page.currentPage}"> 
+					<input type="hidden" name="currentPage" id="currentPage" value="${page.currentPage}"> 
 					<table style="margin-top:5px;">
 						<tr>
 							<td>
@@ -128,7 +128,32 @@
 							<a class="btn btn-sm btn-success" onclick="add();">新增</a>
 							<a title="批量删除" class="btn btn-sm btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
 						</td>
-						<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;"></div></td>
+						<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">
+															<!-- 分页-->
+										<ul class="pagination pull-right no-margin">
+											<li><a>共<font color=red></font>${page.count}条</a></li>
+											<li><input type="number" value="" id="toGoPage" style="width:50px;text-align:center;float:left" placeholder="页码"/></li>
+											<li style="cursor:pointer;"><a onclick="toPageButton();"  class="btn btn-mini btn-success">跳转</a></li>
+											<li><a href="javascript:void(0)" onclick="toPage(1)">首页</a></li>
+											<li><a href="javascript:void(0)" onclick="toPage(${page.currentPage-1})">上页</a></li>
+											<li class="active"><a><font color='white'>${page.currentPage}</font></a></li>
+											<li><a href="javascript:void(0)" onclick="toPage(${page.currentPage+1})">下页</a></li>
+											<li><a href="javascript:void(0)" onclick="toPage(${page.totalPage})">尾页</a></li>
+											<li><a>共${page.totalPage}页</a></li>
+											<li><select title='显示条数' name="rows" style="width:55px;float:left;margin-top:1px;" onchange="changeRows()">
+													<option value='10'>10</option>
+													<option value='20'>20</option>
+													<option value='30'>30</option>
+													<option value='40'>40</option>
+													<option value='50'>50</option>
+													<option value='60'>60</option>
+													<option value='70'>70</option>
+													<option value='80'>80</option>
+													<option value='90'>90</option>
+												</select>
+											</li>
+										</ul>
+						</div></td>
 					</tr>
 				</table>
 				</div>
@@ -151,6 +176,19 @@
 	</body>
 	<script type="text/javascript">
 		$(top.hangge());
+
+		function toPage(pageNum) {
+			var currentPage;
+			if(pageNum <= 0 ) {
+				currentPage = 1;
+			} else if(pageNum >= '${page.count}') {
+				currentPage = page.count;
+			} else {
+				currentPage = pageNum;
+			}
+			$("#currentPage").val(currentPage); 
+			$("form:first").submit();
+		}
 		
 		//检索
 		function searchs(){
@@ -183,7 +221,7 @@
 		function del(id){
 			if(confirm("确定要删除?")){ 
 				top.jzts();
-				var url = "<%=basePath%>picture/delete.do?pictureId="+Id+"&tm="+new Date().getTime();
+				var url = "<%=basePath%>picture/delete.do?pictureId="+id+"&tm="+new Date().getTime();
 				$.get(url,function(data){
 					 top.jzts();
 					 setTimeout("self.location=self.location",100);
@@ -244,15 +282,14 @@
 							top.jzts();
 							$.ajax({
 								type: "POST",
-								url: '<%=basePath%>pictures/deleteAll.do?tm='+new Date().getTime(),
-						    	data: {DATA_IDS:str},
+								url: '<%=basePath%>picture/deleteAll.do?tm='+new Date().getTime(),
+						    	data: {pictureIds:str},
 								dataType:'json',
 								//beforeSend: validateData,
 								cache: false,
 								success: function(data){
-									 $.each(data.list, function(i, list){
-											nextPage(${page.currentPage});
-									 });
+									 top.jzts();
+									 setTimeout("self.location=self.location",100);
 								}
 							});
 						}

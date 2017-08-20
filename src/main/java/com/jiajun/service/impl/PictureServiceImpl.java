@@ -1,6 +1,8 @@
 package com.jiajun.service.impl;
 
+import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +63,24 @@ public class PictureServiceImpl implements PictureService{
 	@Override
 	public PictureEntity getById(Integer pictureId) throws Exception {
 		return (PictureEntity) dao.selectObject(PICTURE_NAME_SPACE+"selectByPrimaryKey", pictureId);
+	}
+
+	@Override
+	public void deleteAll(List<Integer> ids, String basePath) throws Exception {
+		if(ids != null && ids.size()>0) {
+			List<PictureEntity> pictures = dao.selectList(PICTURE_NAME_SPACE+"selectByIds", ids);
+			if(pictures != null && pictures.size()>0) {
+				dao.batchDelete(PICTURE_NAME_SPACE+"deleteByPrimaryKey", ids);
+				for (PictureEntity pictureEntity : pictures) {
+					String filePath = basePath+"/"+pictureEntity.getPath();
+					File f = new File(filePath);
+					if(f.exists()) {
+						f.delete();
+					}
+				}
+				
+			}
+		}
 	}
 
 }

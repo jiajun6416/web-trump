@@ -1,6 +1,9 @@
 package com.jiajun.controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +23,7 @@ import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.ResultModel;
 import com.jiajun.pojo.information.PictureEntity;
 import com.jiajun.service.PictureService;
+import com.jiajun.service.SysLogService;
 import com.jiajun.util.Constant;
 import com.jiajun.util.FileUtils;
 
@@ -33,6 +37,8 @@ public class PictureController extends BaseController{
 	
 	@Autowired
 	private PictureService pictureService;
+	@Autowired
+	private SysLogService sysLogService;
 	
 	@RequestMapping("list")
 	@RequiresPermissions("picture:query")
@@ -89,6 +95,7 @@ public class PictureController extends BaseController{
 					f.delete();
 				}
 				logger.info("delete picture {} success", filePath);
+				sysLogService.save(this.getLoginUser(), this.getIP(request), "删除图片");
 				return ResultModel.build(200, "success");
 			} else {
 				logger.info("the picture {} is null ", pictureId);
@@ -99,6 +106,27 @@ public class PictureController extends BaseController{
 			return ResultModel.build(403, "error");
 		}
 	}
-	
+		
+	@RequestMapping("deleteAll")
+	@ResponseBody
+	@RequiresPermissions("picture:delete")
+	public ResultModel deleteAll(String pictureIds, HttpServletRequest request) {
+		String[] ids = pictureIds.split(",");
+		if(ids != null && ids.length>0) {
+			List<Integer> idList = new ArrayList(ids.length);
+			for (String id : ids) {
+				idList.add(Integer.parseInt(id));
+			}
+			try {
+				pictureService.deleteAll(idList, request.getServletContext().getRealPath("/"));
+				sysLogService.save(this.getLoginUser(), this.getIP(request), "batch delete success");
+				return ResultModel.build(200, "success");
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				return ResultModel.build(500, e.getMessage());
+			}
+		}
+		return ResultModel.build(403, "parameters invalid");
+	}
 			
 }

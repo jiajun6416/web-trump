@@ -119,33 +119,35 @@
 								<td style="vertical-align:top;">
 									<a class="btn btn-mini btn-danger" onclick="deleteCheck('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
 								</td>
-								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">
-								<!-- 分页-->
-									<ul class="pagination pull-right no-margin">
-										<li><a>共<font color=red></font>${page.count}条</a></li>
-										<li><input type="number" value="" id="toGoPage" style="width:50px;text-align:center;float:left" placeholder="页码"/></li>
-										<li style="cursor:pointer;"><a onclick="toPageButton();"  class="btn btn-mini btn-success">跳转</a></li>
-										<li><a href="javascript:void(0)" onclick="toPage(1)">首页</a></li>
-										<li><a href="javascript:void(0)" onclick="toPage(${page.currentPage-1})">上页</a></li>
-										<li class="active"><a><font color='white'>${page.currentPage}</font></a></li>
-										<li><a href="javascript:void(0)" onclick="toPage(${page.currentPage+1})">下页</a></li>
-										<li><a href="javascript:void(0)" onclick="toPage(${page.totalPage})">尾页</a></li>
-										<li><a>共${page.totalPage}页</a></li>
-										<li><select title='显示条数' name="rows" style="width:55px;float:left;margin-top:1px;" onchange="changeRows()">
-												<option value='10'>10</option>
-												<option value='20'>20</option>
-												<option value='30'>30</option>
-												<option value='40'>40</option>
-												<option value='50'>50</option>
-												<option value='60'>60</option>
-												<option value='70'>70</option>
-												<option value='80'>80</option>
-												<option value='90'>90</option>
-											</select>
-										</li>
-									</ul>
-								
-								</div></td>
+								<td style="vertical-align:top;">
+									<div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">
+									<!-- 分页-->
+										<ul class="pagination pull-right no-margin">
+											<li><a>共<font color=red></font>${page.count}条</a></li>
+											<li><input type="number" value="" id="toGoPage" style="width:50px;text-align:center;float:left" placeholder="页码"/></li>
+											<li style="cursor:pointer;"><a onclick="toPageButton();"  class="btn btn-mini btn-success">跳转</a></li>
+											<li><a href="javascript:void(0)" onclick="toPage(1)">首页</a></li>
+											<li><a href="javascript:void(0)" onclick="toPage(${page.currentPage-1})">上页</a></li>
+											<li class="active"><a><font color='white'>${page.currentPage}</font></a></li>
+											<li><a href="javascript:void(0)" onclick="toPage(${page.currentPage+1})">下页</a></li>
+											<li><a href="javascript:void(0)" onclick="toPage(${page.totalPage})">尾页</a></li>
+											<li><a>共${page.totalPage}页</a></li>
+											<li><select title='显示条数' name="rows" style="width:55px;float:left;margin-top:1px;" onchange="changeRows()">
+													<option value='10'>10</option>
+													<option value='20'>20</option>
+													<option value='30'>30</option>
+													<option value='40'>40</option>
+													<option value='50'>50</option>
+													<option value='60'>60</option>
+													<option value='70'>70</option>
+													<option value='80'>80</option>
+													<option value='90'>90</option>
+												</select>
+											</li>
+										</ul>
+									
+									</div>
+								</td>
 							</tr>
 						</table>
 						</div>
@@ -337,6 +339,11 @@
 			});
 		};
 
+		function toExcel() {
+			var params  = $("#Form").serialize();
+			window.location.href='<%=basePath%>log/excel.do?'+params;
+		}
+		
 	</script>
 
 </body>

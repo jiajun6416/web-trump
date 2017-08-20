@@ -430,11 +430,8 @@ $(function() {
 
 //导出excel
 function toExcel(){
-	var keywords = $("#nav-search-input").val();
-	var lastLoginStart = $("#lastLoginStart").val();
-	var lastLoginEnd = $("#lastLoginEnd").val();
-	var ROLE_ID = $("#role_id").val();
-	window.location.href='<%=basePath%>user/excel.do?keywords='+keywords+'&lastLoginStart='+lastLoginStart+'&lastLoginEnd='+lastLoginEnd+'&ROLE_ID='+ROLE_ID;
+	var params  = $("form:first").serialize();
+	window.location.href='<%=basePath%>user/excel.do?'+params;
 }
 
 //打开上传excel页面

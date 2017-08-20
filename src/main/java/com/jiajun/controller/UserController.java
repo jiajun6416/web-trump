@@ -3,9 +3,9 @@ package com.jiajun.controller;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jiajun.controller.base.BaseController;
-import com.jiajun.exception.SysCustomException;
 import com.jiajun.pojo.Page;
 import com.jiajun.pojo.ParameMap;
 import com.jiajun.pojo.ResultModel;
@@ -34,8 +33,7 @@ import com.jiajun.service.SysRoleService;
 import com.jiajun.service.SysUserService;
 import com.jiajun.util.Constant;
 import com.jiajun.util.JsonUtils;
-import com.jiajun.util.PropertiesLoader;
-import com.jiajun.websocket.online.OnlineWebSocketHandler;
+import com.jiajun.util.PoiExcelExport;
 
 /**
  * @描述：用户信息
@@ -233,6 +231,37 @@ public class UserController extends BaseController{
 		return "system/user/user_list";
 	}
 	
+	@RequestMapping("excel")
+	@RequiresPermissions("opera:outExcel")
+	public void listExcel(HttpServletRequest request, HttpServletResponse response) {
+		ParameMap params = getParaMap();
+		if(params.get("currentPage") == null || params.get("currentPage").equals("")) {
+			params.put("currentPage", 1);
+		}
+		try {
+			//如果rows没有指定的话, 自己读取制定的文件
+			if(params.get("rows") == null || params.get("rows").equals("")) {
+				String rows = Constant.getConfig("page.size");
+				params.put("rows", Integer.parseInt(rows));
+			} else {
+				String rows =  (String) params.get("rows");
+				params.put("rows", Integer.parseInt(rows));
+			}
+			Page<SysUserEntity> page = sysUserService.getSysUserPage(params);
+			String[] cols = {"用户名","姓名","角色","邮箱","最近登陆","上次登陆IP"};
+			String[] fields = {"username","name","roleName","email","loginTime","lastIp"};
+			PoiExcelExport excelExport = new PoiExcelExport(cols,fields, page.getList())
+						.withColWith("用户名", 10)
+						.withColWith("最近登陆", 20)
+						.withSubject("系统用户详情")
+						.withNumber("编号")
+						.withColWith("编号", 10);
+			excelExport.exportExcel(response, "系统用户");
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		}
+	}
+	
 	@RequestMapping("/deleteUser")
 	@ResponseBody
 	@RequiresPermissions("sysUser:delete")
@@ -316,6 +345,7 @@ public class UserController extends BaseController{
 		}
 		return ResultModel.build(200, "success");
 	}
+
 	
 	
 	@RequestMapping("/online")
@@ -323,4 +353,6 @@ public class UserController extends BaseController{
 	public String getLoginUser(Model model) {
 		return "system/online/list";
 	}
+	
+	
 }
