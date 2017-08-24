@@ -251,11 +251,11 @@ public class UserController extends BaseController{
 			String[] cols = {"用户名","姓名","角色","邮箱","最近登陆","上次登陆IP"};
 			String[] fields = {"username","name","roleName","email","loginTime","lastIp"};
 			PoiExcelExport excelExport = new PoiExcelExport(cols,fields, page.getList())
-						.withColWith("用户名", 10)
-						.withColWith("最近登陆", 20)
+						.withColWidth("用户名", 10)
+						.withColWidth("最近登陆", 20)
 						.withSubject("系统用户详情")
 						.withNumber("编号")
-						.withColWith("编号", 10);
+						.withColWidth("编号", 10);
 			excelExport.exportExcel(response, "系统用户");
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

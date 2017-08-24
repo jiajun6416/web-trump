@@ -32,7 +32,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * 
  * poi excel 导出工具类
  * 
- * @author tvu
+ * @author jiajun
  */
 public class PoiExcelExport {
 
@@ -44,6 +44,7 @@ public class PoiExcelExport {
 	private SimpleDateFormat dateFormat = new SimpleDateFormat(default_datePattern);
 	private DecimalFormat decimalFormat = new DecimalFormat(default_decimalPattern);;
 	private String sheetName = default_sheetName;
+	private int columnWidth = default_ColumnWidth;
 
 	private String subject; //table的表头
 	private String[] titleCols; //table的字段名
@@ -88,10 +89,18 @@ public class PoiExcelExport {
 		this.decimalFormat = new DecimalFormat(decimalPattern);
 		return this;
 	}
+	
 	/*
-	 * 指定列宽度
+	 * 指定默认宽度
 	 */
-	public PoiExcelExport withColWith(String colName, int chartNum) {
+	public PoiExcelExport withDefaultWidth(int defaultWidth) {
+		this.columnWidth = defaultWidth*256;
+		return this;
+	}
+	/*
+	 * 指定某一列宽度
+	 */
+	public PoiExcelExport withColWidth(String colName, int chartNum) {
 		this.customColWidth.put(colName, chartNum*256);
 		return this;
 	}
@@ -120,6 +129,11 @@ public class PoiExcelExport {
 	}
 	
 	
+	/**
+	 * 导出
+	 * @param response
+	 * @param fileName
+	 */
 	public void exportExcel(HttpServletResponse response, String fileName) {
 		OutputStream out = null;
 		try {
@@ -224,9 +238,9 @@ public class PoiExcelExport {
 			if (customColWidth.containsKey(colName)) {
 				sheet.setColumnWidth(colIndex, customColWidth.get(colName));
 			} else if(StringUtils.isNotEmpty(number) && number.equals(colName)) {
-				sheet.setColumnWidth(colIndex, default_ColumnWidth/2);
+				sheet.setColumnWidth(colIndex, columnWidth/2);
 			}else {
-				sheet.setColumnWidth(colIndex, default_ColumnWidth);
+				sheet.setColumnWidth(colIndex, columnWidth);
 			}
 		}
 		return cell;

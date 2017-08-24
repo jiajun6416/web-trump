@@ -41,6 +41,7 @@
 						<form  action="menu/${action}.do" name="menuForm" id="menuForm" method="post" class="form-horizontal">
 							<input type="hidden" name="id" id="menuId" value="${menu.id}"/>
 							<input type="hidden" name="parentId" value="${pId}">
+							<input type="hidden" name="isParent" value="${menu.isParent}">
 							<div class="form-group">
 								<label class="col-sm-3 control-label no-padding-right" for="form-field-1"> 上级 :</label>
 								<div class="col-sm-9">

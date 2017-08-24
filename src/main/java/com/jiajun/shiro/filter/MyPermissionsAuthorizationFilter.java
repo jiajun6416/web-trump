@@ -19,8 +19,11 @@ import com.jiajun.util.HttpUtils;
 import com.jiajun.util.JsonUtils;
 
 /**
- * @desc 自定义的基于权限的过滤器, 实现 1. 如果admin用户则直接放行. 2. 权限不足时候, 如果是http请求则跳转定义的好的页面,
- *       如果是ajax请求,则返回json字符串
+ * @desc 自定义的基于权限的过滤器, 实现
+ * 			 1. 如果admin用户则直接放行. 
+ * 			 2. 权限不足时候, 如果是http请求则跳转定义的好的页面,如果是ajax请求,则返回json字符串
+ *
+ * @destnition 不能用于注解, 因为那个是AOP不是过滤器实现      
  * 
  * 	
  * @author JIAJUN

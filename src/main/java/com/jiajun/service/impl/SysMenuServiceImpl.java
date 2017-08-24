@@ -8,6 +8,9 @@ import javax.annotation.Resource;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -22,6 +25,7 @@ import com.jiajun.util.RegularUtils;
 
 @Service
 @SuppressWarnings("unchecked")
+@Cacheable
 public class SysMenuServiceImpl implements SysMenuService{
 
 	private final static String NAME_SPACE = "SysMenuMapper.";
@@ -37,16 +41,19 @@ public class SysMenuServiceImpl implements SysMenuService{
 	
 	
 	@Override
+	@Cacheable(value="menu",key="#p0")
 	public SysMenuEntity getById(Integer id) throws Exception {
 		return (SysMenuEntity) dao.selectObject(NAME_SPACE+"selectMenuWithPremissonByPrimartyKey", id);
 	}
 
 	@Override
+	@Cacheable(value="menu", key="#p0")
 	public List<SysMenuEntity> getMenuByParentId(Integer patentId) throws Exception {
 		return (List<SysMenuEntity>) dao.selectList(NAME_SPACE+"selectMenuWithPremissionByPid", patentId);
 	}
 
 	@Override
+	@CacheEvict(value="menu", key="#p0")
 	public void delete(Integer id) throws Exception {
 		SysMenuEntity menu = (SysMenuEntity) dao.selectObject(NAME_SPACE+"selectByPrimaryKey", id);
 		dao.delete(NAME_SPACE+"deleteByPrimaryKey", id);
@@ -96,6 +103,7 @@ public class SysMenuServiceImpl implements SysMenuService{
 
 
 	@Override
+	@CacheEvict(value="menu",key="#menuId")
 	public void updateIcon(Integer menuId, String icon) throws Exception{
 		SysMenuEntity menu = new SysMenuEntity();
 		menu.setId(menuId);
@@ -104,49 +112,55 @@ public class SysMenuServiceImpl implements SysMenuService{
 	}
 	
 	@Override
+	@CacheEvict(value="menu",allEntries=true)
 	public void update(SysMenuEntity menuEntity) throws Exception {
 		List<SysMenuPremission> premissions = menuEntity.getPremissionList();
-		if(premissions.size() != 5) {
-			throw new SysCustomException("参数有误!!!");
-		}
 		menuEntity.setGmtModifyed(new Date());
 		dao.update(NAME_SPACE+"updateByPrimaryKeySelective", menuEntity);
-		List<SysMenuPremission> premissionList = (List<SysMenuPremission>) dao.selectList(SYS_PREMISSION_NAME_SPACE+"selectByMenuId",menuEntity.getId());
-		//已经存在修改, 不存在的添加, 或者删除已存在的
-		List<SysMenuPremission> updateList = new ArrayList<>(5);
-		List<SysMenuPremission> insertList = new ArrayList<>(5);
-		List<Integer> removeList = new ArrayList<>(5);
-		
-		int length = premissionList.size();
-		int index = 0;
-		for(int i=0; i<5; i++) {
-			SysMenuPremission premission = premissions.get(i);
-			//原本存在
-			if(index<length && premission.getPremissionType() == premissionList.get(index).getPremissionType()) {
-				Integer id = premissionList.get(index).getId();
-				if(StringUtils.isEmpty(premission.getPremissionCode())) {
-					removeList.add(id);
+		if (menuEntity.getIsParent() != null && !menuEntity.getIsParent()) {
+			// 父菜单直接返回
+			if (premissions.size() != 5) {
+				throw new SysCustomException("参数有误!!!");
+			}
+			// 子菜单带有权限表示, 修改权限标识
+			List<SysMenuPremission> premissionList = (List<SysMenuPremission>) dao
+					.selectList(SYS_PREMISSION_NAME_SPACE + "selectByMenuId", menuEntity.getId());
+			// 已经存在修改, 不存在的添加, 或者删除已存在的
+			List<SysMenuPremission> updateList = new ArrayList<>(5);
+			List<SysMenuPremission> insertList = new ArrayList<>(5);
+			List<Integer> removeList = new ArrayList<>(5);
+
+			int length = premissionList.size();
+			int index = 0;
+			for (int i = 0; i < 5; i++) {
+				SysMenuPremission premission = premissions.get(i);
+				// 原本存在
+				if (index < length && premission.getPremissionType() == premissionList.get(index).getPremissionType()) {
+					Integer id = premissionList.get(index).getId();
+					if (StringUtils.isEmpty(premission.getPremissionCode())) {
+						removeList.add(id);
+					} else {
+						premission.setId(id);
+						premission.setMenuId(menuEntity.getId());
+						updateList.add(premission);
+					}
+					index++;
 				} else {
-					premission.setId(id);
-					premission.setMenuId(menuEntity.getId());
-					updateList.add(premission);
-				}
-				index++;
-			} else {
-				if(!StringUtils.isEmpty(premission.getPremissionCode())) {
-					premission.setMenuId(menuEntity.getId());
-					insertList.add(premission);
+					if (!StringUtils.isEmpty(premission.getPremissionCode())) {
+						premission.setMenuId(menuEntity.getId());
+						insertList.add(premission);
+					}
 				}
 			}
-		}
-		if(insertList.size() > 0) {
-			dao.batchInsert(SYS_PREMISSION_NAME_SPACE+"insert", insertList);
-		}
-		if(updateList.size() > 0) {
-			dao.batchUpdate(SYS_PREMISSION_NAME_SPACE+"updateByPrimaryKey", updateList);
-		}
-		if(removeList.size() > 0) {
-			dao.batchDelete(SYS_PREMISSION_NAME_SPACE+"deleteByPrimaryKey", removeList);
+			if (insertList.size() > 0) {
+				dao.batchInsert(SYS_PREMISSION_NAME_SPACE + "insert", insertList);
+			}
+			if (updateList.size() > 0) {
+				dao.batchUpdate(SYS_PREMISSION_NAME_SPACE + "updateByPrimaryKey", updateList);
+			}
+			if (removeList.size() > 0) {
+				dao.batchDelete(SYS_PREMISSION_NAME_SPACE + "deleteByPrimaryKey", removeList);
+			}
 		}
 	}
 	

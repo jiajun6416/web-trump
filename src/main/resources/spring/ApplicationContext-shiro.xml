@@ -81,7 +81,7 @@
     <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
     	<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache.xml"/>
     </bean>
-
+    
 	<!-- 会话管理器，web容器的session废弃 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
     	<!-- 避免subject不存在时候会自动在url上加上sessionId如果禁用了cookike,设置为true -->
@@ -92,7 +92,6 @@
         <property name="deleteInvalidSessions" value="true"/>
         <!-- 是否开启会话验证器任务 默认true -->
         <property name="sessionValidationSchedulerEnabled" value="false"/>
-        
          <property name="sessionFactory" ref="sessionFactory"/>
         <property name="SessionDAO" ref="ShiroCacheSessionDAO"/>
         <property name="sessionIdCookie" ref="shiroCookie"/>	

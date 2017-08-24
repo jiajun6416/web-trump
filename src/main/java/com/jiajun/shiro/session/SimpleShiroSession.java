@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * 每次访问session都会更新LastAccessTime这个字段, 重置session过期时间,且会调用update方法, 但是项目中过期时间是由redis自己维护的
+ * 
  * 解决: 如果只是修改lastAccessTime这个字段,则不实际调用redis的update, 除去只是修改lastAccessTIme字段的操作还是需要访问redis
  * 
  * @author jiajun

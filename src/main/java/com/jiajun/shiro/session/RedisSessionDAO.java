@@ -48,7 +48,7 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 		assignSessionId(session, sessionId);
 		try {
 			Serializable key = getKey(sessionId);
-			logger.debug("do create session, key id {}", key);
+			logger.info("do create session, key id {}", key);
 			redisDao.put(key, (Serializable)session, timeOutSeconds);
 			return sessionId;
 		} catch (Exception e) {
@@ -64,7 +64,7 @@ public class RedisSessionDAO extends AbstractSessionDAO{
         }
 		Serializable key = this.getKey(sessionId);
 		try {
-			logger.debug("get shiro session, and touch session, the key is {}", key);
+			logger.info("get shiro session, and touch session, the key is {}", key);
 			Session session = (Session) redisDao.getAndReSetExpireTime(key, timeOutSeconds);
 			return session;
 		} catch (Exception e) {
@@ -84,7 +84,7 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 		} 
 		Serializable sessionId = session.getId();
 		Serializable key = getKey(sessionId);
-		logger.debug("update shiro session, the key is {}", key);
+		logger.info("update shiro session, the key is {}", key);
 		try {
 			redisDao.put(key, (Serializable)session, timeOutSeconds);
 		} catch (Exception e) {
@@ -96,7 +96,7 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 	public void delete(Session session) {
 		Serializable sessionId = session.getId();
 		Serializable key = this.getKey(sessionId);
-		logger.debug("delete shiro session, the key is {}", key);
+		logger.info("delete shiro session, the key is {}", key);
 		try {
 			redisDao.remove(key);
 		} catch (Exception e) {
@@ -106,7 +106,7 @@ public class RedisSessionDAO extends AbstractSessionDAO{
 	
 	public Collection<Session> getActiveSessions() {
 		try {
-			logger.debug("get all shiro session");
+			logger.info("get all shiro session");
 			Collection<Session> values =  (Collection<Session>) redisDao.values(this.getPattern());
 			return values;
 		} catch (Exception e) {

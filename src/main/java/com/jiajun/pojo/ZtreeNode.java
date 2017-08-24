@@ -7,7 +7,8 @@ import java.util.List;
  * @author jiajun
  * @date 2017年7月2日下午9:07:37
  */
-public class ZtreeNode {
+public class ZtreeNode implements java.io.Serializable{
+	private static final long serialVersionUID = -7084960522357304191L;
 	/*节点id*/
 	private Integer id;
 	/*父节点id*/
