@@ -25,7 +25,6 @@ import com.jiajun.util.RegularUtils;
 
 @Service
 @SuppressWarnings("unchecked")
-@Cacheable
 public class SysMenuServiceImpl implements SysMenuService{
 
 	private final static String NAME_SPACE = "SysMenuMapper.";
