@@ -67,7 +67,7 @@
 	    <property name="cachingEnabled" value="true"/> 
 	    <!-- 启用授权缓存 -->
 	    <property name="authorizationCachingEnabled" value="true"/>  
-	    <!-- 授权缓存名称, 默认是Principal, 推荐存储用户名(String), 后面好处多, redis缓存key再下一次登陆还是可用的 -->
+	    <!-- 授权缓存的ehcache对象名, 存储的key默认是Principal, 推荐认证信息使用username -->
 	    <property name="authorizationCacheName" value="authorizationCache"/>
 	</bean>
 
@@ -77,18 +77,20 @@
 		<property name="hashIterations" value="${hashIterations}" />
 	</bean>
 
-	<!-- 用户授权信息Cache, 采用EhCache，本地缓存最长时间应比redis短 -->
+	<!-- shiro ehcahce本地缓存管理器,注意每个ehcache对象的ttl<redis中的ttl  -->
     <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-    	<property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache.xml"/>
+    	<!-- <property name="cacheManagerConfigFile" value="classpath:ehcache/ehcache.xml"/> -->
+    	<!--springcache中已经配置了ehcachemanager factory-->
+    	<property name="cacheManager" ref="ehcacheManagerFacotry"/>
     </bean>
     
 	<!-- 会话管理器，web容器的session废弃 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-    	<!-- 避免subject不存在时候会自动在url上加上sessionId如果禁用了cookike,设置为true -->
+    	<!-- subject不存在时候会自动在url上加上sessionId,禁用cookie也会加上sessionId,看情况禁止-->
  	    <property name="sessionIdUrlRewritingEnabled" value="false" />
         <!-- session的失效时长，单位毫秒 -->
         <property name="globalSessionTimeout" value="1800000"/>
-        <!-- 是否在会话过期后会调用SessionDAO的delete方法删除会话(此时可以删除redis中的缓存) 默认true,-->
+        <!-- 是否在会话过期后会调用SessionDAO的delete方法删除会话(此时可以删除redis中的缓存) 默认true-->
         <property name="deleteInvalidSessions" value="true"/>
         <!-- 是否开启会话验证器任务 默认true -->
         <property name="sessionValidationSchedulerEnabled" value="false"/>
@@ -102,7 +104,9 @@
 	
 	<bean id="ShiroCacheSessionDAO" class="com.jiajun.shiro.session.ShiroCacheSessionDAO">
 		<property name="prefix" value="shiro_session_key:"/>
-		<!-- 比本地ehcache时间长 -->
+		<!-- encache对象名, 不配置使用defaultcache -->
+		<property name="activeSessionsCacheName" value="activeSessionsCache"/>
+		<!-- redis超时, 比本地ehcache时间长 -->
 		<property name="timeOutSeconds" value="1800"/>
 	</bean>
 	

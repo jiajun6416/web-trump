@@ -71,11 +71,18 @@
     	<property name="dataSource" ref="dataSource"></property>
  	</bean>
  	
+	<!-- 调用spring的DebugInterceptor记录日志,以确定方法是否被AOP增强 -->  
+	<bean id="debugInterceptor" class="org.springframework.aop.interceptor.DebugInterceptor" />
+	
+	<!-- 暴露代理,可以实现同类再次切入 -->
+	<aop:config expose-proxy="true"/>
+		
  	<!-- 事物AOP -->
 	<aop:config>
 		<aop:pointcut id="pc" expression="execution(* com.jiajun.service..*(..))"/>
 		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
 	</aop:config>
+	
 	
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
@@ -89,6 +96,8 @@
 			           rollback-for="java.lang.Exception" />
 			<tx:method name="save*" propagation="REQUIRED" read-only="false" 
 			           rollback-for="java.lang.Exception" />
+			 <tx:method name="batchDelete" propagation="REQUIRED" read-only="false"
+					   rollback-for="java.lang.Exception" />
 		</tx:attributes>
 	</tx:advice>
 

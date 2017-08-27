@@ -26,7 +26,6 @@ import com.jiajun.redis.dao.RedisDao;
 public class ShiroCacheSessionDAO extends CachingSessionDAO {
 
 	private static Logger logger = LoggerFactory.getLogger(RedisSessionDAO.class);
-
 	@Autowired
 	private RedisDao redisDao;
 	

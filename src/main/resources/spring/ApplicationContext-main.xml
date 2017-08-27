@@ -37,19 +37,34 @@
 	</context:component-scan>
 
 	<context:property-placeholder location="classpath:config/*.properties" />
-
 	<!-- 开启spring缓存,cache-manager缺省值为cacheManager -->
 	<cache:annotation-driven cache-manager="cacheManager" />
 	
-	<!-- spring整合ehcache -->
-	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-		<property name="cacheManager" ref="springCacheManager" />
+	<!-- ===========================spring 自带整合redis cache====================== -->
+	<bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+		<property name="transactionAware" value="true"/>
+		<constructor-arg name="redisOperations" ref="redisTemplate"/>
+		<!-- 默认失效时间, 单位s -->
+		<property name="defaultExpiration" value="300"/>
+		<constructor-arg name="cacheNames">
+			<set>
+				<value>menu</value>
+				<value>role</value>
+			</set>
+		</constructor-arg>
 	</bean>
+	
+	<!-- ==================spring 整合ehcache============================= -->
+	<!-- spring整合ehcache,环绕事务,事务回滚缓存回滚 -->
+<!-- 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager" ref="ehcacheManagerFacotry" />
+		<property name="transactionAware" value="true"/>
+	</bean> -->
 
-	<!-- ehcache 管理器, 默认是单例,但是在shiro中已经配置过了所以需要设置允许多例 -->
-	<bean id="springCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+	<!-- spring生成 net.sf.ehcache.CacheManager的工厂, 有一个名称的cachemanager只能存在一个-->
+	<bean id="ehcacheManagerFacotry" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:ehcache/ehcache.xml" />
-		<property name="acceptExisting" value="true" />
+		<property name="cacheManagerName" value="springCache"/>
 	</bean>
 
 

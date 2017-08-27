@@ -40,19 +40,19 @@ public class SysMenuServiceImpl implements SysMenuService{
 	
 	
 	@Override
-	@Cacheable(value="menu",key="#p0")
+	@Cacheable(value="menu",key="'menu:id'+#p0")
 	public SysMenuEntity getById(Integer id) throws Exception {
 		return (SysMenuEntity) dao.selectObject(NAME_SPACE+"selectMenuWithPremissonByPrimartyKey", id);
 	}
 
 	@Override
-	@Cacheable(value="menu", key="#p0")
+	@Cacheable(value="menu", key="'menu:typeId'+#p0")
 	public List<SysMenuEntity> getMenuByParentId(Integer patentId) throws Exception {
 		return (List<SysMenuEntity>) dao.selectList(NAME_SPACE+"selectMenuWithPremissionByPid", patentId);
 	}
 
 	@Override
-	@CacheEvict(value="menu", key="#p0")
+	@CacheEvict(value="menu",key="'menu:id'+#p0")
 	public void delete(Integer id) throws Exception {
 		SysMenuEntity menu = (SysMenuEntity) dao.selectObject(NAME_SPACE+"selectByPrimaryKey", id);
 		dao.delete(NAME_SPACE+"deleteByPrimaryKey", id);
@@ -102,7 +102,7 @@ public class SysMenuServiceImpl implements SysMenuService{
 
 
 	@Override
-	@CacheEvict(value="menu",key="#menuId")
+	@CacheEvict(value="menu",key="'menu:id'+#p0")
 	public void updateIcon(Integer menuId, String icon) throws Exception{
 		SysMenuEntity menu = new SysMenuEntity();
 		menu.setId(menuId);
@@ -111,7 +111,7 @@ public class SysMenuServiceImpl implements SysMenuService{
 	}
 	
 	@Override
-	@CacheEvict(value="menu",allEntries=true)
+	@CacheEvict(value="menu", key="'menu:id'+#p0.id")
 	public void update(SysMenuEntity menuEntity) throws Exception {
 		List<SysMenuPremission> premissions = menuEntity.getPremissionList();
 		menuEntity.setGmtModifyed(new Date());

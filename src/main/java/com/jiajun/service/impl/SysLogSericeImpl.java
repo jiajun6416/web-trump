@@ -22,6 +22,7 @@ public class SysLogSericeImpl implements SysLogService {
 	@Qualifier("daoImpl")
 	private Dao dao;
 	
+	
 	@Override
 	public void save(String username, String ip, String event){
 		SysLogEntity logEntity = new SysLogEntity();
@@ -56,6 +57,7 @@ public class SysLogSericeImpl implements SysLogService {
 	@Override
 	public void batchDelete(List<Integer> ids) throws Exception{
 		dao.batchDelete(NAME_SPACE+"deleteByPrimaryKey", ids);
+		int i= 10/0;
 	}
 
 

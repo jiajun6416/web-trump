@@ -6,6 +6,7 @@ import java.util.Set;
 
 public interface RedisDao {
 	
+	/*============================ key-value 结构=============================*/
 	/**
 	 * get 
 	 * 
@@ -51,6 +52,7 @@ public interface RedisDao {
 	 */
 	void clear(Serializable pattern) throws Exception;
 	
+	/*================================set结构==================================*/
 	/**
 	 * key a*
 	 * @param pattern

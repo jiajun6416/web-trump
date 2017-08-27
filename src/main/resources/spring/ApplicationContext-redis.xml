@@ -35,10 +35,14 @@
 	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
 		<property name="connectionFactory" ref="jedisConnFactory" />
 		<property name="keySerializer">
-			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+			<bean class="org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer" >
+				<constructor-arg name="type" value="#{T(Object)}"/>
+			</bean>
 		</property>
 		<property name="hashKeySerializer">
-			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+			<bean class="org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer" >
+				<constructor-arg name="type" value="#{T(Object)}"/>
+			</bean>
 		</property>
 		<property name="valueSerializer">
 			<bean  class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer" />  

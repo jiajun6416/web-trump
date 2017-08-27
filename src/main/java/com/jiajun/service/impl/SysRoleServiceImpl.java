@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.jiajun.dao.base.Dao;
@@ -53,21 +55,25 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 	
 	@Override
+	@Cacheable(value="role", key="'role:id'+#p0")
 	public SysRoleEntity getRoleById(int roleId) throws Exception {
 		return (SysRoleEntity) dao.selectObject(ROLE_NAME_SPACE+"selectByPrimaryKey", roleId);
 	}
 	
 	@Override
+	@Cacheable(value="role", key="'role:typeId'+#p0")
 	public List<SysRoleEntity> getListByType(int type) throws Exception {
 		return (List<SysRoleEntity>) dao.selectList(ROLE_NAME_SPACE+"getByType", type);
 	}
 
 	@Override
+	@Cacheable(value="role", key="'role:all'")
 	public List<SysRoleEntity> getAllTypeRole() throws Exception {
 		return (List<SysRoleEntity>) dao.selectList(ROLE_NAME_SPACE+"getAllTypeRole", null);
 	}
 
 	@Override
+	@CacheEvict(value="role", key="'role:id'+#p0")
 	public void delete(int roleId) throws Exception {
 		//查询此角色是否有用户
 		int count = (int) dao.selectObject(USER_NAME_SPACE+"getUserNumByRole", roleId);
@@ -83,6 +89,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	
 	
 	@Override
+	@CacheEvict(value="role", key="'role:typeId'+#p0")
 	public void deleteType(int roleType) throws Exception {
 		//查询当前角色组下是否有角色
 		int count = (int) dao.selectObject(ROLE_NAME_SPACE+"getRoleNumByType", roleType);
@@ -93,6 +100,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 	}
 	
 	@Override
+	@CacheEvict(value="role", key="'role:id'+#p0")
 	public void update(SysRoleEntity roleEntity) throws Exception {
 		dao.update(ROLE_NAME_SPACE+"updateByPrimaryKeySelective", roleEntity);
 	}
