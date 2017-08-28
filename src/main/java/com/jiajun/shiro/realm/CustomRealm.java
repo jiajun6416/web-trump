@@ -80,9 +80,10 @@ public class CustomRealm extends AuthorizingRealm{
 				 premissionList = userService.getPermissionListById(user.getId());
 			}
 			SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+			//基于permission验证
 			simpleAuthorizationInfo.addStringPermissions(premissionList);
-			//如果是admin,则添加, 后面有只有admin才能用的权限
 			if(user.getRoleId().equals(Constant.SYSTEM_ROLE)) {
+				//基于role验证
 				simpleAuthorizationInfo.addRole("admin");
 			}
 			return simpleAuthorizationInfo;

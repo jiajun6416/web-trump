@@ -1,4 +1,4 @@
-package com.jiajun.shiro.cache;
+package com.jiajun.shiro.realm.cache;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -26,24 +26,30 @@ import com.jiajun.redis.dao.RedisDao;
  * @version 1.0.0
  */
 @Component
-@Scope("prototype")
-public class RedisCache implements Cache<Serializable, Serializable>{
-	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+public class RedisRealmCache implements Cache<Serializable, Serializable>{
 	
 	@Autowired
 	private RedisDao redisDao;
+
+	
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	/**
 	 * redis中key的前缀
 	 */
-	@Value("${redisCache.keyPrefix}")
 	private String keyPrefix;
-	
-	@Value("${redisCache.timeOut}")
 	private int timeToIdleSeconds;
 	
-	public RedisCache() {
+	public void setKeyPrefix(String keyPrefix) {
+		this.keyPrefix = keyPrefix;
+	}
+	public void setTimeToIdleSeconds(int timeToIdleSeconds) {
+		this.timeToIdleSeconds = timeToIdleSeconds;
+	}
+
+
+	public RedisRealmCache() {
 	}
 
 	
@@ -62,7 +68,6 @@ public class RedisCache implements Cache<Serializable, Serializable>{
 			if(logger.isDebugEnabled()) {
 				logger.debug("get value from redis by key: {}",this.getKey(key));
 			}
-		//	return redisDao.get(this.getKey(key)); //只查找, 不影响失效时间
 			//查找后重置失效时间
 			return redisDao.getAndReSetExpireTime(this.getKey(key), timeToIdleSeconds);
 		} catch (Exception e) {
