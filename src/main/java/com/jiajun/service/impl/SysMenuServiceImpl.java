@@ -190,7 +190,7 @@ public class SysMenuServiceImpl implements SysMenuService{
 			}
 		}
 		
-		if(CollectionUtils.isEmpty(menuEntitys)) {
+		if(CollectionUtils.isEmpty(menuEntitys)) { 
 			return null;
 		}
 		//进行递归,将子菜单和父亲菜单进行关联起来

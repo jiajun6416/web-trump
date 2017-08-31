@@ -23,8 +23,10 @@ import com.jiajun.pojo.ResultModel;
 import com.jiajun.pojo.ZtreeNode;
 import com.jiajun.pojo.system.SysMenuEntity;
 import com.jiajun.pojo.system.SysMenuPremission;
+import com.jiajun.pojo.system.SysUserEntity;
 import com.jiajun.service.SysLogService;
 import com.jiajun.service.SysMenuService;
+import com.jiajun.service.SysUserService;
 import com.jiajun.util.JsonUtils;
 
 @Controller
@@ -35,6 +37,8 @@ public class MenuController extends BaseController{
 	private SysLogService sysLogService;
 	@Autowired
 	private SysMenuService sysMenuService;
+	@Autowired
+	private SysUserService userService;
 	
 	@RequestMapping("/listAllMenu")
 	@RequiresPermissions("menu:query")
@@ -154,6 +158,11 @@ public class MenuController extends BaseController{
 		}
 		try {
 			sysMenuService.update(menu);
+			
+			//修改菜单信息
+			String username = this.getLoginUser();
+			SysUserEntity  user= userService.getUserByUsername(username);
+			session.setAttribute("menuList", sysMenuService.getMenuListByRoleId(user.getRoleId()));
 			sysLogService.save(this.getLoginUser(session), this.getIP(request), "修改菜单信息");
 			return ResultModel.build(200, "success");
 		} catch (Exception e) {

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 						http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/aop 
@@ -13,15 +11,18 @@
 						http://www.springframework.org/schema/tx 
 						http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<!-- 配置数据源 --> 
-	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+	<!-- 配置数据源 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
 		<!-- 数据库基本信息配置 -->
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
 		<property name="username" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
+		<!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->
+		<property name="filters" value="${druid.filters}" />
 		<!-- 初始化连接数量 -->
-		<property name="initialSize" value="5" /> 
+		<property name="initialSize" value="${druid.initialSize}" />
 		<!-- 最大并发连接数 -->
 		<property name="maxActive" value="${druid.maxActive}" />
 		<!-- 最小空闲连接数 -->
@@ -36,68 +37,67 @@
 		<property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />
 		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
 		<property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />
-		<!-- 用来检测连接是否有效的sql，要求是一个查询语句-->
+		<!-- 用来检测连接是否有效的sql，要求是一个查询语句 -->
 		<property name="validationQuery" value="${druid.validationQuery}" />
 		<!-- 申请连接的时候检测 -->
 		<property name="testWhileIdle" value="${druid.testWhileIdle}" />
 		<!-- 申请连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
 		<property name="testOnBorrow" value="${druid.testOnBorrow}" />
-		<!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能  -->
+		<!-- 归还连接时执行validationQuery检测连接是否有效，配置为true会降低性能 -->
 		<property name="testOnReturn" value="${druid.testOnReturn}" />
 		<!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
 		<property name="poolPreparedStatements" value="${druid.poolPreparedStatements}" />
-		<property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}" />
-		<!--属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：  监控统计用的filter:stat 日志用的filter:log4j防御SQL注入的filter:wall -->
-		 <!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 .. 项目不需要druid统计-->
-		<!-- <property name="filters" value="stat" /> -->
+		<property name="maxPoolPreparedStatementPerConnectionSize"
+			value="${druid.maxPoolPreparedStatementPerConnectionSize}" />
+		<!--属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 监控统计用的filter:stat 日志用的filter:log4j防御SQL注入的filter:wall -->
 	</bean>
-	
+
 	<!-- 配置mybatis -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-    	<property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
-        <property name="mapperLocations" value="classpath:mybatis/*/*Mapper.xml"/>
-    </bean>
-    
-    	
-	<!-- 使用代理mapper接口放开 -->
-<!-- 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.jiajun.mapper"/>
-		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
-	</bean>	 -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+		<property name="mapperLocations" value="classpath:mybatis/*/*Mapper.xml" />
+	</bean>
 
-    
-  	<bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">   
-    	<property name="dataSource" ref="dataSource"></property>
- 	</bean>
- 	
-	<!-- 调用spring的DebugInterceptor记录日志,以确定方法是否被AOP增强 -->  
+
+	<!-- 使用代理mapper接口放开 -->
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> <property 
+		name="basePackage" value="com.jiajun.mapper"/> <property name="sqlSessionFactoryBeanName" 
+		value="sqlSessionFactory"/> </bean> -->
+
+
+	<bean name="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 调用spring的DebugInterceptor记录日志,以确定方法是否被AOP增强 -->
 	<bean id="debugInterceptor" class="org.springframework.aop.interceptor.DebugInterceptor" />
-	
+
 	<!-- 暴露代理,可以实现同类再次切入 -->
-	<aop:config expose-proxy="true"/>
-		
- 	<!-- 事物AOP -->
+	<aop:config expose-proxy="true" />
+
+	<!-- 事物AOP -->
 	<aop:config>
-		<aop:pointcut id="pc" expression="execution(* com.jiajun.service..*(..))"/>
+		<aop:pointcut id="pc" expression="execution(* com.jiajun.service..*(..))" />
 		<aop:advisor pointcut-ref="pc" advice-ref="txAdvice" />
 	</aop:config>
-	
-	
+
+
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="delete*" propagation="REQUIRED" read-only="false" 
-			           rollback-for="java.lang.Exception"/>
-			<tx:method name="remove*" propagation="REQUIRED" read-only="false" 
-			           rollback-for="java.lang.Exception" />
-			<tx:method name="insert*" propagation="REQUIRED" read-only="false" 
-			           rollback-for="java.lang.Exception" />
-			<tx:method name="update*" propagation="REQUIRED" read-only="false" 
-			           rollback-for="java.lang.Exception" />
-			<tx:method name="save*" propagation="REQUIRED" read-only="false" 
-			           rollback-for="java.lang.Exception" />
-			 <tx:method name="batchDelete" propagation="REQUIRED" read-only="false"
-					   rollback-for="java.lang.Exception" />
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="remove*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="save*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="batchDelete" propagation="REQUIRED"
+				read-only="false" rollback-for="java.lang.Exception" />
 		</tx:attributes>
 	</tx:advice>
 

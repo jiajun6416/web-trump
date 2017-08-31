@@ -224,7 +224,4 @@ public class SysUserServiceImpl implements SysUserService{
 			return null;
 		}
 	}
-	
-	
-	
 }

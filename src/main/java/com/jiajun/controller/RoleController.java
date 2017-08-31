@@ -298,6 +298,7 @@ public class RoleController extends BaseController{
 	
 	@RequestMapping("/operation/update")
 	@RequiresPermissions("premission:button")
+	@ResponseBody
 	public ResultModel updateOperation(int roleId, int opearId, HttpServletRequest request, HttpSession session) {
 		try {
 			sysRoleService.updateOpera(roleId, opearId);
