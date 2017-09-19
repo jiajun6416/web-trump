@@ -215,6 +215,7 @@
     
     <!-- 依赖的插件 , 运行  tomcat7:redeploy -->
 	<build>
+		<finalName>router</finalName>
 		<plugins>
 			<!-- 配置Tomcat插件 -->
 			<plugin>

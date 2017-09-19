@@ -105,11 +105,10 @@
     	</property>
     </bean>
     
-	<!-- 开启contoller的代理, 和 proxy-target-class="true" 开启cglib代理冲突, 两者只能配置一个-->
-	<!-- <aop:config proxy-target-class="true"/> -->
+    <!-- 注册自动代理 -->
 	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
 	
-	<!-- 开启shrio注解支持 -->
+	<!-- shiro注解切面 -->
 	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager" />
 	</bean>

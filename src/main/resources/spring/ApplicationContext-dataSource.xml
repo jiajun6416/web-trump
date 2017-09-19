@@ -74,7 +74,7 @@
 	<!-- 调用spring的DebugInterceptor记录日志,以确定方法是否被AOP增强 -->
 	<bean id="debugInterceptor" class="org.springframework.aop.interceptor.DebugInterceptor" />
 
-	<!-- 暴露代理,可以实现同类再次切入 -->
+	<!-- 暴露代理,将代理对象放入threadlocal -->
 	<aop:config expose-proxy="true" />
 
 	<!-- 事物AOP -->

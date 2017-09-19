@@ -60,5 +60,4 @@ public class ParameMap extends HashMap<String, Object>{
 	public int size() {
 		return params.size();
 	}
-	
 }

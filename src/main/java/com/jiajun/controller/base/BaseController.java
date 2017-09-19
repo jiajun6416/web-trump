@@ -13,7 +13,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.jiajun.pojo.ParameMap;
-import com.jiajun.pojo.system.SysUserEntity;
 import com.jiajun.util.Constant;
 
 public class BaseController {
